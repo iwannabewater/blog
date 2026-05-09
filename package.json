@@ -5,7 +5,7 @@
   "private": true,
   "description": "A bilingual editorial blog built with Astro, Tailwind CSS, React, and shadcn/ui.",
   "license": "MIT",
-  "homepage": "https://whynotsleep.cc/blog/",
+  "homepage": "https://blog.whynotsleep.cc/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/iwannabewater/blog.git"

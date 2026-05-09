@@ -2,7 +2,7 @@
 
 Atelier Log is Winston's bilingual editorial blog for design, code, systems, and slow thinking. It is built as a careful increment on top of [AstroPaper](https://github.com/satnaing/astro-paper), preserving the template's static publishing strengths while adding a more refined visual system, bilingual typography, and production-ready project hygiene.
 
-Live site: <https://whynotsleep.cc/blog/>
+Live site: <https://blog.whynotsleep.cc/>
 
 ## Stack
 
@@ -94,19 +94,23 @@ public/            Static public assets
 
 The repository is configured for GitHub Pages. Pushing to `main` runs `.github/workflows/deploy.yml`, which installs dependencies, runs linting, checks formatting, builds the site, uploads `dist`, and deploys through GitHub Pages.
 
-This project is intended to be deployed as a GitHub Pages project site:
+This project is intended to be deployed as a GitHub Pages site with its own
+custom subdomain:
 
 ```text
-iwannabewater/blog
+iwannabewater/blog -> blog.whynotsleep.cc
 ```
 
 The deployed URL is:
 
 ```text
-https://whynotsleep.cc/blog/
+https://blog.whynotsleep.cc/
 ```
 
-If the repository name changes, update the Astro `base` option in `astro.config.ts`. If the GitHub account or custom domain changes, update `SITE.website` in `src/config.ts` and the repository homepage as well.
+The `public/CNAME` file is included in the Pages artifact so GitHub Pages binds
+the repository to `blog.whynotsleep.cc`. If the GitHub account or custom domain
+changes, update `SITE.website` in `src/config.ts`, `public/CNAME`, and the
+repository homepage as well.
 
 ## Public Repository Policy
 
