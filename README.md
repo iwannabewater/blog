@@ -2,7 +2,7 @@
 
 Atelier Log is Winston's bilingual editorial blog for design, code, systems, and slow thinking. It is built as a careful increment on top of [AstroPaper](https://github.com/satnaing/astro-paper), preserving the template's static publishing strengths while adding a more refined visual system, bilingual typography, and production-ready project hygiene.
 
-Live site: <https://iwannabewater.github.io/blog/>
+Live site: <https://whynotsleep.cc/blog/>
 
 ## Stack
 
@@ -103,10 +103,10 @@ iwannabewater/blog
 The deployed URL is:
 
 ```text
-https://iwannabewater.github.io/blog/
+https://whynotsleep.cc/blog/
 ```
 
-If the repository name changes, update the Astro `base` option in `astro.config.ts`. If the GitHub account or custom domain changes, update `SITE.website` in `src/config.ts` as well.
+If the repository name changes, update the Astro `base` option in `astro.config.ts`. If the GitHub account or custom domain changes, update `SITE.website` in `src/config.ts` and the repository homepage as well.
 
 ## Public Repository Policy
 

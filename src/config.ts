@@ -1,5 +1,5 @@
 export const SITE = {
-  website: "https://iwannabewater.github.io",
+  website: "https://whynotsleep.cc",
   author: "Winston",
   profile: "https://github.com/iwannabewater",
   desc: "A bilingual notebook for design, code, systems, and slow thinking.",
