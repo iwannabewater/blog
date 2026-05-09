@@ -14,6 +14,7 @@ html[data-theme="light"] {
   --surface-elevated: #f4efe3;
   --accent: #9b4f2e;
   --accent-foreground: #fff7ec;
+  --accent-ink: #1f405f;
   --accent-quiet: #e8cdb8;
   --accent-secondary: #17665f;
   --accent-tertiary: #763958;
@@ -55,6 +56,7 @@ html[data-theme="dark"] {
   --surface-elevated: #28231e;
   --accent: #d38a57;
   --accent-foreground: #20120b;
+  --accent-ink: #8eb0cd;
   --accent-quiet: #5b3826;
   --accent-secondary: #70b7a5;
   --accent-tertiary: #d29ab6;
@@ -89,13 +91,13 @@ html[data-theme="dark"] {
 
 @theme inline {
   --font-display: var(--font-cormorant-garamond), var(--font-lxgw-wenkai);
-  --font-heading: var(--font-lxgw-wenkai), var(--font-lora);
-  --font-body: var(--font-lxgw-wenkai), var(--font-lora);
+  --font-heading: var(--font-cormorant-garamond), var(--font-lxgw-wenkai);
+  --font-body: var(--font-lora), var(--font-lxgw-wenkai);
   --font-quote: var(--font-cormorant-garamond), var(--font-lxgw-wenkai);
-  --font-handwritten: var(--font-ma-shan-zheng), var(--font-caveat);
+  --font-handwritten: var(--font-caveat), var(--font-ma-shan-zheng);
   --font-decorative: var(--font-fraunces);
-  --font-code: var(--font-jetbrains-mono);
-  --font-ui: var(--font-noto-sans-sc), var(--font-inter);
+  --font-code: var(--font-victor-mono), monospace;
+  --font-ui: var(--font-comic-neue), var(--font-lxgw-wenkai);
   --font-app: var(--font-body);
   --font-sans: var(--font-ui);
   --font-serif: var(--font-body);
@@ -106,6 +108,7 @@ html[data-theme="dark"] {
   --color-surface-elevated: var(--surface-elevated);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-accent-ink: var(--accent-ink);
   --color-accent-quiet: var(--accent-quiet);
   --color-accent-secondary: var(--accent-secondary);
   --color-accent-tertiary: var(--accent-tertiary);
