@@ -1,5 +1,4 @@
 ---
-import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
 import { PUBLIC_GOOGLE_SITE_VERIFICATION } from "astro:env/client";
 import { SITE } from "@/config";
@@ -77,8 +76,20 @@ const structuredData = {
       type="font/woff2"
       crossorigin
     />
-    <Font cssVariable="--font-lxgw-wenkai" preload={[{ weight: 400 }]} />
-    <Font cssVariable="--font-comic-neue" preload={[{ weight: 400 }]} />
+    <link
+      rel="preload"
+      href={withBase("/fonts/lxgw-wenkai/lxgw-wenkai-500.woff2")}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href={withBase("/fonts/comic-neue/comic-neue-400.woff2")}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
 
     <!-- General Meta Tags -->
     <title>{title}</title>
@@ -153,28 +164,35 @@ const structuredData = {
     <!-- Minimal inline script to prevent FOUC - sets theme immediately -->
     <script is:inline>
       (function () {
-        const initialColorScheme = ""; // "light" | "dark"
-        const currentTheme = localStorage.getItem("theme");
+        const storedTheme = localStorage.getItem("theme") || "system";
 
-        function getPreferTheme() {
-          if (currentTheme) return currentTheme;
-          if (initialColorScheme) return initialColorScheme;
+        function resolveTheme(mode) {
+          if (mode === "light" || mode === "dark") return mode;
           return window.matchMedia("(prefers-color-scheme: dark)").matches
             ? "dark"
             : "light";
         }
 
-        const themeValue = getPreferTheme();
+        const themeMode = ["system", "light", "dark"].includes(storedTheme)
+          ? storedTheme
+          : "system";
+        const themeValue = resolveTheme(themeMode);
 
         // Set theme immediately to prevent flash
         document.firstElementChild?.setAttribute("data-theme", themeValue);
+        document.firstElementChild?.setAttribute("data-theme-mode", themeMode);
 
         // Export minimal API for external script
         window.theme = {
-          themeValue: themeValue,
+          themeMode,
+          themeValue,
           getTheme: () => window.theme.themeValue,
+          getMode: () => window.theme.themeMode,
           setTheme: val => {
             window.theme.themeValue = val;
+          },
+          setMode: val => {
+            window.theme.themeMode = val;
           },
         };
       })();

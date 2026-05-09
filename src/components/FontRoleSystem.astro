@@ -43,9 +43,8 @@ const roles = [
   {
     role: "Code",
     cn: "代码与文件名",
-    fonts: "Comic Neue + LXGW WenKai",
-    detail:
-      "在只保留指定字体的前提下，代码区使用 Comic Neue，避免回退到默认等宽字体。",
+    fonts: "JetBrains Mono + LXGW WenKai",
+    detail: "代码区使用 JetBrains Mono，中文注释和缺字只回到霞鹜文楷。",
     sample: 'const note = "kami";',
     demoClass: "font-role-code text-base",
   },
@@ -67,11 +66,12 @@ const roles = [
       <h2
         class="mt-3 max-w-xl font-heading text-4xl leading-tight font-medium text-balance"
       >
-        只保留五种字体，但分工必须清楚
+        字体少而有序，分工必须清楚
       </h2>
       <p class="mt-4 max-w-md text-base leading-7 text-muted-foreground">
         中文用霞鹜文楷与仓耳金楷分层，英文用 Charter 与 Comic Neue
-        分工；日文优先 YuMincho，并只使用已允许字体兜底。没有额外系统字体链。
+        分工；代码交给 JetBrains Mono。日文优先
+        YuMincho，并只使用已允许字体兜底。
       </p>
     </div>
 

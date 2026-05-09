@@ -1,4 +1,4 @@
-import { defineConfig, envField, fontProviders } from "astro/config";
+import { defineConfig, envField } from "astro/config";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
@@ -75,22 +75,4 @@ export default defineConfig({
       }),
     },
   },
-  fonts: [
-    {
-      name: "LXGW WenKai",
-      cssVariable: "--font-lxgw-wenkai",
-      provider: fontProviders.fontsource(),
-      fallbacks: [],
-      weights: [300, 400, 700],
-      styles: ["normal"],
-    },
-    {
-      name: "Comic Neue",
-      cssVariable: "--font-comic-neue",
-      provider: fontProviders.google(),
-      fallbacks: [],
-      weights: [400, 700],
-      styles: ["normal"],
-    },
-  ],
 });

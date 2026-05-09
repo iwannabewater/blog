@@ -43,13 +43,13 @@ const date = datetime.format("YYYY.MM.DD HH:mm");
   />
   {
     isModified && (
-      <span class:list={["text-sm", { "sm:text-base": size === "lg" }]}>
+      <span class:list={["text-base", { "sm:text-lg": size === "lg" }]}>
         Updated:
       </span>
     )
   }
   <time
-    class:list={["text-sm", { "sm:text-base": size === "lg" }]}
+    class:list={["text-base", { "sm:text-lg": size === "lg" }]}
     datetime={datetime.toISOString()}>{date}</time
   >
 </div>

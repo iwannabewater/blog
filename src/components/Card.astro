@@ -22,13 +22,13 @@ const { title, description, tags, ...props } = data;
         class="inline-block text-foreground no-underline outline-offset-4 hover:text-accent"
       >
         <Heading
-          class="font-heading text-2xl leading-tight font-medium text-balance transition-colors sm:text-3xl"
+          class="font-heading text-3xl leading-tight font-medium text-balance transition-colors sm:text-4xl"
           style={{ viewTransitionName: slugifyStr(title.replaceAll(".", "-")) }}
         >
           {title}
         </Heading>
       </a>
-      <p class="mt-3 max-w-2xl text-base leading-7 text-muted-foreground">
+      <p class="mt-3 max-w-2xl text-lg leading-8 text-muted-foreground">
         {description}
       </p>
     </div>
@@ -43,7 +43,7 @@ const { title, description, tags, ...props } = data;
           tags.slice(0, 3).map(tag => (
             <a
               href={withBase(`/tags/${slugifyStr(tag)}/`)}
-              class="rounded-sm border border-border bg-accent-quiet px-2 py-1 font-ui text-xs text-accent no-underline transition-colors hover:border-accent"
+              class="rounded-sm border border-border bg-accent-quiet px-2.5 py-1.5 font-ui text-sm text-accent no-underline transition-colors hover:border-accent"
             >
               {tag}
             </a>

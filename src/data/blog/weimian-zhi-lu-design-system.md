@@ -15,9 +15,9 @@ tags:
 
 ## 字体角色
 
-中文正文使用霞鹜文楷，中文题签、封面和引用使用仓耳金楷。英文正文与标题优先使用 Charter，导航、标签、按钮和代码区交给 Comic Neue。日文短句优先使用 YuMincho，缺字时也只回到已允许的中文字体。
+中文正文使用霞鹜文楷，中文题签、封面和引用使用仓耳金楷。英文正文与标题优先使用 Charter，导航、标签和按钮交给 Comic Neue，代码区使用 JetBrains Mono。日文短句优先使用 YuMincho，缺字时也只回到已允许的中文字体。
 
-这套分工不追求字体数量，而是让每种字体有边界：金楷负责气韵，文楷负责耐读，Charter 负责英文书页感，Comic Neue 负责轻一点的界面语气。
+这套分工不追求字体数量，而是让每种字体有边界：金楷负责气韵，文楷负责耐读，Charter 负责英文书页感，Comic Neue 负责轻一点的界面语气，JetBrains Mono 负责代码的工程秩序。
 
 ## 内容组件
 
@@ -32,6 +32,7 @@ export const principle = {
     "TsangerJinKai02",
     "Charter",
     "Comic Neue",
+    "JetBrains Mono",
     "YuMincho",
   ],
 };

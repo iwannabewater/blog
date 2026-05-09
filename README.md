@@ -12,7 +12,7 @@ Live site: <https://blog.whynotsleep.cc/>
 - shadcn/ui conventions for reusable UI primitives.
 - Pagefind for static search.
 - Shiki for code highlighting.
-- A constrained font system: LXGW WenKai, TsangerJinKai02, Charter, Comic Neue, and YuMincho only.
+- A constrained local font system: LXGW WenKai, TsangerJinKai02, Charter, Comic Neue, and JetBrains Mono are served from `public/fonts`; YuMincho is reserved for Japanese snippets with allowed fallbacks.
 
 ## Local Development
 
@@ -138,8 +138,7 @@ Not committed:
 This project is derived from [AstroPaper](https://github.com/satnaing/astro-paper), originally created by Sat Naing and released under the MIT License. The current design, content system customizations, and site configuration are maintained by Winston.
 
 Font files keep their own licenses and are not relicensed by this repository.
-See `public/fonts/charter/LICENSE.fonts.txt` and
-`public/fonts/tsanger/LICENSE.fonts.txt`.
+Each font family under `public/fonts/*/` includes its own `LICENSE.fonts.txt`.
 
 ## License
 
