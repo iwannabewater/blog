@@ -29,6 +29,9 @@ importers:
       astro:
         specifier: ^6.3.1
         version: 6.3.1(@types/node@24.12.3)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.60.3)(yaml@2.8.4)
+      charter-webfont:
+        specifier: 4.1.0
+        version: 4.1.0
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -2370,6 +2373,9 @@ packages:
 
   character-entities@2.0.2:
     resolution: {integrity: sha512-shx7oQ0Awen/BRIdkjkvz54PnEEI/EjwXDSIZp86/KKdbafHh1Df/RYGBhn4hbe2+uKC9FnT5UCEdyPz3ai9hQ==}
+
+  charter-webfont@4.1.0:
+    resolution: {integrity: sha512-nYu9iCmmhHTHm3UxQagborgPJZ6VjlFD6BKP6AqkqRrVC5YbRkFv8up2Ccg3exsaRA0jbIt18+ge4BkYMRugzA==}
 
   chokidar@4.0.3:
     resolution: {integrity: sha512-Qgzu8kfBvo+cA4962jnP1KkS6Dop5NS6g7R5LFYJr4b8Ub94PPQXUksCw9PvXoeXPRRddRNC5C1JQUR2SMGtnA==}
@@ -7167,6 +7173,8 @@ snapshots:
   character-entities-legacy@3.0.0: {}
 
   character-entities@2.0.2: {}
+
+  charter-webfont@4.1.0: {}
 
   chokidar@4.0.3:
     dependencies:

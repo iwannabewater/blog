@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "charter-webfont/charter.css";
 @import "./typography.css";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
@@ -91,7 +92,7 @@ html[data-theme="dark"] {
 
 @theme inline {
   --font-display: var(--font-cormorant-garamond), var(--font-lxgw-wenkai);
-  --font-heading: var(--font-cormorant-garamond), var(--font-lxgw-wenkai);
+  --font-heading: Charter, var(--font-lxgw-wenkai);
   --font-body: var(--font-lora), var(--font-lxgw-wenkai);
   --font-quote: var(--font-cormorant-garamond), var(--font-lxgw-wenkai);
   --font-handwritten: var(--font-caveat), var(--font-ma-shan-zheng);
