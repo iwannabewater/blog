@@ -1,0 +1,44 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import Socials from "./Socials.astro";
+
+const currentYear = new Date().getFullYear();
+
+type Props = {
+  noMarginTop?: boolean;
+} & HTMLAttributes<"footer">;
+
+const { noMarginTop = false, class: className, ...attrs } = Astro.props;
+---
+
+<footer
+  class:list={["app-layout", { "mt-auto": !noMarginTop }, className]}
+  {...attrs}
+>
+  <div
+    class:list={[
+      "py-8",
+      "border-t border-border/75",
+      "flex flex-col items-center justify-between gap-5 sm:flex-row-reverse",
+    ]}
+  >
+    <Socials />
+    <div
+      class="flex flex-col items-center gap-1 text-muted-foreground sm:flex-row sm:items-center sm:gap-2"
+    >
+      <span
+        class="font-role-display text-lg leading-none text-foreground sm:text-xl"
+      >
+        Copyright &#169; Winston {currentYear}
+      </span>
+      <span aria-hidden="true" class="hidden font-ui text-border sm:inline">
+        |
+      </span>
+      <span
+        class="font-role-display text-lg leading-none text-foreground sm:text-xl"
+      >
+        All rights reserved.
+      </span>
+    </div>
+  </div>
+</footer>

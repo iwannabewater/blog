@@ -1,0 +1,22 @@
+import rss from "@astrojs/rss";
+import { getCollection } from "astro:content";
+import { getPath } from "@/utils/getPath";
+import { trimLeadingSlash, withBase } from "@/utils/basePath";
+import getSortedPosts from "@/utils/getSortedPosts";
+import { SITE } from "@/config";
+
+export async function GET() {
+  const posts = await getCollection("blog");
+  const sortedPosts = getSortedPosts(posts);
+  return rss({
+    title: SITE.title,
+    description: SITE.desc,
+    site: new URL(withBase("/"), SITE.website).href,
+    items: sortedPosts.map(({ data, id, filePath }) => ({
+      link: trimLeadingSlash(getPath(id, filePath)),
+      title: data.title,
+      description: data.description,
+      pubDate: new Date(data.modDatetime ?? data.pubDatetime),
+    })),
+  });
+}

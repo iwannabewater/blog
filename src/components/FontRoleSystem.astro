@@ -1,0 +1,111 @@
+---
+const roles = [
+  {
+    role: "Hero Display",
+    cn: "封面大标题",
+    fonts: "霞鹜文楷 + Cormorant Garamond 300",
+    detail: "极高对比度，奢而不艳。",
+    sample: "Ink, Memory, Systems",
+    demoClass: "font-role-display text-4xl font-light",
+  },
+  {
+    role: "Heading",
+    cn: "文章 H1 至 H2",
+    fonts: "霞鹜文楷 + Lora 600",
+    detail: "温润有力，适合长标题停顿。",
+    sample: "设计是一种有边界的判断",
+    demoClass: "font-role-heading text-3xl font-semibold",
+  },
+  {
+    role: "Body",
+    cn: "正文主力",
+    fonts: "霞鹜文楷 + Lora Regular",
+    detail: "中英文节奏贴合，适合深阅读。",
+    sample: "在速度之外，文字需要留下呼吸。",
+    demoClass: "font-role-body text-2xl",
+  },
+  {
+    role: "Blockquote",
+    cn: "引用块",
+    fonts: "霞鹜文楷 + Cormorant Garamond Italic",
+    detail: "斜体让语气沉下来。",
+    sample: "Slow notes make sharper systems.",
+    demoClass: "font-role-quote text-3xl italic",
+  },
+  {
+    role: "Handwritten",
+    cn: "旁注与批注",
+    fonts: "马善政毛笔楷书 + Caveat",
+    detail: "保留手写感，不进入正文负担。",
+    sample: "旁批：此处需要再想一次",
+    demoClass: "font-role-handwritten text-3xl",
+  },
+  {
+    role: "Decorative",
+    cn: "章节数字与拉引句",
+    fonts: "Fraunces Light",
+    detail: "只作装饰，不抢阅读权重。",
+    sample: "01 / 09",
+    demoClass: "font-role-decorative text-4xl font-light",
+  },
+  {
+    role: "Code",
+    cn: "代码块",
+    fonts: "JetBrains Mono",
+    detail: "高可读性，符号区分清晰。",
+    sample: 'const craft = "quiet precision";',
+    demoClass: "font-role-code text-base",
+  },
+  {
+    role: "UI & Tags",
+    cn: "标签、元信息、导航",
+    fonts: "Noto Sans SC + Inter",
+    detail: "清晰、克制、可扫描。",
+    sample: "2026.05.09 / DESIGN SYSTEM",
+    demoClass: "font-role-ui text-sm font-medium",
+  },
+];
+---
+
+<section class="section-rule py-14">
+  <div class="grid gap-8 lg:grid-cols-[0.75fr_1.25fr]">
+    <div>
+      <p class="font-ui text-sm font-medium text-accent">Typography Roles</p>
+      <h2
+        class="mt-3 max-w-xl font-heading text-4xl leading-tight font-semibold text-balance"
+      >
+        完整字体角色系统
+      </h2>
+      <p class="mt-4 max-w-md text-base leading-7 text-muted-foreground">
+        每一种字体只承担一个明确任务，让中文、英文、代码、旁注和导航各自保持气质与效率。
+      </p>
+    </div>
+
+    <div class="grid gap-3 sm:grid-cols-2">
+      {
+        roles.map(role => (
+          <article class="rounded-lg border border-border bg-surface/90 p-4 shadow-sm">
+            <div class="flex items-start justify-between gap-4 font-ui text-xs text-muted-foreground">
+              <div>
+                <p class="font-semibold text-foreground">{role.role}</p>
+                <p class="mt-1">{role.cn}</p>
+              </div>
+              <p class="text-end text-accent-secondary">{role.fonts}</p>
+            </div>
+            <p
+              class:list={[
+                "mt-5 min-h-12 leading-tight text-foreground",
+                role.demoClass,
+              ]}
+            >
+              {role.sample}
+            </p>
+            <p class="mt-4 font-ui text-sm leading-6 text-muted-foreground">
+              {role.detail}
+            </p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,198 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Card from "@/components/Card.astro";
+import ContentShowcase from "@/components/ContentShowcase.astro";
+import FontRoleSystem from "@/components/FontRoleSystem.astro";
+import ReadingActions from "@/components/react/ReadingActions";
+import getSortedPosts from "@/utils/getSortedPosts";
+import getUniqueTags from "@/utils/getUniqueTags";
+import { withBase } from "@/utils/basePath";
+import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
+import { SITE } from "@/config";
+
+const posts = await getCollection("blog");
+
+const sortedPosts = getSortedPosts(posts);
+const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
+const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
+const tags = getUniqueTags(posts);
+const latestPost = sortedPosts[0];
+---
+
+<Layout>
+  <Header />
+  <main id="main-content" data-layout="index" class="app-layout">
+    <section
+      id="hero"
+      class="grid gap-10 py-12 sm:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-center"
+    >
+      <div>
+        <p class="font-ui text-sm font-medium text-accent">
+          Winston's digital atelier
+        </p>
+        <h1
+          class="mt-5 max-w-4xl font-display text-6xl leading-none font-light text-balance text-foreground sm:text-7xl lg:text-8xl"
+        >
+          Notes with quiet precision.
+        </h1>
+        <p class="mt-6 max-w-2xl text-xl leading-9 text-muted-foreground">
+          一个以文字、代码和系统思考为核心的双语博客。保留 AstroPaper
+          的静态速度与内容工作流，再叠加更克制、更锋利的视觉系统。
+        </p>
+        <div
+          class="mt-8 inline-flex flex-col border-s border-accent/40 ps-5"
+          aria-label="Author signature"
+        >
+          <p
+            class="font-role-display text-4xl leading-none font-light text-foreground sm:text-5xl"
+          >
+            Winston
+          </p>
+          <p
+            class="font-role-handwritten mt-1 text-5xl leading-none text-accent sm:text-6xl"
+            style="font-family: var(--font-caveat);"
+          >
+            Larger than life
+          </p>
+        </div>
+        <div class="mt-8">
+          <ReadingActions />
+        </div>
+      </div>
+
+      <aside class="relative">
+        <div
+          class="aspect-[4/5] overflow-hidden rounded-lg border border-border bg-surface shadow-sm"
+        >
+          <img
+            src={withBase("/atelier-visual.svg")}
+            alt="Atelier Log editorial visual mark"
+            class="h-full w-full object-cover opacity-90 mix-blend-multiply dark:mix-blend-normal"
+            loading="eager"
+          />
+        </div>
+        <div class="mt-4 grid grid-cols-3 gap-3 font-ui text-sm">
+          <div class="rounded-lg border border-border bg-surface/90 p-3">
+            <div class="text-2xl font-semibold text-accent">
+              {sortedPosts.length}
+            </div>
+            <div class="mt-1 text-muted-foreground">Posts</div>
+          </div>
+          <div class="rounded-lg border border-border bg-surface/90 p-3">
+            <div class="text-2xl font-semibold text-accent-secondary">
+              {tags.length}
+            </div>
+            <div class="mt-1 text-muted-foreground">Tags</div>
+          </div>
+          <div class="rounded-lg border border-border bg-surface/90 p-3">
+            <div class="text-2xl font-semibold text-accent-tertiary">
+              {featuredPosts.length}
+            </div>
+            <div class="mt-1 text-muted-foreground">Featured</div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section
+      class="grid gap-6 section-rule py-8 font-ui text-sm text-muted-foreground sm:grid-cols-3"
+    >
+      <div>
+        <p class="font-medium text-foreground">Latest</p>
+        <p class="mt-1">{latestPost?.data.title}</p>
+      </div>
+      <div>
+        <p class="font-medium text-foreground">Stack</p>
+        <p class="mt-1">Astro 6 / Tailwind CSS 4 / React 19 / shadcn</p>
+      </div>
+      <div>
+        <p class="font-medium text-foreground">Principle</p>
+        <p class="mt-1">
+          Fast static pages, React only where it earns its weight.
+        </p>
+      </div>
+    </section>
+
+    <FontRoleSystem />
+
+    {
+      featuredPosts.length > 0 && (
+        <section
+          id="featured"
+          class:list={[
+            "section-rule py-14",
+            { "border-b border-border": recentPosts.length > 0 },
+          ]}
+        >
+          <div class="mb-5 flex items-end justify-between gap-6">
+            <div>
+              <p class="font-ui text-sm font-medium text-accent">Featured</p>
+              <h2 class="mt-2 font-heading text-4xl leading-tight font-semibold">
+                精选文章
+              </h2>
+            </div>
+          </div>
+          <ul>
+            {featuredPosts.slice(0, 3).map(data => (
+              <Card variant="h3" {...data} />
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      recentPosts.length > 0 && (
+        <section id="recent-posts" class="section-rule py-14">
+          <div class="mb-5 flex items-end justify-between gap-6">
+            <div>
+              <p class="font-ui text-sm font-medium text-accent">Recent</p>
+              <h2 class="mt-2 font-heading text-4xl leading-tight font-semibold">
+                最新笔记
+              </h2>
+            </div>
+            <a
+              href={withBase("/posts/")}
+              class="hidden items-center gap-1 font-ui text-sm font-medium text-accent no-underline hover:text-accent-secondary sm:flex"
+            >
+              All Posts
+              <IconArrowRight class="size-4 rtl:-rotate-180" />
+            </a>
+          </div>
+          <ul>
+            {recentPosts.map(
+              (data, index) =>
+                index < SITE.postPerIndex && <Card variant="h3" {...data} />
+            )}
+          </ul>
+        </section>
+      )
+    }
+
+    <ContentShowcase />
+
+    <div class="section-rule py-10 text-center">
+      <a
+        href={withBase("/posts/")}
+        class="inline-flex items-center gap-2 rounded-lg border border-border bg-primary px-4 py-2.5 font-ui text-sm font-medium text-primary-foreground no-underline shadow-sm transition-colors hover:bg-primary/90"
+      >
+        All Posts
+        <IconArrowRight class="size-4 rtl:-rotate-180" />
+      </a>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const indexLayout = (document.querySelector("#main-content") as HTMLElement)
+      ?.dataset?.layout;
+    if (indexLayout) {
+      sessionStorage.setItem("backUrl", "/");
+    }
+  });
+</script>

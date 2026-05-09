@@ -1,0 +1,35 @@
+---
+import IconHash from "@/assets/icons/IconHash.svg";
+import { withBase } from "@/utils/basePath";
+
+type Props = {
+  tag: string;
+  tagName: string;
+  size?: "sm" | "lg";
+};
+
+const { tag, tagName, size = "lg" } = Astro.props;
+---
+
+<li>
+  <a
+    href={withBase(`/tags/${tag}/`)}
+    transition:name={tag}
+    class:list={[
+      "flex items-center gap-1 rounded-md border border-border bg-surface px-3 py-1.5 font-ui text-muted-foreground no-underline shadow-sm",
+      "hover:border-accent/50 hover:text-accent",
+      "focus-visible:border-accent focus-visible:text-accent",
+      { "text-sm": size === "sm" },
+      { "text-lg": size === "lg" },
+    ]}
+  >
+    <IconHash
+      class:list={[
+        "opacity-80",
+        { "size-5": size === "lg" },
+        { "size-4": size === "sm" },
+      ]}
+    />
+    {tagName}
+  </a>
+</li>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" role="img" aria-labelledby="title desc">
+  <title id="title">Atelier Log visual mark</title>
+  <desc id="desc">An editorial composition of paper, ink lines, and a warm handwritten signature.</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7f2e8" />
+      <stop offset="0.55" stop-color="#ebe1d0" />
+      <stop offset="1" stop-color="#d8c4a8" />
+    </linearGradient>
+    <linearGradient id="ink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#161412" />
+      <stop offset="1" stop-color="#6f4b3b" />
+    </linearGradient>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="26" stdDeviation="34" flood-color="#2a211a" flood-opacity="0.18" />
+    </filter>
+  </defs>
+  <rect width="1200" height="1500" fill="#efe8dc" />
+  <path d="M0 0h1200v1500H0z" fill="url(#paper)" />
+  <g opacity="0.24">
+    <path d="M92 230h1016M92 430h1016M92 630h1016M92 830h1016M92 1030h1016M92 1230h1016" stroke="#7d614d" stroke-width="1.2" />
+    <path d="M225 96v1308M425 96v1308M625 96v1308M825 96v1308M1025 96v1308" stroke="#7d614d" stroke-width="1.2" />
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="150" y="150" width="900" height="1200" rx="22" fill="#fbf8f1" />
+    <path d="M250 285h700" stroke="#1c1915" stroke-width="4" stroke-linecap="round" />
+    <path d="M250 360h420" stroke="#9b5d43" stroke-width="4" stroke-linecap="round" />
+    <path d="M250 510h560M250 590h630M250 670h520M250 750h670" stroke="#2b2721" stroke-width="3" stroke-linecap="round" opacity="0.72" />
+    <path d="M250 905c120-72 245-72 375 0s255 72 375 0" fill="none" stroke="url(#ink)" stroke-width="16" stroke-linecap="round" />
+    <path d="M250 1048h210M250 1116h560M250 1184h410" stroke="#7b6656" stroke-width="3" stroke-linecap="round" opacity="0.58" />
+    <path d="M250 997c46-28 72-20 77 8 5 30-34 51-68 34 72-6 143-28 210-68 8 36-6 70-37 101 58-14 112-39 162-76 10 35-2 62-36 82 73-9 137-33 193-72 2 31-12 56-42 76 58-10 111-32 158-66" fill="none" stroke="#8f533d" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+  <circle cx="930" cy="300" r="68" fill="#1d1a16" opacity="0.96" />
+  <path d="M906 300h48M930 276v48" stroke="#fbf8f1" stroke-width="7" stroke-linecap="round" />
+</svg>

@@ -1,0 +1,55 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { slugifyStr } from "@/utils/slugify";
+import { getPath } from "@/utils/getPath";
+import { withBase } from "@/utils/basePath";
+import Datetime from "./Datetime.astro";
+
+type Props = {
+  variant?: "h2" | "h3";
+} & CollectionEntry<"blog">;
+
+const { variant: Heading = "h2", id, data, filePath } = Astro.props;
+
+const { title, description, tags, ...props } = data;
+---
+
+<li class="group border-b border-border/70 py-6 last:border-b-0">
+  <article class="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-start">
+    <div>
+      <a
+        href={withBase(getPath(id, filePath))}
+        class="inline-block text-foreground no-underline outline-offset-4 hover:text-accent"
+      >
+        <Heading
+          class="font-heading text-2xl leading-tight font-semibold text-balance transition-colors sm:text-3xl"
+          style={{ viewTransitionName: slugifyStr(title.replaceAll(".", "-")) }}
+        >
+          {title}
+        </Heading>
+      </a>
+      <p class="mt-3 max-w-2xl text-base leading-7 text-muted-foreground">
+        {description}
+      </p>
+    </div>
+
+    <div class="sm:pt-1 sm:text-end">
+      <Datetime
+        {...props}
+        class="font-ui text-muted-foreground sm:justify-end"
+      />
+      <div class="mt-3 flex flex-wrap gap-2 sm:justify-end">
+        {
+          tags.slice(0, 3).map(tag => (
+            <a
+              href={withBase(`/tags/${slugifyStr(tag)}/`)}
+              class="rounded-md border border-border bg-surface px-2 py-1 font-ui text-xs text-muted-foreground no-underline transition-colors hover:border-accent/50 hover:text-accent"
+            >
+              {tag}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </article>
+</li>
