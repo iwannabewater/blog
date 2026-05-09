@@ -30,17 +30,14 @@ const latestPost = sortedPosts[0];
       class="grid gap-10 py-12 sm:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-center"
     >
       <div>
-        <p class="font-ui text-sm font-medium text-accent">
-          未眠纸录 · blog.whynotsleep.cc
-        </p>
         <h1
-          class="mt-5 max-w-4xl font-display text-6xl leading-[1.05] font-medium tracking-[0.04em] text-balance text-foreground sm:text-7xl lg:text-8xl"
+          class="max-w-4xl font-display text-6xl leading-[1.05] font-medium tracking-[0.04em] text-balance text-foreground sm:text-7xl lg:text-8xl"
         >
-          纸上未眠，灯下有录。
+          流云栖木，桨声灯影。
         </h1>
         <p class="mt-6 max-w-2xl text-xl leading-9 text-muted-foreground">
           一处偏静的个人博客，写设计、代码、系统与日常判断。以暖纸为底，
-          以墨蓝作记号，保留静态页面的速度，也保留慢慢写清楚一件事的耐心。
+          以墨蓝作记号，让文章像船过灯下，慢慢留下可以回看的波纹。
         </p>
         <p
           lang="ja"
@@ -49,7 +46,7 @@ const latestPost = sortedPosts[0];
           紙と灯り、眠らぬ記録。
         </p>
         <div
-          class="mt-8 inline-flex flex-col border-s-[3px] border-accent-ink ps-6"
+          class="mt-8 inline-flex flex-col border-s-[7px] border-accent-ink ps-6"
           aria-label="Author signature"
         >
           <p
@@ -60,14 +57,14 @@ const latestPost = sortedPosts[0];
           <p
             class="font-role-quote mt-2 text-3xl leading-tight text-accent sm:text-4xl"
           >
-            纸上留白，夜里成篇
-          </p>
-          <p
-            class="font-role-handwritten mt-3 text-4xl leading-none text-accent-secondary sm:text-5xl"
-          >
-            Larger than life
+            纸中留白，夜里成篇
           </p>
         </div>
+        <p
+          class="font-role-slogan -ms-1 mt-6 max-w-2xl text-6xl leading-none text-slogan sm:text-7xl lg:text-8xl"
+        >
+          Larger than life
+        </p>
         <div class="mt-8">
           <ReadingActions />
         </div>
@@ -79,44 +76,45 @@ const latestPost = sortedPosts[0];
         >
           <img
             src={withBase("/paper-visual.svg")}
-            alt="未眠纸录纸面视觉标记"
+            alt="流云栖木纸面视觉标记"
             class="h-full w-full object-cover opacity-90 mix-blend-multiply dark:mix-blend-normal"
             loading="eager"
           />
         </div>
-        <div class="mt-4 grid grid-cols-3 gap-3 font-ui text-sm">
-          <div class="rounded-lg border border-border bg-surface/90 p-3">
+        <div class="mt-4 grid grid-cols-3 gap-3 font-ui text-base">
+          <a
+            href={withBase("/posts/")}
+            class="rounded-lg border border-border bg-surface/90 p-3 no-underline transition-colors hover:border-accent"
+          >
             <div class="text-2xl font-medium text-accent">
               {sortedPosts.length}
             </div>
             <div class="mt-1 text-muted-foreground">文章</div>
-          </div>
-          <div class="rounded-lg border border-border bg-surface/90 p-3">
+          </a>
+          <a
+            href={withBase("/tags/")}
+            class="rounded-lg border border-border bg-surface/90 p-3 no-underline transition-colors hover:border-accent"
+          >
             <div class="text-2xl font-medium text-accent-secondary">
               {tags.length}
             </div>
             <div class="mt-1 text-muted-foreground">标签</div>
-          </div>
-          <div class="rounded-lg border border-border bg-surface/90 p-3">
+          </a>
+          <a
+            href={withBase("#featured")}
+            class="rounded-lg border border-border bg-surface/90 p-3 no-underline transition-colors hover:border-accent"
+          >
             <div class="text-2xl font-medium text-accent-tertiary">
               {featuredPosts.length}
             </div>
             <div class="mt-1 text-muted-foreground">精选</div>
-          </div>
-        </div>
-        <div
-          class="mt-4 grid grid-cols-3 gap-px overflow-hidden rounded-lg border border-border bg-border font-quote text-lg text-accent"
-          aria-label="纸签"
-        >
-          <span class="bg-surface/95 px-3 py-3 text-center">留白</span>
-          <span class="bg-surface/95 px-3 py-3 text-center">慢读</span>
-          <span class="bg-surface/95 px-3 py-3 text-center">可维护</span>
+          </a>
         </div>
       </aside>
     </section>
 
     <section
-      class="grid gap-6 section-rule py-8 font-ui text-sm text-muted-foreground sm:grid-cols-3"
+      class="grid gap-6 section-rule py-8 font-ui text-base text-muted-foreground sm:grid-cols-3"
     >
       <div>
         <p class="font-medium text-foreground">最新</p>

@@ -70,6 +70,14 @@
 }
 
 @font-face {
+  font-family: "Caveat";
+  src: url("/fonts/caveat/caveat-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: "JetBrains Mono";
   src: url("/fonts/jetbrains-mono/jetbrains-mono-400.woff2") format("woff2");
   font-weight: 400;
@@ -99,6 +107,7 @@ html[data-theme="light"] {
   --font-lxgw-wenkai: "LXGW WenKai";
   --font-comic-neue: "Comic Neue";
   --font-jetbrains-mono: "JetBrains Mono";
+  --font-caveat: "Caveat";
   --background: #f5f4ed;
   --foreground: #141413;
   --surface: #faf9f5;
@@ -109,6 +118,7 @@ html[data-theme="light"] {
   --accent-quiet: #eef2f7;
   --accent-secondary: #2d5a8a;
   --accent-tertiary: #504e49;
+  --slogan: #98553f;
   --muted: #e8e6dc;
   --muted-foreground: #504e49;
   --border: #e8e6dc;
@@ -154,6 +164,7 @@ html[data-theme="dark"] {
   --accent-quiet: #202a37;
   --accent-secondary: #c0d0df;
   --accent-tertiary: #c7bfae;
+  --slogan: #c28769;
   --muted: #24231f;
   --muted-foreground: #b1aa9b;
   --border: #36342c;
@@ -192,6 +203,7 @@ html[data-theme="dark"] {
   --font-body: Charter, var(--font-lxgw-wenkai);
   --font-quote: TsangerJinKai02, Charter, var(--font-lxgw-wenkai);
   --font-handwritten: var(--font-comic-neue), var(--font-lxgw-wenkai);
+  --font-slogan: var(--font-caveat);
   --font-decorative: TsangerJinKai02, var(--font-lxgw-wenkai);
   --font-code: var(--font-jetbrains-mono), var(--font-lxgw-wenkai);
   --font-ui: var(--font-comic-neue), var(--font-lxgw-wenkai);
@@ -211,6 +223,7 @@ html[data-theme="dark"] {
   --color-accent-quiet: var(--accent-quiet);
   --color-accent-secondary: var(--accent-secondary);
   --color-accent-tertiary: var(--accent-tertiary);
+  --color-slogan: var(--slogan);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
@@ -356,6 +369,12 @@ html[data-theme="dark"] {
 
 .font-role-handwritten {
   font-family: var(--font-handwritten);
+}
+
+.font-role-slogan {
+  font-family: var(--font-slogan);
+  font-weight: 700;
+  letter-spacing: 0.01em;
 }
 
 .font-role-decorative {

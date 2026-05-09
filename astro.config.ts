@@ -20,16 +20,84 @@ const kamiCodeTheme = {
       "editor.background": "#faf9f5",
       "editor.foreground": "#141413",
     },
-    settings: [{ settings: { foreground: "#141413" } }],
+    settings: [
+      { settings: { foreground: "#141413" } },
+      {
+        scope: ["comment", "punctuation.definition.comment"],
+        settings: { foreground: "#8a8375" },
+      },
+      {
+        scope: ["keyword", "storage", "constant.language"],
+        settings: { foreground: "#1B365D" },
+      },
+      {
+        scope: ["string", "string.quoted", "markup.inline.raw"],
+        settings: { foreground: "#98553F" },
+      },
+      {
+        scope: [
+          "entity.name.function",
+          "support.function",
+          "variable.function",
+        ],
+        settings: { foreground: "#2D5A8A" },
+      },
+      {
+        scope: ["constant.numeric", "constant.character", "support.constant"],
+        settings: { foreground: "#6B5A3D" },
+      },
+      {
+        scope: ["entity.name.type", "support.type", "meta.type"],
+        settings: { foreground: "#504E49" },
+      },
+      {
+        scope: ["punctuation", "meta.brace"],
+        settings: { foreground: "#6B6A64" },
+      },
+    ],
   },
   dark: {
     name: "kami-dark",
     type: "dark" as const,
     colors: {
-      "editor.background": "#30302e",
-      "editor.foreground": "#f5f4ed",
+      "editor.background": "#22211d",
+      "editor.foreground": "#f4efe2",
     },
-    settings: [{ settings: { foreground: "#f5f4ed" } }],
+    settings: [
+      { settings: { foreground: "#f4efe2" } },
+      {
+        scope: ["comment", "punctuation.definition.comment"],
+        settings: { foreground: "#8f887b" },
+      },
+      {
+        scope: ["keyword", "storage", "constant.language"],
+        settings: { foreground: "#9AB3CF" },
+      },
+      {
+        scope: ["string", "string.quoted", "markup.inline.raw"],
+        settings: { foreground: "#C28769" },
+      },
+      {
+        scope: [
+          "entity.name.function",
+          "support.function",
+          "variable.function",
+        ],
+        settings: { foreground: "#C0D0DF" },
+      },
+      {
+        scope: ["constant.numeric", "constant.character", "support.constant"],
+        settings: { foreground: "#C7BFAE" },
+      },
+      {
+        scope: ["entity.name.type", "support.type", "meta.type"],
+        settings: { foreground: "#D8D0C0" },
+      },
+      {
+        scope: ["punctuation", "meta.brace"],
+        settings: { foreground: "#B1AA9B" },
+      },
+    ],
   },
 };
 

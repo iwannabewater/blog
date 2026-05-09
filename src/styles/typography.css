@@ -299,8 +299,4 @@
     background: var(--muted);
     padding: 0 0.15rem;
   }
-
-  .astro-code span {
-    color: var(--foreground) !important;
-  }
 }

@@ -5,7 +5,7 @@ const roles = [
     cn: "封面与章题",
     fonts: "TsangerJinKai02 + LXGW WenKai",
     detail: "仓耳金楷承担纸面骨架，霞鹜文楷只在中文补字时承接。",
-    sample: "纸上未眠",
+    sample: "流云栖木",
     demoClass: "font-role-display text-4xl font-medium tracking-[0.08em]",
   },
   {
@@ -29,7 +29,7 @@ const roles = [
     cn: "引句与纸条",
     fonts: "TsangerJinKai02 + Charter + LXGW WenKai",
     detail: "短句、古风提示和拉引句使用金楷，像夹在书页里的签条。",
-    sample: "灯下有录，纸上有风。",
+    sample: "桨声灯影，纸中有风。",
     demoClass: "font-role-quote text-3xl font-medium",
   },
   {
@@ -39,6 +39,14 @@ const roles = [
     detail: "Comic Neue 只负责界面小字，让操作区更松弛，不进入长文正文。",
     sample: "posts / tags / rss",
     demoClass: "font-role-ui text-lg font-medium",
+  },
+  {
+    role: "Slogan",
+    cn: "唯一英文手写标语",
+    fonts: "Caveat",
+    detail: "只用于 Larger than life 这一处，复刻手写题签的棕色墨迹。",
+    sample: "Larger than life",
+    demoClass: "font-role-slogan text-5xl text-slogan",
   },
   {
     role: "Code",
@@ -70,7 +78,7 @@ const roles = [
       </h2>
       <p class="mt-4 max-w-md text-base leading-7 text-muted-foreground">
         中文用霞鹜文楷与仓耳金楷分层，英文用 Charter 与 Comic Neue
-        分工；代码交给 JetBrains Mono。日文优先
+        分工；手写标语只用 Caveat；代码交给 JetBrains Mono。日文优先
         YuMincho，并只使用已允许字体兜底。
       </p>
     </div>
@@ -79,7 +87,7 @@ const roles = [
       {
         roles.map(role => (
           <article class="rounded-lg border border-border bg-surface/90 p-4 shadow-sm">
-            <div class="flex items-start justify-between gap-4 font-ui text-xs text-muted-foreground">
+            <div class="flex items-start justify-between gap-4 font-ui text-sm text-muted-foreground">
               <div>
                 <p class="font-medium text-foreground">{role.role}</p>
                 <p class="mt-1">{role.cn}</p>
@@ -94,7 +102,7 @@ const roles = [
             >
               {role.sample}
             </p>
-            <p class="mt-4 font-ui text-sm leading-6 text-muted-foreground">
+            <p class="mt-4 font-ui text-base leading-7 text-muted-foreground">
               {role.detail}
             </p>
           </article>

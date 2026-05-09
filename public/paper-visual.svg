@@ -1,19 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" role="img" aria-labelledby="title desc">
-  <title id="title">未眠纸录纸面视觉标记</title>
-  <desc id="desc">暖纸底上的墨蓝题签、书页、竖线与留白。</desc>
+  <title id="title">流云栖木纸面视觉标记</title>
+  <desc id="desc">暖纸底上的墨蓝云木、桨声灯影与纸面留白。</desc>
   <rect width="1200" height="1500" fill="#f5f4ed" />
   <g opacity="0.72">
     <path d="M112 205h976M112 405h976M112 605h976M112 805h976M112 1005h976M112 1205h976" stroke="#e8e6dc" stroke-width="2" />
     <path d="M250 110v1280M450 110v1280M650 110v1280M850 110v1280M1050 110v1280" stroke="#e8e6dc" stroke-width="2" />
   </g>
   <rect x="150" y="150" width="900" height="1200" rx="14" fill="#faf9f5" stroke="#e8e6dc" stroke-width="3" />
-  <path d="M250 270h2v960h-2z" fill="#1B365D" />
-  <path d="M304 286h470" stroke="#141413" stroke-width="6" stroke-linecap="round" />
-  <path d="M304 365h305" stroke="#1B365D" stroke-width="5" stroke-linecap="round" />
-  <path d="M304 520h610M304 600h520M304 680h660M304 760h575" stroke="#3d3d3a" stroke-width="4" stroke-linecap="round" opacity="0.72" />
-  <path d="M304 930c95-58 200-58 315 0s220 58 315 0" fill="none" stroke="#1B365D" stroke-width="13" stroke-linecap="round" />
-  <path d="M304 1070h245M304 1140h590M304 1210h430" stroke="#6b6a64" stroke-width="4" stroke-linecap="round" opacity="0.62" />
-  <circle cx="895" cy="334" r="58" fill="#1B365D" />
-  <path d="M867 334h56M895 306v56" stroke="#faf9f5" stroke-width="7" stroke-linecap="round" />
+  <path d="M250 270h7v960h-7z" fill="#1B365D" />
+  <path d="M337 425c-64 0-106-33-106-84 0-48 39-81 96-81 15-70 74-118 151-118 69 0 125 39 146 102 20-11 43-16 68-16 71 0 123 45 123 108 0 65-55 109-135 109H337Z" fill="none" stroke="#1B365D" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M518 450v362M518 660c-104-28-173-79-207-153M520 612c99-24 169-75 210-153" stroke="#1B365D" stroke-width="18" stroke-linecap="round" />
+  <path d="M335 820h374" stroke="#98553F" stroke-width="12" stroke-linecap="round" />
+  <path d="M324 1015c122-74 254-74 396 0s274 74 396 0" fill="none" stroke="#1B365D" stroke-width="13" stroke-linecap="round" />
+  <path d="M340 1108c96 26 192 26 288 0 80-22 160-22 240 0" fill="none" stroke="#6b6a64" stroke-width="5" stroke-linecap="round" opacity=".62" />
+  <path d="M773 930h164l-38 72H732l41-72Z" fill="none" stroke="#98553F" stroke-width="10" stroke-linejoin="round" />
+  <path d="M847 772v158M811 812h72M825 858h44" stroke="#98553F" stroke-width="8" stroke-linecap="round" />
+  <circle cx="847" cy="754" r="23" fill="#98553F" opacity=".9" />
   <path d="M240 1420h720" stroke="#e8e6dc" stroke-width="2" />
 </svg>
