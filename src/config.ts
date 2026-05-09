@@ -2,8 +2,8 @@ export const SITE = {
   website: "https://blog.whynotsleep.cc",
   author: "Winston",
   profile: "https://github.com/iwannabewater",
-  desc: "A bilingual notebook for design, code, systems, and slow thinking.",
-  title: "Atelier Log",
+  desc: "未眠纸录：写设计、代码、系统与慢一点的判断。",
+  title: "未眠纸录",
   ogImage: "",
   lightAndDarkMode: true,
   postPerIndex: 4,
@@ -13,7 +13,7 @@ export const SITE = {
   showBackButton: true, // show back button in post detail
   editPost: {
     enabled: false,
-    text: "Edit page",
+    text: "编辑页面",
     url: "https://github.com/iwannabewater/blog/edit/main/",
   },
   dynamicOgImage: true,

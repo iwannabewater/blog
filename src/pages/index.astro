@@ -31,30 +31,36 @@ const latestPost = sortedPosts[0];
     >
       <div>
         <p class="font-ui text-sm font-medium text-accent">
-          Winston's digital atelier
+          未眠纸录 · blog.whynotsleep.cc
         </p>
         <h1
-          class="mt-5 max-w-4xl font-display text-6xl leading-none font-light text-balance text-foreground sm:text-7xl lg:text-8xl"
+          class="mt-5 max-w-4xl font-display text-6xl leading-[1.05] font-medium tracking-[0.04em] text-balance text-foreground sm:text-7xl lg:text-8xl"
         >
-          Notes with quiet precision.
+          纸上未眠，灯下有录。
         </h1>
         <p class="mt-6 max-w-2xl text-xl leading-9 text-muted-foreground">
-          一个以文字、代码和系统思考为核心的双语博客。保留 AstroPaper
-          的静态速度与内容工作流，再叠加更克制、更锋利的视觉系统。
+          一处偏静的个人博客，写设计、代码、系统与日常判断。以暖纸为底，
+          以墨蓝作记号，保留静态页面的速度，也保留慢慢写清楚一件事的耐心。
+        </p>
+        <p
+          lang="ja"
+          class="font-role-japanese mt-4 text-lg text-muted-foreground"
+        >
+          紙と灯り、眠らぬ記録。
         </p>
         <div
           class="mt-8 inline-flex flex-col border-s-[3px] border-accent-ink ps-6"
           aria-label="Author signature"
         >
           <p
-            class="font-role-display text-4xl leading-none font-light text-foreground sm:text-5xl"
+            class="font-heading text-4xl leading-none font-medium text-foreground sm:text-5xl"
           >
             Winston
           </p>
           <p
-            class="font-role-handwritten mt-1 text-5xl leading-none text-accent sm:text-6xl"
+            class="font-role-quote mt-2 text-3xl leading-tight text-accent sm:text-4xl"
           >
-            Larger than life
+            纸上留白，夜里成篇
           </p>
         </div>
         <div class="mt-8">
@@ -67,30 +73,30 @@ const latestPost = sortedPosts[0];
           class="aspect-[4/5] overflow-hidden rounded-lg border border-border bg-surface shadow-sm"
         >
           <img
-            src={withBase("/atelier-visual.svg")}
-            alt="Atelier Log editorial visual mark"
+            src={withBase("/paper-visual.svg")}
+            alt="未眠纸录纸面视觉标记"
             class="h-full w-full object-cover opacity-90 mix-blend-multiply dark:mix-blend-normal"
             loading="eager"
           />
         </div>
         <div class="mt-4 grid grid-cols-3 gap-3 font-ui text-sm">
           <div class="rounded-lg border border-border bg-surface/90 p-3">
-            <div class="text-2xl font-semibold text-accent">
+            <div class="text-2xl font-medium text-accent">
               {sortedPosts.length}
             </div>
-            <div class="mt-1 text-muted-foreground">Posts</div>
+            <div class="mt-1 text-muted-foreground">文章</div>
           </div>
           <div class="rounded-lg border border-border bg-surface/90 p-3">
-            <div class="text-2xl font-semibold text-accent-secondary">
+            <div class="text-2xl font-medium text-accent-secondary">
               {tags.length}
             </div>
-            <div class="mt-1 text-muted-foreground">Tags</div>
+            <div class="mt-1 text-muted-foreground">标签</div>
           </div>
           <div class="rounded-lg border border-border bg-surface/90 p-3">
-            <div class="text-2xl font-semibold text-accent-tertiary">
+            <div class="text-2xl font-medium text-accent-tertiary">
               {featuredPosts.length}
             </div>
-            <div class="mt-1 text-muted-foreground">Featured</div>
+            <div class="mt-1 text-muted-foreground">精选</div>
           </div>
         </div>
       </aside>
@@ -100,18 +106,16 @@ const latestPost = sortedPosts[0];
       class="grid gap-6 section-rule py-8 font-ui text-sm text-muted-foreground sm:grid-cols-3"
     >
       <div>
-        <p class="font-medium text-foreground">Latest</p>
+        <p class="font-medium text-foreground">最新</p>
         <p class="mt-1">{latestPost?.data.title}</p>
       </div>
       <div>
-        <p class="font-medium text-foreground">Stack</p>
+        <p class="font-medium text-foreground">底层</p>
         <p class="mt-1">Astro 6 / Tailwind CSS 4 / React 19 / shadcn</p>
       </div>
       <div>
-        <p class="font-medium text-foreground">Principle</p>
-        <p class="mt-1">
-          Fast static pages, React only where it earns its weight.
-        </p>
+        <p class="font-medium text-foreground">原则</p>
+        <p class="mt-1">静态优先，少即是多；让文字先抵达，再让界面退后。</p>
       </div>
     </section>
 
@@ -128,8 +132,8 @@ const latestPost = sortedPosts[0];
         >
           <div class="mb-5 flex items-end justify-between gap-6">
             <div>
-              <p class="font-ui text-sm font-medium text-accent">Featured</p>
-              <h2 class="mt-2 font-heading text-4xl leading-tight font-semibold">
+              <p class="font-ui text-sm font-medium text-accent">精选</p>
+              <h2 class="mt-2 font-heading text-4xl leading-tight font-medium">
                 精选文章
               </h2>
             </div>
@@ -148,8 +152,8 @@ const latestPost = sortedPosts[0];
         <section id="recent-posts" class="section-rule py-14">
           <div class="mb-5 flex items-end justify-between gap-6">
             <div>
-              <p class="font-ui text-sm font-medium text-accent">Recent</p>
-              <h2 class="mt-2 font-heading text-4xl leading-tight font-semibold">
+              <p class="font-ui text-sm font-medium text-accent">近作</p>
+              <h2 class="mt-2 font-heading text-4xl leading-tight font-medium">
                 最新笔记
               </h2>
             </div>
@@ -157,7 +161,7 @@ const latestPost = sortedPosts[0];
               href={withBase("/posts/")}
               class="hidden items-center gap-1 font-ui text-sm font-medium text-accent no-underline hover:text-accent-secondary sm:flex"
             >
-              All Posts
+              全部文章
               <IconArrowRight class="size-4 rtl:-rotate-180" />
             </a>
           </div>
@@ -178,7 +182,7 @@ const latestPost = sortedPosts[0];
         href={withBase("/posts/")}
         class="inline-flex items-center gap-2 rounded-lg border border-border bg-primary px-4 py-2.5 font-ui text-sm font-medium text-primary-foreground no-underline shadow-sm transition-colors hover:bg-primary/90"
       >
-        All Posts
+        全部文章
         <IconArrowRight class="size-4 rtl:-rotate-180" />
       </a>
     </div>

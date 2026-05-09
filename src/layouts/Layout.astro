@@ -62,18 +62,23 @@ const structuredData = {
     <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- Load editorial font roles. Preload only above-the-fold families. -->
-    <Font cssVariable="--font-lxgw-wenkai" />
-    <Font
-      cssVariable="--font-cormorant-garamond"
-      preload={[{ weight: 300, style: "normal" }]}
+    <!-- Load the constrained Kami font set. -->
+    <link
+      rel="preload"
+      href={withBase("/fonts/charter/charter_regular.woff2")}
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
-    <Font cssVariable="--font-lora" preload={[{ weight: 400 }]} />
-    <Font cssVariable="--font-ma-shan-zheng" />
-    <Font cssVariable="--font-caveat" />
-    <Font cssVariable="--font-comic-neue" preload={[{ weight: 700 }]} />
-    <Font cssVariable="--font-fraunces" />
-    <Font cssVariable="--font-victor-mono" />
+    <link
+      rel="preload"
+      href={withBase("/fonts/tsanger/TsangerJinKai02-W04.woff2")}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <Font cssVariable="--font-lxgw-wenkai" preload={[{ weight: 400 }]} />
+    <Font cssVariable="--font-comic-neue" preload={[{ weight: 400 }]} />
 
     <!-- General Meta Tags -->
     <title>{title}</title>

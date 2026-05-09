@@ -1,5 +1,4 @@
 ---
-import "@pagefind/default-ui/css/ui.css";
 import Main from "@/layouts/Main.astro";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
@@ -9,9 +8,9 @@ import { SITE } from "@/config";
 const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
 ---
 
-<Layout title={`Search | ${SITE.title}`}>
+<Layout title={`搜索 | ${SITE.title}`}>
   <Header />
-  <Main pageTitle="Search" pageDesc="Search any article ...">
+  <Main pageTitle="搜索" pageDesc="检索文章、片段与旧笔记。">
     <div id="pagefind-search" transition:persist data-backurl={backUrl}></div>
   </Main>
   <Footer />
@@ -32,17 +31,17 @@ const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
       // @ts-expect-error — Missing types for @pagefind/default-ui package.
       const { PagefindUI } = await import("@pagefind/default-ui");
 
-      // Display warning inn dev mode
+      // Display warning in dev mode
       if (import.meta.env.DEV) {
         pageFindSearch.innerHTML = `
-            <div class="bg-muted/75 rounded p-4 space-y-4 mb-4">
-              <p><strong>DEV mode Warning! </strong>You need to build the project at least once to see the search results during development.</p>
-              <code class="block bg-black text-white px-2 py-1 rounded">pnpm run build</code>
+            <div class="rounded border border-border bg-surface p-4 space-y-4 mb-4">
+              <p><strong>开发提示：</strong>本地搜索需要先运行一次生产构建。</p>
+              <code class="block border border-border bg-muted px-2 py-1 rounded">pnpm build</code>
             </div>
           `;
       }
 
-      // Init pagefind ui
+      // Init Pagefind UI
       const search = new PagefindUI({
         element: "#pagefind-search",
         showImages: false,
@@ -102,17 +101,99 @@ const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
     --pagefind-ui-image-border-radius: 8px;
     --pagefind-ui-image-box-ratio: 3 / 2;
 
+    .pagefind-ui {
+      color: var(--foreground);
+      font-family: var(--font-app);
+    }
+
+    .pagefind-ui__hidden,
+    .pagefind-ui__suppressed {
+      display: none;
+    }
+
+    .pagefind-ui__form {
+      position: relative;
+      margin: 0 0 1.5rem;
+    }
+
     form::before {
+      position: absolute;
+      top: 1.05rem;
+      left: 1rem;
+      z-index: 1;
+      width: 1rem;
+      height: 1rem;
       background-color: var(--foreground);
+      content: "";
+      mask:
+        radial-gradient(
+          circle at 45% 45%,
+          transparent 35%,
+          #000 37% 58%,
+          transparent 60%
+        ),
+        linear-gradient(45deg, transparent 55%, #000 57% 72%, transparent 74%);
     }
 
-    input {
-      font-weight: 400;
+    .pagefind-ui__search-input {
+      box-sizing: border-box;
+      width: 100%;
+      min-height: 3.25rem;
+      padding: 0.75rem 3.5rem 0.75rem 2.75rem;
       border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--foreground);
+      font-family: var(--font-ui);
+      font-weight: 400;
     }
 
-    input:focus-visible {
+    .pagefind-ui__search-input:focus-visible {
       outline: 1px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .pagefind-ui__search-clear {
+      position: absolute;
+      top: 0.45rem;
+      right: 0.45rem;
+      border-radius: calc(var(--radius) * 0.75);
+      padding: 0.45rem 0.65rem;
+      color: var(--accent);
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+    }
+
+    .pagefind-ui__message {
+      margin: 1rem 0;
+      color: var(--muted-foreground);
+      font-family: var(--font-ui);
+    }
+
+    .pagefind-ui__results {
+      list-style: none;
+      padding: 0;
+    }
+
+    .pagefind-ui__result {
+      display: grid;
+      gap: 0.5rem;
+      padding: 1.25rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .pagefind-ui__result-title {
+      margin: 0;
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 500;
+      line-height: 1.25;
+    }
+
+    .pagefind-ui__result-excerpt {
+      margin: 0.25rem 0 0;
+      color: var(--muted-foreground);
+      line-height: 1.65;
     }
 
     .pagefind-ui__result-title a {
@@ -134,8 +215,14 @@ const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
       border-bottom: 0;
     }
 
+    .pagefind-ui__result-nested {
+      margin-top: 0.4rem;
+      padding-left: 1rem;
+      color: var(--muted-foreground);
+    }
+
     .pagefind-ui__result-nested .pagefind-ui__result-link:before {
-      font-family: system-ui;
+      font-family: var(--font-ui);
     }
   }
 </style>

@@ -1,6 +1,6 @@
-# Atelier Log
+# 未眠纸录
 
-Atelier Log is Winston's bilingual editorial blog for design, code, systems, and slow thinking. It is built as a careful increment on top of [AstroPaper](https://github.com/satnaing/astro-paper), preserving the template's static publishing strengths while adding a more refined visual system, bilingual typography, and production-ready project hygiene.
+未眠纸录 is Winston's editorial blog for design, code, systems, and slower judgment. It is built as a careful increment on top of [AstroPaper](https://github.com/satnaing/astro-paper), preserving the template's static publishing strengths while adding a Kami-inspired paper visual system, bilingual typography, and production-ready project hygiene.
 
 Live site: <https://blog.whynotsleep.cc/>
 
@@ -12,7 +12,7 @@ Live site: <https://blog.whynotsleep.cc/>
 - shadcn/ui conventions for reusable UI primitives.
 - Pagefind for static search.
 - Shiki for code highlighting.
-- Astro Fonts for explicit Chinese, English, display, handwriting, UI, and code font roles.
+- A constrained font system: LXGW WenKai, TsangerJinKai02, Charter, Comic Neue, and YuMincho only.
 
 ## Local Development
 
@@ -136,6 +136,10 @@ Not committed:
 ## Attribution
 
 This project is derived from [AstroPaper](https://github.com/satnaing/astro-paper), originally created by Sat Naing and released under the MIT License. The current design, content system customizations, and site configuration are maintained by Winston.
+
+Font files keep their own licenses and are not relicensed by this repository.
+See `public/fonts/charter/LICENSE.fonts.txt` and
+`public/fonts/tsanger/LICENSE.fonts.txt`.
 
 ## License
 

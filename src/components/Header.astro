@@ -5,7 +5,7 @@ import IconSearch from "@/assets/icons/IconSearch.svg";
 import IconArchive from "@/assets/icons/IconArchive.svg";
 import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
 import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
-import IconAtelierMark from "@/assets/icons/IconAtelierMark.svg";
+import IconPaperMark from "@/assets/icons/IconPaperMark.svg";
 import LinkButton from "./LinkButton.astro";
 import { SITE } from "@/config";
 import { withBase, withoutBase } from "@/utils/basePath";
@@ -50,18 +50,18 @@ const isActive = (path: string) => {
           aria-hidden="true"
           class="grid size-10 shrink-0 place-items-center rounded-lg border border-border bg-surface text-accent shadow-sm transition-colors group-hover:border-accent/60 group-hover:text-accent-secondary"
         >
-          <IconAtelierMark class="size-7" />
+          <IconPaperMark class="size-7" />
         </span>
         <span class="min-w-0">
           <span
-            class="block font-heading text-xl leading-none font-semibold sm:text-2xl"
+            class="block font-heading text-xl leading-none font-medium sm:text-2xl"
           >
             {SITE.title}
           </span>
           <span
             class="mt-1 hidden font-ui text-xs text-muted-foreground sm:block"
           >
-            Design / Code / Systems
+            纸上 / 代码 / 系统
           </span>
         </span>
       </a>
@@ -69,7 +69,7 @@ const isActive = (path: string) => {
         <button
           id="menu-btn"
           class="focus-outline grid size-10 place-items-center rounded-lg border border-border bg-surface sm:hidden"
-          aria-label="Open Menu"
+          aria-label="打开菜单"
           aria-expanded="false"
           aria-controls="menu-items"
         >
@@ -90,7 +90,7 @@ const isActive = (path: string) => {
               href={withBase("/posts")}
               class:list={{ "active-nav": isActive("/posts") }}
             >
-              Posts
+              文章
             </a>
           </li>
           <li class="col-span-2">
@@ -98,7 +98,7 @@ const isActive = (path: string) => {
               href={withBase("/tags")}
               class:list={{ "active-nav": isActive("/tags") }}
             >
-              Tags
+              标签
             </a>
           </li>
           <li class="col-span-2">
@@ -106,7 +106,7 @@ const isActive = (path: string) => {
               href={withBase("/about")}
               class:list={{ "active-nav": isActive("/about") }}
             >
-              About
+              关于
             </a>
           </li>
           {
@@ -120,11 +120,11 @@ const isActive = (path: string) => {
                       "active-nav [&>svg]:stroke-accent": isActive("/archives"),
                     },
                   ]}
-                  title="Archives"
-                  aria-label="archives"
+                  title="归档"
+                  aria-label="归档"
                 >
                   <IconArchive class="hidden sm:inline-block" />
-                  <span class="sm:sr-only">Archives</span>
+                  <span class="sm:sr-only">归档</span>
                 </LinkButton>
               </li>
             )
@@ -136,11 +136,11 @@ const isActive = (path: string) => {
                 "focus-outline flex rounded-md p-3 sm:p-1",
                 { "[&>svg]:stroke-accent": isActive("/search") },
               ]}
-              title="Search"
-              aria-label="search"
+              title="搜索"
+              aria-label="搜索"
             >
               <IconSearch />
-              <span class="sr-only">Search</span>
+              <span class="sr-only">搜索</span>
             </LinkButton>
           </li>
           {
@@ -149,7 +149,7 @@ const isActive = (path: string) => {
                 <button
                   id="theme-btn"
                   class="focus-outline relative size-12 rounded-md p-4 hover:bg-muted sm:size-8 sm:p-1 hover:[&>svg]:stroke-accent"
-                  title="Toggles light & dark"
+                  title="切换明暗主题"
                   aria-label="auto"
                   aria-live="polite"
                 >
@@ -178,7 +178,7 @@ const isActive = (path: string) => {
       const openMenu = menuBtn.getAttribute("aria-expanded") === "true";
 
       menuBtn.setAttribute("aria-expanded", openMenu ? "false" : "true");
-      menuBtn.setAttribute("aria-label", openMenu ? "Open Menu" : "Close Menu");
+      menuBtn.setAttribute("aria-label", openMenu ? "打开菜单" : "关闭菜单");
 
       menuItems.classList.toggle("hidden");
       menuIcon.classList.toggle("hidden");

@@ -1,68 +1,61 @@
 ---
 const roles = [
   {
-    role: "Hero Display",
-    cn: "封面大标题",
-    fonts: "霞鹜文楷 + Cormorant Garamond 300",
-    detail: "极高对比度，奢而不艳。",
-    sample: "Ink, Memory, Systems",
-    demoClass: "font-role-display text-4xl font-light",
+    role: "Display",
+    cn: "封面与章题",
+    fonts: "TsangerJinKai02 + LXGW WenKai",
+    detail: "仓耳金楷承担纸面骨架，霞鹜文楷只在中文补字时承接。",
+    sample: "纸上未眠",
+    demoClass: "font-role-display text-4xl font-medium tracking-[0.08em]",
   },
   {
     role: "Heading",
-    cn: "文章 H1 至 H2",
-    fonts: "Charter + 霞鹜文楷",
-    detail: "更像书籍标题，优雅但不飘。",
-    sample: "设计是一种有边界的判断",
-    demoClass: "font-role-heading text-3xl font-semibold",
+    cn: "英文标题与混排标题",
+    fonts: "Charter + TsangerJinKai02 + LXGW WenKai",
+    detail: "英文先走 Charter，中文标题回到金楷，混排时保持书页感。",
+    sample: "Quiet Systems / 纸页",
+    demoClass: "font-role-heading text-3xl font-medium",
   },
   {
     role: "Body",
     cn: "正文主力",
-    fonts: "Lora Regular + 霞鹜文楷",
-    detail: "中英文节奏贴合，适合深阅读。",
-    sample: "在速度之外，文字需要留下呼吸。",
+    fonts: "Charter + LXGW WenKai",
+    detail: "英文正文保持 Charter 的书籍质感，中文长段落交给霞鹜文楷。",
+    sample: "在速度之外，文字仍需留下呼吸。",
     demoClass: "font-role-body text-2xl",
   },
   {
-    role: "Blockquote",
-    cn: "引用块",
-    fonts: "霞鹜文楷 + Cormorant Garamond Italic",
-    detail: "斜体让语气沉下来。",
-    sample: "Slow notes make sharper systems.",
-    demoClass: "font-role-quote text-3xl italic",
+    role: "Callout",
+    cn: "引句与纸条",
+    fonts: "TsangerJinKai02 + Charter + LXGW WenKai",
+    detail: "短句、古风提示和拉引句使用金楷，像夹在书页里的签条。",
+    sample: "灯下有录，纸上有风。",
+    demoClass: "font-role-quote text-3xl font-medium",
   },
   {
-    role: "Handwritten",
-    cn: "旁注与批注",
-    fonts: "Caveat + 马善政毛笔楷书",
-    detail: "保留手写感，不进入正文负担。",
-    sample: "旁批：此处需要再想一次",
-    demoClass: "font-role-handwritten text-3xl",
-  },
-  {
-    role: "Decorative",
-    cn: "章节数字与拉引句",
-    fonts: "Fraunces Light",
-    detail: "只作装饰，不抢阅读权重。",
-    sample: "01 / 09",
-    demoClass: "font-role-decorative text-4xl font-light",
+    role: "UI",
+    cn: "导航、标签、按钮",
+    fonts: "Comic Neue + LXGW WenKai",
+    detail: "Comic Neue 只负责界面小字，让操作区更松弛，不进入长文正文。",
+    sample: "posts / tags / rss",
+    demoClass: "font-role-ui text-lg font-medium",
   },
   {
     role: "Code",
-    cn: "代码块",
-    fonts: "Victor Mono",
-    detail: "保留代码清晰度，同时减少机械感。",
-    sample: 'const craft = "quiet precision";',
+    cn: "代码与文件名",
+    fonts: "Comic Neue + LXGW WenKai",
+    detail:
+      "在只保留指定字体的前提下，代码区使用 Comic Neue，避免回退到默认等宽字体。",
+    sample: 'const note = "kami";',
     demoClass: "font-role-code text-base",
   },
   {
-    role: "UI & Tags",
-    cn: "标签、元信息、导航",
-    fonts: "Comic Neue + 霞鹜文楷",
-    detail: "更松弛的界面语气，避免方正硬朗。",
-    sample: "2026.05.09 / DESIGN SYSTEM",
-    demoClass: "font-role-ui text-sm font-medium",
+    role: "Japanese",
+    cn: "日文短句",
+    fonts: "YuMincho + TsangerJinKai02 + LXGW WenKai",
+    detail: "日文优先 YuMincho；缺字时只回到已允许的中文字体，不走默认系统链。",
+    sample: "紙と灯り",
+    demoClass: "font-role-japanese text-3xl font-medium",
   },
 ];
 ---
@@ -70,14 +63,15 @@ const roles = [
 <section class="section-rule py-14">
   <div class="grid gap-8 lg:grid-cols-[0.75fr_1.25fr]">
     <div>
-      <p class="font-ui text-sm font-medium text-accent">Typography Roles</p>
+      <p class="font-ui text-sm font-medium text-accent">字体角色</p>
       <h2
-        class="mt-3 max-w-xl font-heading text-4xl leading-tight font-semibold text-balance"
+        class="mt-3 max-w-xl font-heading text-4xl leading-tight font-medium text-balance"
       >
-        完整字体角色系统
+        只保留五种字体，但分工必须清楚
       </h2>
       <p class="mt-4 max-w-md text-base leading-7 text-muted-foreground">
-        每一种字体只承担一个明确任务，让中文、英文、代码、旁注和导航各自保持气质与效率。
+        中文用霞鹜文楷与仓耳金楷分层，英文用 Charter 与 Comic Neue
+        分工；日文优先 YuMincho，并只使用已允许字体兜底。没有额外系统字体链。
       </p>
     </div>
 
@@ -87,7 +81,7 @@ const roles = [
           <article class="rounded-lg border border-border bg-surface/90 p-4 shadow-sm">
             <div class="flex items-start justify-between gap-4 font-ui text-xs text-muted-foreground">
               <div>
-                <p class="font-semibold text-foreground">{role.role}</p>
+                <p class="font-medium text-foreground">{role.role}</p>
                 <p class="mt-1">{role.cn}</p>
               </div>
               <p class="text-end text-accent-secondary">{role.fonts}</p>

@@ -8,14 +8,14 @@ export default function ReadingActions() {
     <div className="flex flex-wrap gap-3">
       <Button asChild size="lg" className="font-ui">
         <a href={withBase("/posts/")}>
-          Start reading
+          开始阅读
           <ArrowRight data-icon="inline-end" />
         </a>
       </Button>
       <Button asChild variant="outline" size="lg" className="font-ui">
         <a href={withBase("/search/")}>
           <Search data-icon="inline-start" />
-          Search
+          搜索
         </a>
       </Button>
       <Button asChild variant="ghost" size="lg" className="font-ui">

@@ -1,19 +1,19 @@
 ---
 const components = [
   {
-    label: "Callout",
+    label: "纸条",
     title: "策展式提示",
     body: "用于文章中的关键判断、方法边界和阅读提醒，保留信息密度但不打断正文。",
   },
   {
-    label: "Pull Quote",
+    label: "引句",
     title: "拉引句",
     body: "让文章里最有重量的一句话拥有独立舞台，适合长文的节奏切分。",
   },
   {
     label: "Code",
     title: "工程片段",
-    body: "Victor Mono 与 Shiki 主题配合，保留复制按钮、文件名和高亮标记。",
+    body: "代码块收敛为单色纸面风格，保留复制按钮、文件名和高亮标记。",
   },
 ];
 ---
@@ -21,15 +21,15 @@ const components = [
 <section class="section-rule py-14">
   <div class="grid gap-8 lg:grid-cols-[0.75fr_1.25fr]">
     <div>
-      <p class="font-ui text-sm font-medium text-accent">Content Components</p>
+      <p class="font-ui text-sm font-medium text-accent">纸面组件</p>
       <h2
-        class="mt-3 font-heading text-4xl leading-tight font-semibold text-balance"
+        class="mt-3 font-heading text-4xl leading-tight font-medium text-balance"
       >
-        内容组件先服务阅读，再表达审美
+        组件像纸上的批注，不抢正文
       </h2>
       <p class="mt-4 max-w-md text-base leading-7 text-muted-foreground">
-        保留 AstroPaper 的 Markdown
-        工作流，通过全局排版系统增强引用、代码、表格、提示框和标签。
+        保留 AstroPaper 的 Markdown 工作流，通过 Kami
+        式纸面系统增强引用、代码、表格、提示框和标签。
       </p>
     </div>
 
@@ -40,20 +40,18 @@ const components = [
         <div class="font-ui text-xs font-medium text-accent-secondary">
           {components[0].label}
         </div>
-        <h3 class="mt-3 font-heading text-2xl font-semibold">
+        <h3 class="mt-3 font-heading text-2xl font-medium">
           {components[0].title}
         </h3>
         <p class="mt-3 leading-7 text-muted-foreground">{components[0].body}</p>
       </article>
 
       <blockquote
-        class="rounded-lg border border-border bg-surface/90 p-5 font-quote text-3xl leading-tight italic shadow-sm"
+        class="rounded-lg border border-border bg-surface p-5 font-quote text-3xl leading-tight shadow-[0_1px_0_var(--border)]"
       >
-        “Quiet typography can still feel cinematic.”
-        <cite
-          class="mt-4 block font-ui text-sm text-muted-foreground not-italic"
-        >
-          Pull Quote / Cormorant Garamond Italic
+        “半卷纸痕，几行代码；灯火未眠，山河自静。”
+        <cite class="mt-4 block font-ui text-sm text-muted-foreground">
+          引句 / TsangerJinKai02
         </cite>
       </blockquote>
 
@@ -67,7 +65,7 @@ const components = [
         </div>
         <pre
           class="m-0 overflow-x-auto p-4 font-code text-sm leading-6"><code>{`export const note = {
-  tone: "quiet luxury",
+  tone: "warm parchment",
   stack: ["Astro", "Tailwind CSS", "React", "shadcn/ui"],
 };`}</code></pre>
       </article>

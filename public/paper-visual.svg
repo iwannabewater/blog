@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" role="img" aria-labelledby="title desc">
+  <title id="title">未眠纸录纸面视觉标记</title>
+  <desc id="desc">暖纸底上的墨蓝题签、书页、竖线与留白。</desc>
+  <rect width="1200" height="1500" fill="#f5f4ed" />
+  <g opacity="0.72">
+    <path d="M112 205h976M112 405h976M112 605h976M112 805h976M112 1005h976M112 1205h976" stroke="#e8e6dc" stroke-width="2" />
+    <path d="M250 110v1280M450 110v1280M650 110v1280M850 110v1280M1050 110v1280" stroke="#e8e6dc" stroke-width="2" />
+  </g>
+  <rect x="150" y="150" width="900" height="1200" rx="14" fill="#faf9f5" stroke="#e8e6dc" stroke-width="3" />
+  <path d="M250 270h2v960h-2z" fill="#1B365D" />
+  <path d="M304 286h470" stroke="#141413" stroke-width="6" stroke-linecap="round" />
+  <path d="M304 365h305" stroke="#1B365D" stroke-width="5" stroke-linecap="round" />
+  <path d="M304 520h610M304 600h520M304 680h660M304 760h575" stroke="#3d3d3a" stroke-width="4" stroke-linecap="round" opacity="0.72" />
+  <path d="M304 930c95-58 200-58 315 0s220 58 315 0" fill="none" stroke="#1B365D" stroke-width="13" stroke-linecap="round" />
+  <path d="M304 1070h245M304 1140h590M304 1210h430" stroke="#6b6a64" stroke-width="4" stroke-linecap="round" opacity="0.62" />
+  <circle cx="895" cy="334" r="58" fill="#1B365D" />
+  <path d="M867 334h56M895 306v56" stroke="#faf9f5" stroke-width="7" stroke-linecap="round" />
+  <path d="M240 1420h720" stroke="#e8e6dc" stroke-width="2" />
+</svg>

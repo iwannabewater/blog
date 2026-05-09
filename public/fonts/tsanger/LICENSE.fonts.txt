@@ -1,0 +1,17 @@
+Tsanger JinKai 02 font notice
+
+Files:
+- TsangerJinKai02-W04.ttf
+- TsangerJinKai02-W04.woff2
+- TsangerJinKai02-W05.woff2
+
+Copyright belongs to Beijing Tsanger Character Technology Co., Ltd.
+These font files are not covered by this repository's package license.
+
+The current site uses them for a personal, non-commercial blog design. Confirm
+and purchase the appropriate Tsanger license before any commercial use,
+redistribution, brand identity, product packaging, advertising, or client work.
+
+Official product pages:
+- https://www.tsanger.cn/product/33
+- https://www.tsanger.cn/product/34

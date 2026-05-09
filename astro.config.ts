@@ -12,6 +12,27 @@ import {
 import { transformerFileName } from "./src/utils/transformers/fileName";
 import { SITE } from "./src/config";
 
+const kamiCodeTheme = {
+  light: {
+    name: "kami-light",
+    type: "light" as const,
+    colors: {
+      "editor.background": "#faf9f5",
+      "editor.foreground": "#141413",
+    },
+    settings: [{ settings: { foreground: "#141413" } }],
+  },
+  dark: {
+    name: "kami-dark",
+    type: "dark" as const,
+    colors: {
+      "editor.background": "#30302e",
+      "editor.foreground": "#f5f4ed",
+    },
+    settings: [{ settings: { foreground: "#f5f4ed" } }],
+  },
+};
+
 // https://astro.build/config
 export default defineConfig({
   site: SITE.website,
@@ -24,8 +45,7 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [remarkToc, [remarkCollapse, { test: "Table of contents" }]],
     shikiConfig: {
-      // For more themes, visit https://shiki.style/themes
-      themes: { light: "min-light", dark: "night-owl" },
+      themes: { light: kamiCodeTheme.light, dark: kamiCodeTheme.dark },
       defaultColor: false,
       wrap: false,
       transformers: [
@@ -60,40 +80,8 @@ export default defineConfig({
       name: "LXGW WenKai",
       cssVariable: "--font-lxgw-wenkai",
       provider: fontProviders.fontsource(),
-      fallbacks: ["serif"],
-      weights: [300, 500, 700],
-      styles: ["normal"],
-    },
-    {
-      name: "Cormorant Garamond",
-      cssVariable: "--font-cormorant-garamond",
-      provider: fontProviders.google(),
       fallbacks: [],
-      weights: [300, 400, 600],
-      styles: ["normal", "italic"],
-    },
-    {
-      name: "Lora",
-      cssVariable: "--font-lora",
-      provider: fontProviders.google(),
-      fallbacks: [],
-      weights: [400, 600],
-      styles: ["normal", "italic"],
-    },
-    {
-      name: "Ma Shan Zheng",
-      cssVariable: "--font-ma-shan-zheng",
-      provider: fontProviders.google(),
-      fallbacks: ["cursive"],
-      weights: [400],
-      styles: ["normal"],
-    },
-    {
-      name: "Caveat",
-      cssVariable: "--font-caveat",
-      provider: fontProviders.google(),
-      fallbacks: [],
-      weights: [400, 700],
+      weights: [300, 400, 700],
       styles: ["normal"],
     },
     {
@@ -102,23 +90,7 @@ export default defineConfig({
       provider: fontProviders.google(),
       fallbacks: [],
       weights: [400, 700],
-      styles: ["normal", "italic"],
-    },
-    {
-      name: "Fraunces",
-      cssVariable: "--font-fraunces",
-      provider: fontProviders.google(),
-      fallbacks: [],
-      weights: [300, 400, 600],
       styles: ["normal"],
-    },
-    {
-      name: "Victor Mono",
-      cssVariable: "--font-victor-mono",
-      provider: fontProviders.google(),
-      fallbacks: [],
-      weights: [400, 500, 600, 700],
-      styles: ["normal", "italic"],
     },
   ],
 });
