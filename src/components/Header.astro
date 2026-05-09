@@ -5,7 +5,7 @@ import IconSearch from "@/assets/icons/IconSearch.svg";
 import IconArchive from "@/assets/icons/IconArchive.svg";
 import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
 import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
-import IconCloudWoodMark from "@/assets/icons/IconCloudWoodMark.svg";
+import IconBrushMark from "@/assets/icons/IconBrushMark.svg";
 import IconThemeSystem from "@/assets/icons/IconThemeSystem.svg";
 import LinkButton from "./LinkButton.astro";
 import { SITE } from "@/config";
@@ -49,20 +49,21 @@ const isActive = (path: string) => {
       >
         <span
           aria-hidden="true"
-          class="grid size-11 shrink-0 place-items-center rounded-lg border border-border bg-surface text-accent shadow-sm transition-colors group-hover:border-accent/60 group-hover:text-accent-secondary"
+          class="grid size-12 shrink-0 place-items-center rounded-lg border border-border bg-surface text-accent shadow-sm transition-colors group-hover:border-accent/60 group-hover:text-accent-secondary"
         >
-          <IconCloudWoodMark class="size-8" />
+          <IconBrushMark class="size-9" />
         </span>
         <span class="min-w-0">
           <span
-            class="block font-heading text-2xl leading-none font-medium sm:text-3xl"
+            class="font-role-brand block text-3xl leading-none text-foreground sm:text-4xl"
           >
             {SITE.title}
           </span>
           <span
-            class="mt-1 hidden font-ui text-base leading-none text-muted-foreground sm:block"
+            lang="zh-Latn-pinyin"
+            class="font-role-slogan mt-1 block text-xl leading-none text-slogan"
           >
-            桨声 / 灯影 / 木栖云
+            luò wén
           </span>
         </span>
       </a>
@@ -83,7 +84,7 @@ const isActive = (path: string) => {
             "absolute end-0 top-14 grid w-64 grid-cols-2 gap-2 rounded-lg border border-border bg-surface p-2 shadow-lg",
             "[&>li>a]:block [&>li>a]:rounded-md [&>li>a]:px-3 [&>li>a]:py-2.5 [&>li>a]:text-center [&>li>a]:text-base [&>li>a]:font-medium [&>li>a]:no-underline [&>li>a]:hover:bg-muted [&>li>a]:hover:text-accent",
             "hidden",
-            "sm:static sm:flex sm:w-auto sm:grid-cols-none sm:items-center sm:gap-1 sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:[&>li>a]:flex sm:[&>li>a]:h-10 sm:[&>li>a]:items-center sm:[&>li>a]:px-3 sm:[&>li>a]:py-0 sm:[&>li>a]:text-lg",
+            "sm:static sm:flex sm:w-auto sm:grid-cols-none sm:items-center sm:gap-1.5 sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:[&>li>a]:grid sm:[&>li>a]:size-12 sm:[&>li>a]:place-items-center sm:[&>li>a]:px-0 sm:[&>li>a]:py-0 sm:[&>li>a]:text-xl",
           ]}
         >
           <li class="col-span-2">
@@ -116,7 +117,7 @@ const isActive = (path: string) => {
                 <LinkButton
                   href={withBase("/archives")}
                   class:list={[
-                    "focus-outline flex justify-center rounded-md p-3 sm:size-10 sm:items-center sm:p-0 [&>svg]:size-6",
+                    "focus-outline flex justify-center rounded-md p-3 sm:size-12 sm:items-center sm:p-0 [&>svg]:size-6",
                     {
                       "active-nav [&>svg]:stroke-accent": isActive("/archives"),
                     },
@@ -134,7 +135,7 @@ const isActive = (path: string) => {
             <LinkButton
               href={withBase("/search")}
               class:list={[
-                "focus-outline flex rounded-md p-3 sm:size-10 sm:items-center sm:justify-center sm:p-0 [&>svg]:size-6",
+                "focus-outline flex rounded-md p-3 sm:size-12 sm:items-center sm:justify-center sm:p-0 [&>svg]:size-6",
                 { "[&>svg]:stroke-accent": isActive("/search") },
               ]}
               title="搜索"
@@ -149,7 +150,7 @@ const isActive = (path: string) => {
               <li class="col-span-1 flex items-center justify-center">
                 <button
                   id="theme-btn"
-                  class="focus-outline relative size-12 rounded-md p-3 hover:bg-muted sm:size-10 sm:p-2 hover:[&>svg]:stroke-accent"
+                  class="focus-outline relative size-12 rounded-md p-3 hover:bg-muted sm:size-12 sm:p-3 hover:[&>svg]:stroke-accent"
                   title="当前主题：跟随系统，点击切换"
                   aria-label="当前主题：跟随系统"
                   aria-live="polite"

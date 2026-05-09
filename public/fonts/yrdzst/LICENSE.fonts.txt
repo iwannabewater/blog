@@ -1,0 +1,24 @@
+Yang Rendong Zhushi Ti / 杨任东竹石体
+
+Subset files in this directory:
+- yrdzst-luowen-6587.woff2
+- yrdzst-luowen-843d.woff2
+
+Source:
+- ZeoSeven Fonts item page: https://fonts.zeoseven.com/items/613/
+- Original distribution page referenced by ZeoSeven: https://mp.weixin.qq.com/s/7kv3i_YEs7x9_9IrCDYvBA
+
+The subset files were downloaded from ZeoSeven FontsAPI for the two glyphs used
+by the site brand title "落文". They are kept as unmodified font files.
+
+Font metadata reported by ZeoSeven:
+- CopyrightNotice: 任东视觉.2017
+- DesignerName: 杨任东
+- FullFontName: 杨任东竹石体-Regular
+- VersionString: Version 1.23 April 25, 2017
+- Description: 七字重中文手写体
+- LicenseDescription: 授权全社会免费商用
+
+ZeoSeven's item page describes the font as a web-font-ready open font and marks
+embedding/integration and non-commercial redistribution as allowed, with the
+condition that copyright notices and the license copy are preserved.

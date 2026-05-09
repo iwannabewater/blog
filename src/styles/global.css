@@ -71,10 +71,28 @@
 
 @font-face {
   font-family: "Caveat";
-  src: url("/fonts/caveat/caveat-700.woff2") format("woff2");
-  font-weight: 700;
+  src: url("/fonts/caveat/caveat-400.woff2") format("woff2");
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
+}
+
+@font-face {
+  font-family: "YRDZST-Regular";
+  src: url("/fonts/yrdzst/yrdzst-luowen-6587.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+6587;
+}
+
+@font-face {
+  font-family: "YRDZST-Regular";
+  src: url("/fonts/yrdzst/yrdzst-luowen-843d.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+843D;
 }
 
 @font-face {
@@ -108,6 +126,7 @@ html[data-theme="light"] {
   --font-comic-neue: "Comic Neue";
   --font-jetbrains-mono: "JetBrains Mono";
   --font-caveat: "Caveat";
+  --font-yrdzst: "YRDZST-Regular";
   --background: #f5f4ed;
   --foreground: #141413;
   --surface: #faf9f5;
@@ -204,6 +223,7 @@ html[data-theme="dark"] {
   --font-quote: TsangerJinKai02, Charter, var(--font-lxgw-wenkai);
   --font-handwritten: var(--font-comic-neue), var(--font-lxgw-wenkai);
   --font-slogan: var(--font-caveat);
+  --font-brand: var(--font-yrdzst), TsangerJinKai02, var(--font-lxgw-wenkai);
   --font-decorative: TsangerJinKai02, var(--font-lxgw-wenkai);
   --font-code: var(--font-jetbrains-mono), var(--font-lxgw-wenkai);
   --font-ui: var(--font-comic-neue), var(--font-lxgw-wenkai);
@@ -373,8 +393,15 @@ html[data-theme="dark"] {
 
 .font-role-slogan {
   font-family: var(--font-slogan);
-  font-weight: 700;
-  letter-spacing: 0.01em;
+  font-weight: 400;
+  letter-spacing: 0.012em;
+  font-synthesis-weight: none;
+}
+
+.font-role-brand {
+  font-family: var(--font-brand);
+  font-weight: 400;
+  letter-spacing: 0.04em;
 }
 
 .font-role-decorative {

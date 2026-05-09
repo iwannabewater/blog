@@ -1,7 +1,7 @@
 ---
 title: Static-first 是这个博客的工程底线
 pubDatetime: 2026-05-09T11:00:00+08:00
-description: 为什么流云栖木选择 Astro 的静态优先模型，并只在必要位置使用 React 小岛。
+description: 为什么落文选择 Astro 的静态优先模型，并只在必要位置使用 React 小岛。
 featured: false
 tags:
   - engineering
@@ -11,7 +11,7 @@ tags:
 
 个人博客很容易在技术选择上变重。评论、搜索、动画、主题、统计、订阅、内容组件都可以继续叠加，但叠加不应该破坏最基本的事情：页面要快，内容要可索引，部署要稳定。
 
-流云栖木的工程底线是 static-first。Astro 负责构建页面、组织内容集合、生成 RSS 与 sitemap；React 只用于确实需要交互的小岛，例如阅读操作和后续可能加入的局部控件。
+落文的工程底线是 static-first。Astro 负责构建页面、组织内容集合、生成 RSS 与 sitemap；React 只用于确实需要交互的小岛，例如阅读操作和后续可能加入的局部控件。
 
 ## 为什么这样做
 

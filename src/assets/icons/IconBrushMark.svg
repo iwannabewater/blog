@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <path
+    d="M18 50c8.8-10.5 17.4-19.1 27.8-27.8 2.9-2.4 4.1-5.7 2.5-8.1-1.7-2.6-5.3-2.7-8.3-.3-10.3 8.4-18.7 17.6-27 28.8"
+    stroke="currentColor"
+    stroke-width="4.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M38.9 17.2l8.1 8.1M12.6 43.2c-1.5 3.8-1.4 6.7.3 8.4 1.8 1.8 4.7 1.9 8.4.3"
+    stroke="currentColor"
+    stroke-width="3.4"
+    stroke-linecap="round"
+  />
+  <path
+    d="M15 17.5c8.3-4.8 16.1-4.8 23.6 0M17 24.4c6.7-3.1 13-3.1 19 0"
+    stroke="var(--slogan)"
+    stroke-width="3.2"
+    stroke-linecap="round"
+  />
+  <circle cx="48.5" cy="44.5" r="4.5" fill="var(--slogan)" />
+</svg>

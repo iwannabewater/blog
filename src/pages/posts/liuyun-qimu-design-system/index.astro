@@ -1,0 +1,19 @@
+---
+import { withBase } from "@/utils/basePath";
+
+const target = withBase("/posts/luowen-design-system/");
+const absoluteTarget = new URL(target, Astro.site).toString();
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <link rel="canonical" href={absoluteTarget} />
+    <title>跳转到落文的纸面系统</title>
+  </head>
+  <body>
+    <a href={target}>跳转到落文的纸面系统</a>
+  </body>
+</html>

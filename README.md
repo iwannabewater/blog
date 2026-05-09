@@ -1,6 +1,6 @@
-# 流云栖木
+# 落文
 
-流云栖木 is Winston's editorial blog for design, code, systems, and slower judgment. It is built as a careful increment on top of [AstroPaper](https://github.com/satnaing/astro-paper), preserving the template's static publishing strengths while adding a Kami-inspired paper visual system, bilingual typography, and production-ready project hygiene.
+落文 is Winston's editorial blog for design, code, systems, and slower judgment. It is built as a careful increment on top of [AstroPaper](https://github.com/satnaing/astro-paper), preserving the template's static publishing strengths while adding a Kami-inspired paper visual system, bilingual typography, and production-ready project hygiene.
 
 Live site: <https://blog.whynotsleep.cc/>
 
@@ -12,7 +12,7 @@ Live site: <https://blog.whynotsleep.cc/>
 - shadcn/ui conventions for reusable UI primitives.
 - Pagefind for static search.
 - Shiki for code highlighting.
-- A constrained local font system: LXGW WenKai, TsangerJinKai02, Charter, Comic Neue, JetBrains Mono, and the single-use Caveat slogan font are served from `public/fonts`; YuMincho is reserved for Japanese snippets with allowed fallbacks.
+- A constrained local font system: YRDZST-Regular, LXGW WenKai, TsangerJinKai02, Charter, Comic Neue, JetBrains Mono, and the single-use Caveat slogan font are served from `public/fonts`; YuMincho is reserved for Japanese snippets with allowed fallbacks.
 
 ## Local Development
 
