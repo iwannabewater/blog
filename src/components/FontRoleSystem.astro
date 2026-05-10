@@ -68,7 +68,8 @@ const roles = [
     role: "Japanese",
     cn: "日文短句",
     fonts: "YuMincho + TsangerJinKai02 + LXGW WenKai",
-    detail: "日文优先 YuMincho；缺字时只回到已允许的中文字体，不走默认系统链。",
+    detail:
+      "YuMincho 只作为系统优先字体，不随仓库分发；缺字时回到已允许的中文字体。",
     sample: "紙と灯り",
     demoClass: "font-role-japanese text-3xl font-medium",
   },
@@ -87,7 +88,7 @@ const roles = [
       <p class="mt-4 max-w-md text-base leading-7 text-muted-foreground">
         品牌字只用杨任东竹石体，中文用霞鹜文楷与仓耳金楷分层，英文用 Charter 与
         Comic Neue 分工；手写标语只用 Caveat；代码交给 JetBrains Mono。日文优先
-        YuMincho，并只使用已允许字体兜底。
+        YuMincho 作为系统优先字体，并只使用已允许字体兜底。
       </p>
     </div>
 
