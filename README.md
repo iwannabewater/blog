@@ -29,8 +29,6 @@ Current font roles:
 - `Hina Mincho`: local Japanese Mincho snippets.
 - `JetBrains Mono`: code blocks and file names.
 
-`Yu Mincho` / `YuMincho` is not vendored. Platform font catalogs list it as a JIYUKOBO font and point to redistribution licensing rather than a public source package. If a redistributable YuMincho source is provided later, it should be added under `public/fonts/yumincho/` with its license, then swapped into the `--font-japanese` token.
-
 ## Development
 
 Requirements:
