@@ -61,23 +61,20 @@ const craftNotes = [
   <main id="main-content" data-layout="index" class="app-layout">
     <section
       id="hero"
-      class="grid gap-10 py-10 sm:py-14 lg:grid-cols-[1.02fr_0.98fr] lg:items-center"
+      class="grid gap-10 py-12 sm:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-center"
     >
       <div data-entrance="1">
-        <p class="font-ui text-sm font-medium text-accent">
-          落文 · <span lang="zh-Latn-pinyin">luò wén</span>
-        </p>
         <h1
-          class="mt-4 max-w-4xl font-display text-5xl leading-[1.05] font-medium text-balance text-foreground sm:text-7xl lg:text-8xl"
+          class="max-w-4xl font-display text-6xl leading-[1.05] font-medium text-balance text-foreground sm:text-7xl lg:text-8xl"
         >
           灯下有录，纸上有风。
         </h1>
         <p class="mt-6 max-w-2xl text-xl leading-9 text-muted-foreground">
-          一处写设计、代码与系统判断的个人研究室。页面要像一张好纸，
-          信息要能被快速扫描，长文要能经得住夜里的第二遍阅读。
+          一处偏静的个人博客，写设计、代码、系统与日常判断。以暖纸为底，
+          以墨蓝作记号，让文章像船过灯下，慢慢留下可以回看的波纹。
         </p>
         <div
-          class="mt-8 grid gap-4 border-s border-accent-ink ps-5 sm:max-w-2xl sm:grid-cols-[auto_1fr]"
+          class="mt-8 inline-flex flex-col border-s-[7px] border-accent-ink ps-6"
           aria-label="Author signature"
         >
           <p
@@ -86,11 +83,16 @@ const craftNotes = [
             Winston
           </p>
           <p
-            class="font-role-quote text-3xl leading-tight text-accent sm:text-4xl"
+            class="font-role-quote mt-2 text-3xl leading-tight text-accent sm:text-4xl"
           >
             纸中留白，夜里成篇
           </p>
         </div>
+        <p
+          class="font-role-slogan slogan-mark -ms-1 mt-6 max-w-2xl text-6xl leading-none sm:text-7xl lg:text-8xl"
+        >
+          Larger than life
+        </p>
         <div class="mt-8">
           <ReadingActions />
         </div>
@@ -117,35 +119,115 @@ const craftNotes = [
             </p>
           </figcaption>
         </figure>
+        <div class="mt-5 grid grid-cols-3 gap-3 font-ui text-base">
+          <a
+            href={withBase("/posts/")}
+            class="rounded-lg border border-border bg-surface/90 p-3 no-underline transition-colors hover:border-accent"
+          >
+            <div class="text-2xl font-medium text-accent">
+              {sortedPosts.length}
+            </div>
+            <div class="mt-1 text-muted-foreground">文章</div>
+          </a>
+          <a
+            href={withBase("/tags/")}
+            class="rounded-lg border border-border bg-surface/90 p-3 no-underline transition-colors hover:border-accent"
+          >
+            <div class="text-2xl font-medium text-accent-secondary">
+              {tags.length}
+            </div>
+            <div class="mt-1 text-muted-foreground">标签</div>
+          </a>
+          <a
+            href={withBase("#featured")}
+            class="rounded-lg border border-border bg-surface/90 p-3 no-underline transition-colors hover:border-accent"
+          >
+            <div class="text-2xl font-medium text-accent-tertiary">
+              {featuredPosts.length}
+            </div>
+            <div class="mt-1 text-muted-foreground">精选</div>
+          </a>
+        </div>
       </aside>
     </section>
 
-    <section class="grid gap-5 section-rule py-8 sm:grid-cols-3">
-      <a
-        href={withBase("/posts/")}
-        class="metric-tile no-underline"
-        aria-label={`阅读 ${sortedPosts.length} 篇文章`}
-      >
-        <span class="metric-value">{sortedPosts.length}</span>
-        <span class="metric-label">published notes</span>
-      </a>
-      <a
-        href={withBase("/tags/")}
-        class="metric-tile no-underline"
-        aria-label={`浏览 ${tags.length} 个标签`}
-      >
-        <span class="metric-value">{tags.length}</span>
-        <span class="metric-label">working tags</span>
-      </a>
-      <a
-        href={withBase("#featured")}
-        class="metric-tile no-underline"
-        aria-label={`查看 ${featuredPosts.length} 篇精选文章`}
-      >
-        <span class="metric-value">{featuredPosts.length}</span>
-        <span class="metric-label">featured essays</span>
-      </a>
+    <section
+      class="grid gap-6 section-rule py-8 font-ui text-base text-muted-foreground sm:grid-cols-3"
+    >
+      <div>
+        <p class="font-medium text-foreground">最新</p>
+        <p class="mt-1">{latestPost?.data.title}</p>
+      </div>
+      <div>
+        <p class="font-medium text-foreground">底层</p>
+        <p class="mt-1">Astro 6 / Tailwind CSS 4 / React 19 / shadcn</p>
+      </div>
+      <div>
+        <p class="font-medium text-foreground">原则</p>
+        <p class="mt-1">静态优先，少即是多；让文字先抵达，再让界面退后。</p>
+      </div>
     </section>
+
+    <FontRoleSystem />
+
+    {
+      featuredPosts.length > 0 && (
+        <section
+          id="featured"
+          class:list={[
+            "section-rule py-14",
+            { "border-b border-border": recentPosts.length > 0 },
+          ]}
+        >
+          <div class="mb-5 flex items-end justify-between gap-6">
+            <div>
+              <p class="font-ui text-sm font-medium text-accent">精选</p>
+              <h2 class="mt-2 font-heading text-4xl leading-tight font-medium">
+                精选文章
+              </h2>
+            </div>
+          </div>
+          <ul>
+            {featuredPosts.slice(0, 3).map(data => (
+              <Card variant="h3" {...data} />
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      recentPosts.length > 0 && (
+        <section id="recent-posts" class="section-rule py-14">
+          <div class="mb-5 flex items-end justify-between gap-6">
+            <div>
+              <p class="font-ui text-sm font-medium text-accent">近作</p>
+              <h2 class="mt-2 font-heading text-4xl leading-tight font-medium">
+                最新笔记
+              </h2>
+            </div>
+            <a
+              href={withBase("/posts/")}
+              class="hidden items-center gap-1 font-ui text-sm font-medium text-accent no-underline hover:text-accent-secondary sm:flex"
+            >
+              全部文章
+              <IconArrowRight
+                class="size-4 rtl:-rotate-180"
+                aria-hidden="true"
+              />
+            </a>
+          </div>
+          <ul>
+            {recentPosts.map(
+              (data, index) =>
+                index < SITE.postPerIndex && <Card variant="h3" {...data} />
+            )}
+          </ul>
+        </section>
+      )
+    }
+
+    <ContentShowcase />
 
     {
       latestPost && latestReadingTime && (
@@ -156,8 +238,8 @@ const craftNotes = [
               先读最近一篇，再进归档
             </h2>
             <p class="mt-4 max-w-md text-base leading-7 text-muted-foreground">
-              首页不做营销页。最新文章、精选文章、标签和搜索入口都放在第一层，
-              读者可以直接进入内容，而不是穿过装饰。
+              最新文章、精选文章、标签和搜索入口都保持在第一层。
+              新增模块只补足索引与维护信息，不打断原有阅读路径。
             </p>
           </div>
           <a
@@ -251,67 +333,6 @@ const craftNotes = [
         </div>
       </div>
     </section>
-
-    <FontRoleSystem />
-
-    {
-      featuredPosts.length > 0 && (
-        <section
-          id="featured"
-          class:list={[
-            "section-rule py-14",
-            { "border-b border-border": recentPosts.length > 0 },
-          ]}
-        >
-          <div class="mb-5 flex items-end justify-between gap-6">
-            <div>
-              <p class="font-ui text-sm font-medium text-accent">精选</p>
-              <h2 class="mt-2 font-heading text-4xl leading-tight font-medium">
-                精选文章
-              </h2>
-            </div>
-          </div>
-          <ul>
-            {featuredPosts.slice(0, 3).map(data => (
-              <Card variant="h3" {...data} />
-            ))}
-          </ul>
-        </section>
-      )
-    }
-
-    {
-      recentPosts.length > 0 && (
-        <section id="recent-posts" class="section-rule py-14">
-          <div class="mb-5 flex items-end justify-between gap-6">
-            <div>
-              <p class="font-ui text-sm font-medium text-accent">近作</p>
-              <h2 class="mt-2 font-heading text-4xl leading-tight font-medium">
-                最新笔记
-              </h2>
-            </div>
-            <a
-              href={withBase("/posts/")}
-              class="hidden items-center gap-1 font-ui text-sm font-medium text-accent no-underline hover:text-accent-secondary sm:flex"
-            >
-              全部文章
-              <IconArrowRight
-                class="size-4 rtl:-rotate-180"
-                aria-hidden="true"
-              />
-            </a>
-          </div>
-          <ul>
-            {recentPosts.map(
-              (data, index) =>
-                index < SITE.postPerIndex && <Card variant="h3" {...data} />
-            )}
-          </ul>
-        </section>
-      )
-    }
-
-    <ContentShowcase />
 
     <div class="section-rule py-10 text-center">
       <a

@@ -136,20 +136,6 @@ For UI changes, also inspect:
 - Light, dark, and system theme modes.
 - Reduced-motion behavior for page and scroll reveal effects.
 
-## Repository Metadata
-
-Recommended GitHub About description:
-
-```text
-Luowen (luò wén), Winston's static-first editorial blog for design, code, systems thinking, and slower judgment.
-```
-
-Recommended topics:
-
-```text
-astro, tailwindcss, static-site, editorial, blog, typography, pagefind
-```
-
 ## License
 
 Application code is distributed under the MIT License. Font files are not covered by the application license; read the license notice in each `public/fonts/*` directory before redistributing them.

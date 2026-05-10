@@ -574,54 +574,6 @@ html[data-theme="dark"] {
     transform: translateY(-1px);
   }
 
-  .metric-tile {
-    display: grid;
-    min-height: 7rem;
-    align-content: end;
-    border: 1px solid color-mix(in oklab, var(--border) 86%, transparent);
-    border-radius: var(--radius);
-    background:
-      linear-gradient(
-        180deg,
-        color-mix(in oklab, var(--surface) 92%, transparent),
-        color-mix(in oklab, var(--background) 72%, transparent)
-      ),
-      var(--surface);
-    box-shadow:
-      inset 0 1px 0 color-mix(in oklab, white 48%, transparent),
-      0 1px 0 color-mix(in oklab, var(--border) 70%, transparent);
-    padding: 1rem;
-    transition:
-      border-color 160ms ease,
-      color 160ms ease,
-      transform 160ms ease,
-      box-shadow 160ms ease;
-  }
-
-  .metric-tile:hover {
-    border-color: color-mix(in oklab, var(--accent) 42%, var(--border));
-    box-shadow:
-      inset 0 1px 0 color-mix(in oklab, white 52%, transparent),
-      0 10px 24px color-mix(in oklab, var(--accent) 7%, transparent);
-    transform: translateY(-1px);
-  }
-
-  .metric-value {
-    color: var(--accent);
-    font-family: var(--font-heading);
-    font-size: clamp(2.45rem, 8vw, 3.55rem);
-    font-weight: 500;
-    font-variant-numeric: tabular-nums;
-    line-height: 0.92;
-  }
-
-  .metric-label {
-    margin-top: 0.75rem;
-    color: var(--muted-foreground);
-    font-family: var(--font-ui);
-    font-size: 0.95rem;
-  }
-
   .latest-dispatch,
   .system-tile {
     display: block;
@@ -776,7 +728,6 @@ html[data-theme="dark"] {
       0 8px 18px rgb(0 0 0 / 0.24);
   }
 
-  html[data-theme="dark"] .metric-tile,
   html[data-theme="dark"] .latest-dispatch,
   html[data-theme="dark"] .system-tile,
   html[data-theme="dark"] .craft-note {
@@ -785,8 +736,7 @@ html[data-theme="dark"] {
       0 1px 0 color-mix(in oklab, var(--border) 80%, transparent);
   }
 
-  html[data-theme="dark"] .latest-dispatch:hover,
-  html[data-theme="dark"] .metric-tile:hover {
+  html[data-theme="dark"] .latest-dispatch:hover {
     box-shadow:
       inset 0 1px 0 color-mix(in oklab, var(--foreground) 8%, transparent),
       0 14px 34px rgb(0 0 0 / 0.22);
