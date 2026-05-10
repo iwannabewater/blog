@@ -26,7 +26,7 @@
   src: url("/fonts/lxgw-wenkai/lxgw-wenkai-500.woff2") format("woff2");
   font-weight: 400 500;
   font-style: normal;
-  font-display: swap;
+  font-display: fallback;
 }
 
 @font-face {
@@ -34,23 +34,15 @@
   src: url("/fonts/lxgw-wenkai/lxgw-wenkai-700.woff2") format("woff2");
   font-weight: 600 700;
   font-style: normal;
-  font-display: swap;
+  font-display: fallback;
 }
 
 @font-face {
   font-family: "TsangerJinKai02";
   src: url("/fonts/tsanger/TsangerJinKai02-W04.woff2") format("woff2");
-  font-weight: 400;
+  font-weight: 400 700;
   font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "TsangerJinKai02";
-  src: url("/fonts/tsanger/TsangerJinKai02-W05.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
+  font-display: fallback;
 }
 
 @font-face {
@@ -82,7 +74,7 @@
   src: url("/fonts/hina-mincho/hina-mincho-japanese-400.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-display: fallback;
 }
 
 @font-face {
@@ -237,7 +229,7 @@ html[data-theme="dark"] {
   --font-code: var(--font-jetbrains-mono), var(--font-lxgw-wenkai);
   --font-ui: var(--font-comic-neue), var(--font-lxgw-wenkai);
   --font-japanese:
-    var(--font-hina-mincho), TsangerJinKai02, var(--font-lxgw-wenkai);
+    Charter, var(--font-hina-mincho), TsangerJinKai02, var(--font-lxgw-wenkai);
   --font-app: var(--font-body);
   --font-sans: var(--font-ui);
   --font-mono: var(--font-code);

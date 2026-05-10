@@ -26,7 +26,7 @@ Current font roles:
 - `Charter`: English body text, English headings, and mixed-language headings.
 - `Comic Neue`: navigation, tags, buttons, and small UI text.
 - `Caveat`: the single `Larger than life` slogan treatment.
-- `Hina Mincho`: local Japanese Mincho snippets.
+- `Hina Mincho`: Japanese glyph fallback after Charter in Japanese snippets.
 - `JetBrains Mono`: code blocks and file names.
 
 ## Development

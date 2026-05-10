@@ -61,7 +61,7 @@ const structuredData = {
     <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- Load the constrained Kami font set. -->
+    <!-- Preload only above-the-fold fonts that are allowed to compete early. -->
     <link
       rel="preload"
       href={withBase("/fonts/charter/charter_regular.woff2")}
@@ -93,13 +93,6 @@ const structuredData = {
     <link
       rel="preload"
       href={withBase("/fonts/caveat/caveat-400.woff2")}
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href={withBase("/fonts/hina-mincho/hina-mincho-japanese-400.woff2")}
       as="font"
       type="font/woff2"
       crossorigin
