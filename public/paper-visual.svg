@@ -1,20 +1,62 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" role="img" aria-labelledby="title desc">
   <title id="title">流云栖木纸面视觉标记</title>
-  <desc id="desc">暖纸底上的墨蓝云木、桨声灯影与纸面留白。</desc>
+  <desc id="desc">暖纸上由流云、栖木、小舟、灯影和水纹组成的留白视觉。</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#fbfaf6" />
+      <stop offset="0.54" stop-color="#f5f1e8" />
+      <stop offset="1" stop-color="#eee9dc" />
+    </linearGradient>
+    <linearGradient id="inkFade" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#1b365d" stop-opacity="0.16" />
+      <stop offset="0.48" stop-color="#1b365d" stop-opacity="0.78" />
+      <stop offset="1" stop-color="#1b365d" stop-opacity="0.2" />
+    </linearGradient>
+    <filter id="paperGrain" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence baseFrequency="0.9" numOctaves="2" seed="7" type="fractalNoise" result="noise" />
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0.94 0 0 0 0 0.9 0 0 0 0 0.82 0 0 0 .14 0" result="grain" />
+      <feBlend in="SourceGraphic" in2="grain" mode="multiply" />
+    </filter>
+    <filter id="softInk" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="0.16" />
+    </filter>
+  </defs>
+
   <rect width="1200" height="1500" fill="#f5f4ed" />
-  <g opacity="0.72">
-    <path d="M112 205h976M112 405h976M112 605h976M112 805h976M112 1005h976M112 1205h976" stroke="#e8e6dc" stroke-width="2" />
-    <path d="M250 110v1280M450 110v1280M650 110v1280M850 110v1280M1050 110v1280" stroke="#e8e6dc" stroke-width="2" />
+  <g opacity="0.48">
+    <path d="M114 180h972M114 380h972M114 580h972M114 780h972M114 980h972M114 1180h972" stroke="#e4ded0" stroke-width="2" />
+    <path d="M240 96v1312M440 96v1312M640 96v1312M840 96v1312M1040 96v1312" stroke="#e4ded0" stroke-width="2" />
   </g>
-  <rect x="150" y="150" width="900" height="1200" rx="14" fill="#faf9f5" stroke="#e8e6dc" stroke-width="3" />
-  <path d="M250 270h7v960h-7z" fill="#1B365D" />
-  <path d="M337 425c-64 0-106-33-106-84 0-48 39-81 96-81 15-70 74-118 151-118 69 0 125 39 146 102 20-11 43-16 68-16 71 0 123 45 123 108 0 65-55 109-135 109H337Z" fill="none" stroke="#1B365D" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" />
-  <path d="M518 450v362M518 660c-104-28-173-79-207-153M520 612c99-24 169-75 210-153" stroke="#1B365D" stroke-width="18" stroke-linecap="round" />
-  <path d="M335 820h374" stroke="#98553F" stroke-width="12" stroke-linecap="round" />
-  <path d="M324 1015c122-74 254-74 396 0s274 74 396 0" fill="none" stroke="#1B365D" stroke-width="13" stroke-linecap="round" />
-  <path d="M340 1108c96 26 192 26 288 0 80-22 160-22 240 0" fill="none" stroke="#6b6a64" stroke-width="5" stroke-linecap="round" opacity=".62" />
-  <path d="M773 930h164l-38 72H732l41-72Z" fill="none" stroke="#98553F" stroke-width="10" stroke-linejoin="round" />
-  <path d="M847 772v158M811 812h72M825 858h44" stroke="#98553F" stroke-width="8" stroke-linecap="round" />
-  <circle cx="847" cy="754" r="23" fill="#98553F" opacity=".9" />
-  <path d="M240 1420h720" stroke="#e8e6dc" stroke-width="2" />
+
+  <g filter="url(#paperGrain)">
+    <rect x="124" y="104" width="952" height="1292" rx="18" fill="url(#paper)" stroke="#ddd7c8" stroke-width="3" />
+    <path d="M162 151h876M162 1351h876" stroke="#efe9db" stroke-width="2" />
+  </g>
+
+  <path d="M300 230v964" stroke="#1b365d" stroke-width="6" stroke-linecap="round" opacity="0.82" />
+  <path d="M300 363c91-75 188-78 291-8 92-112 239-129 373-42 47-25 107-26 179-2" fill="none" stroke="#1b365d" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" filter="url(#softInk)" />
+  <path d="M252 430c-53 25-79 65-79 119 0 68 50 110 148 124" fill="none" stroke="#1b365d" stroke-width="8" stroke-linecap="round" opacity="0.58" />
+  <path d="M274 505c109-45 221-38 337 22 109-62 224-70 346-24" fill="none" stroke="#1b365d" stroke-width="8" stroke-linecap="round" opacity="0.72" />
+  <path d="M357 616c58 91 139 153 244 188M778 620c-56 75-128 125-217 151M559 566v360" stroke="#1b365d" stroke-width="10" stroke-linecap="round" />
+  <path d="M346 582h472" stroke="#1b365d" stroke-width="10" stroke-linecap="round" />
+  <path d="M348 877h326" stroke="#98553f" stroke-width="7" stroke-linecap="round" opacity="0.76" />
+
+  <path d="M318 1024c122-73 255-81 401-25 93 36 169 88 268 100 82 10 160-6 234-48" fill="none" stroke="#1b365d" stroke-width="12" stroke-linecap="round" />
+  <path d="M350 1110c116 29 228 25 336-12 78-27 162-29 254-7" fill="none" stroke="#6b6a64" stroke-width="5" stroke-linecap="round" opacity="0.52" />
+  <path d="M305 1182c81 20 160 20 236 0 56-15 111-11 166 13" fill="none" stroke="url(#inkFade)" stroke-width="4" stroke-linecap="round" />
+
+  <g stroke="#98553f" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M835 922h158l-43 76H784l51-76Z" fill="none" stroke-width="8" />
+    <path d="M873 922l-35 76" stroke-width="4" opacity="0.46" />
+    <path d="M914 777v145" stroke-width="6" />
+    <path d="M880 819h68M892 861h45" stroke-width="6" />
+    <circle cx="914" cy="754" r="21" fill="#98553f" stroke="none" opacity="0.86" />
+    <path d="M885 1030c36 19 74 19 114 0" fill="none" stroke-width="4" opacity="0.38" />
+  </g>
+
+  <path d="M200 1280c160 18 303 12 429-18 111-26 226-25 345 3" fill="none" stroke="#b3afa3" stroke-width="4" stroke-linecap="round" opacity="0.54" />
+  <path d="M190 208h36M190 246h36M190 284h36" stroke="#98553f" stroke-width="4" stroke-linecap="round" opacity="0.38" />
+  <circle cx="958" cy="276" r="9" fill="#98553f" opacity="0.4" />
+  <circle cx="992" cy="304" r="5" fill="#98553f" opacity="0.33" />
+  <path d="M1009 1315h34M1009 1347h34" stroke="#1b365d" stroke-width="4" stroke-linecap="round" opacity="0.32" />
 </svg>

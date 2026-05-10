@@ -31,7 +31,7 @@ const latestPost = sortedPosts[0];
     >
       <div>
         <h1
-          class="max-w-4xl font-display text-6xl leading-[1.05] font-medium tracking-[0.04em] text-balance text-foreground sm:text-7xl lg:text-8xl"
+          class="max-w-4xl font-display text-6xl leading-[1.05] font-medium text-balance text-foreground sm:text-7xl lg:text-8xl"
         >
           灯下有录，纸上有风。
         </h1>
@@ -60,22 +60,10 @@ const latestPost = sortedPosts[0];
             纸中留白，夜里成篇
           </p>
         </div>
-        <p class="font-role-slogan -ms-1 mt-6 max-w-2xl text-slogan">
-          <span
-            class="inline-block text-6xl leading-none sm:text-7xl lg:text-8xl"
-          >
-            Larger
-          </span>
-          <span
-            class="inline-block translate-y-[-0.22em] text-6xl leading-none sm:text-7xl lg:text-8xl"
-          >
-            than
-          </span>
-          <span
-            class="inline-block translate-y-[-0.36em] text-6xl leading-none sm:text-7xl lg:text-8xl"
-          >
-            life
-          </span>
+        <p
+          class="font-role-slogan slogan-mark -ms-1 mt-6 max-w-2xl text-6xl leading-none sm:text-7xl lg:text-8xl"
+        >
+          Larger than life
         </p>
         <div class="mt-8">
           <ReadingActions />
@@ -83,26 +71,21 @@ const latestPost = sortedPosts[0];
       </div>
 
       <aside class="relative">
-        <div
-          class="relative aspect-[4/5] overflow-hidden rounded-lg border border-border bg-surface shadow-sm"
-        >
-          <img
-            src={withBase("/paper-visual.svg")}
-            alt="流云栖木纸面视觉标记"
-            class="h-full w-full object-cover opacity-90 mix-blend-multiply dark:mix-blend-normal"
-            loading="eager"
-          />
-          <div
-            class="absolute right-8 bottom-8 left-8 border-t border-slogan/70 pt-4"
-          >
-            <p
-              class="font-role-quote text-3xl leading-tight text-accent-ink sm:text-4xl"
-            >
-              流云栖木，桨声灯影。
-            </p>
+        <figure class="liuyun-plate">
+          <div class="liuyun-plate-media">
+            <img
+              src={withBase("/paper-visual.svg")}
+              alt="流云、栖木、小舟和灯影组成的纸面视觉标记"
+              class="liuyun-plate-image"
+              loading="eager"
+            />
           </div>
-        </div>
-        <div class="mt-4 grid grid-cols-3 gap-3 font-ui text-base">
+          <figcaption class="liuyun-plate-caption">
+            <span class="liuyun-plate-caption-knot" aria-hidden="true"></span>
+            <p>流云栖木，桨声灯影。</p>
+          </figcaption>
+        </figure>
+        <div class="mt-5 grid grid-cols-3 gap-3 font-ui text-base">
           <a
             href={withBase("/posts/")}
             class="rounded-lg border border-border bg-surface/90 p-3 no-underline transition-colors hover:border-accent"
