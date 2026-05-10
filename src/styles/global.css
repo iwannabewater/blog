@@ -115,6 +115,7 @@
 
 @font-face {
   font-family: "Yu Mincho Local";
+  /* System-only alias. Add URL sources here only with a web redistribution license. */
   src:
     local("Yu Mincho"), local("Yu Mincho Regular"), local("Yu Mincho Demibold"),
     local("YuMincho"), local("YuMincho-Regular"), local("YuMincho Medium"),

@@ -16,22 +16,35 @@ Live site: <https://blog.whynotsleep.cc/>
 
 ## Font System
 
-The project keeps the currently used web font files under `public/fonts`. Each font directory includes its own `LICENSE.fonts.txt`; the repository MIT license covers application code only and does not relicense font files. Review the original font terms before reuse, especially for fonts with personal-use or commercial-use constraints.
+Fonts are managed in `public/fonts` only when the repository has a compatible redistribution path. Each font directory must keep its own `LICENSE.fonts.txt`. The MIT license in this repository applies to the application code, not to font files.
 
-Current role map:
+Role map:
 
-| Area                                           | Font chain                                                               | Notes                                                                                                                                                                                        |
-| ---------------------------------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Brand mark `落文`                              | `YRDZST-Regular` -> `TsangerJinKai02` -> `LXGW WenKai`                   | `YRDZST-Regular` is subset to the two brand glyphs.                                                                                                                                          |
-| Hero display, cover text, large Chinese labels | `TsangerJinKai02` -> `LXGW WenKai`                                       | The paper-like Chinese display voice.                                                                                                                                                        |
-| Mixed headings                                 | `Charter` -> `TsangerJinKai02` -> `LXGW WenKai`                          | English uses Charter; Chinese glyphs fall through to the Chinese display/body fonts.                                                                                                         |
-| Body copy                                      | `Charter` -> `LXGW WenKai`                                               | English keeps a book serif; Chinese long-form text uses LXGW WenKai.                                                                                                                         |
-| Quotes and callouts                            | `TsangerJinKai02` -> `Charter` -> `LXGW WenKai`                          | Short Chinese pull quotes use Tsanger; English remains readable through Charter.                                                                                                             |
-| Navigation, tags, buttons, small UI            | `Comic Neue` -> `LXGW WenKai`                                            | UI text stays looser and lighter than article prose.                                                                                                                                         |
-| Slogan `Larger than life`                      | `Caveat`                                                                 | Used only for the handwritten slogan treatment.                                                                                                                                              |
-| Japanese snippets                              | `Yu Mincho Local` -> `Hina Mincho` -> `TsangerJinKai02` -> `LXGW WenKai` | `Yu Mincho Local` is a system-only alias for Yu Mincho / YuMincho / 游明朝 names. If the visitor's device does not have Yu Mincho installed, the site falls back to the bundled Hina Mincho. |
-| Code and filenames                             | `JetBrains Mono` -> `LXGW WenKai`                                        | Monospace for code; LXGW WenKai covers Chinese comments.                                                                                                                                     |
-| Open Graph images                              | `TsangerJinKai02` TTF                                                    | Satori needs TTF/OTF/WOFF input, so the TTF is used during OG image generation.                                                                                                              |
+- Brand mark `落文`: `YRDZST-Regular` -> `TsangerJinKai02` -> `LXGW WenKai`
+  The YRDZST files are subset to the two brand glyphs.
+- Hero display, cover text, and large Chinese labels: `TsangerJinKai02` -> `LXGW WenKai`
+  Tsanger carries the paper-like display voice; LXGW WenKai fills Chinese fallback.
+- Mixed headings: `Charter` -> `TsangerJinKai02` -> `LXGW WenKai`
+  English uses Charter; Chinese glyphs fall through to Tsanger and LXGW WenKai.
+- Body copy: `Charter` -> `LXGW WenKai`
+  English keeps a book serif; Chinese long-form text uses LXGW WenKai.
+- Quotes and callouts: `TsangerJinKai02` -> `Charter` -> `LXGW WenKai`
+  Chinese pull quotes use Tsanger; English remains readable through Charter.
+- Navigation, tags, buttons, and small UI: `Comic Neue` -> `LXGW WenKai`
+  UI text stays lighter than article prose.
+- Slogan `Larger than life`: `Caveat`
+  Used only for the handwritten slogan treatment.
+- Japanese snippets: `Yu Mincho Local` -> `Hina Mincho` -> `TsangerJinKai02` -> `LXGW WenKai`
+  `Yu Mincho Local` is a system-only alias for Yu Mincho / YuMincho / 游明朝 names. If the visitor's device does not have Yu Mincho installed, the site falls back to the bundled Hina Mincho.
+- Code and filenames: `JetBrains Mono` -> `LXGW WenKai`
+  JetBrains Mono handles code; LXGW WenKai covers Chinese comments.
+- Open Graph images: `TsangerJinKai02` TTF
+  Satori needs TTF/OTF/WOFF input, so the TTF is used during OG image generation.
+
+Yu Mincho policy:
+
+- Do not copy Yu Mincho from Windows, macOS, or Office into this public repository. Microsoft documents that Windows-supplied fonts may be named in CSS font stacks, but may not be copied to a web server or converted to WOFF/WOFF2 without separate rights: <https://learn.microsoft.com/en-my/typography/fonts/font-faq>
+- If a licensed web redistribution package is purchased, add it as `public/fonts/yu-mincho/`, include `LICENSE.fonts.txt`, and update `src/styles/global.css` to point `Yu Mincho Local` at those licensed files before `Hina Mincho`.
 
 Loading policy:
 
