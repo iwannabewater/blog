@@ -6,7 +6,7 @@ import IconArchive from "@/assets/icons/IconArchive.svg";
 import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
 import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
 import IconThemeSystem from "@/assets/icons/IconThemeSystem.svg";
-import { BookOpenText } from "lucide-react";
+import { Feather } from "lucide-react";
 import LinkButton from "./LinkButton.astro";
 import { SITE } from "@/config";
 import { withBase, withoutBase } from "@/utils/basePath";
@@ -35,9 +35,7 @@ const isActive = (path: string) => {
   Skip to content
 </a>
 
-<header
-  class="sticky top-0 z-30 border-b border-border/75 bg-background/90 backdrop-blur-xl"
->
+<header class="site-header sticky top-0 z-30">
   <div class="app-layout">
     <div
       id="top-nav-wrap"
@@ -47,13 +45,10 @@ const isActive = (path: string) => {
         href={withBase("/")}
         class="group flex min-w-0 items-center gap-3 py-1 no-underline"
       >
-        <span
-          aria-hidden="true"
-          class="grid size-11 shrink-0 place-items-center rounded-lg border border-border bg-surface text-accent shadow-sm transition-colors group-hover:border-accent/60 group-hover:text-accent-secondary sm:size-12"
-        >
-          <BookOpenText className="size-7 sm:size-8" strokeWidth={1.7} />
+        <span aria-hidden="true" class="brand-mark">
+          <Feather className="size-7 sm:size-8" strokeWidth={1.55} />
         </span>
-        <span class="grid min-w-0 justify-items-start">
+        <span class="grid min-w-0 justify-items-center">
           <span
             class="font-role-brand block text-3xl leading-none text-foreground sm:text-4xl"
           >
@@ -61,7 +56,7 @@ const isActive = (path: string) => {
           </span>
           <span
             lang="zh-Latn-pinyin"
-            class="font-role-heading mt-1 block text-base leading-none text-slogan sm:text-lg"
+            class="font-role-slogan mt-1 block text-xl leading-none text-slogan"
           >
             luò wén
           </span>
