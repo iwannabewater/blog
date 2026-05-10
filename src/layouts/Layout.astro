@@ -71,9 +71,17 @@ const structuredData = {
     />
     <link
       rel="preload"
+      href={withBase("/fonts/charter/charter_medium.woff2")}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
       href={withBase("/fonts/tsanger/TsangerJinKai02-W04.woff2")}
       as="font"
       type="font/woff2"
+      fetchpriority="high"
       crossorigin
     />
     <link
@@ -81,6 +89,7 @@ const structuredData = {
       href={withBase("/fonts/lxgw-wenkai/lxgw-wenkai-500.woff2")}
       as="font"
       type="font/woff2"
+      fetchpriority="high"
       crossorigin
     />
     <link

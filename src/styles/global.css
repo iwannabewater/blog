@@ -7,7 +7,10 @@
 
 @font-face {
   font-family: "Charter";
-  src: url("/fonts/charter/charter_regular.woff2") format("woff2");
+  src:
+    local("Charter"),
+    local("CharterRegular"),
+    url("/fonts/charter/charter_regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -15,7 +18,10 @@
 
 @font-face {
   font-family: "Charter";
-  src: url("/fonts/charter/charter_medium.woff2") format("woff2");
+  src:
+    local("Charter Bold"),
+    local("CharterBold"),
+    url("/fonts/charter/charter_medium.woff2") format("woff2");
   font-weight: 500 700;
   font-style: normal;
   font-display: swap;
@@ -23,7 +29,11 @@
 
 @font-face {
   font-family: "LXGW WenKai";
-  src: url("/fonts/lxgw-wenkai/lxgw-wenkai-500.woff2") format("woff2");
+  src:
+    local("LXGW WenKai"),
+    local("LXGWWenKai-Regular"),
+    local("霞鹜文楷"),
+    url("/fonts/lxgw-wenkai/lxgw-wenkai-500.woff2") format("woff2");
   font-weight: 400 500;
   font-style: normal;
   font-display: fallback;
@@ -31,7 +41,10 @@
 
 @font-face {
   font-family: "LXGW WenKai";
-  src: url("/fonts/lxgw-wenkai/lxgw-wenkai-700.woff2") format("woff2");
+  src:
+    local("LXGW WenKai Bold"),
+    local("LXGWWenKai-Bold"),
+    url("/fonts/lxgw-wenkai/lxgw-wenkai-700.woff2") format("woff2");
   font-weight: 600 700;
   font-style: normal;
   font-display: fallback;
@@ -39,7 +52,13 @@
 
 @font-face {
   font-family: "TsangerJinKai02";
-  src: url("/fonts/tsanger/TsangerJinKai02-W04.woff2") format("woff2");
+  src:
+    local("TsangerJinKai02 W04"),
+    local("TsangerJinKai02-W04"),
+    local("TsangerJinKai02"),
+    local("仓耳今楷02 W04"),
+    local("仓耳今楷02"),
+    url("/fonts/tsanger/TsangerJinKai02-W04.woff2") format("woff2");
   font-weight: 400 700;
   font-style: normal;
   font-display: fallback;
@@ -47,7 +66,11 @@
 
 @font-face {
   font-family: "Comic Neue";
-  src: url("/fonts/comic-neue/comic-neue-400.woff2") format("woff2");
+  src:
+    local("Comic Neue"),
+    local("Comic Neue Regular"),
+    local("ComicNeue-Regular"),
+    url("/fonts/comic-neue/comic-neue-400.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -55,7 +78,10 @@
 
 @font-face {
   font-family: "Comic Neue";
-  src: url("/fonts/comic-neue/comic-neue-700.woff2") format("woff2");
+  src:
+    local("Comic Neue Bold"),
+    local("ComicNeue-Bold"),
+    url("/fonts/comic-neue/comic-neue-700.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -63,7 +89,11 @@
 
 @font-face {
   font-family: "Caveat";
-  src: url("/fonts/caveat/caveat-400.woff2") format("woff2");
+  src:
+    local("Caveat"),
+    local("Caveat Regular"),
+    local("Caveat-Regular"),
+    url("/fonts/caveat/caveat-400.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -71,15 +101,23 @@
 
 @font-face {
   font-family: "Hina Mincho";
-  src: url("/fonts/hina-mincho/hina-mincho-japanese-400.woff2") format("woff2");
+  src:
+    local("Hina Mincho"),
+    local("Hina Mincho Regular"),
+    local("HinaMincho-Regular"),
+    url("/fonts/hina-mincho/hina-mincho-japanese-400.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: fallback;
+  unicode-range:
+    U+3000-303F, U+3040-30FF, U+31F0-31FF, U+4E00-9FFF, U+FF00-FFEF;
 }
 
 @font-face {
   font-family: "YRDZST-Regular";
-  src: url("/fonts/yrdzst/yrdzst-luowen-6587.woff2") format("woff2");
+  src:
+    local("YRDZST-Regular"),
+    url("/fonts/yrdzst/yrdzst-luowen-6587.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -88,7 +126,9 @@
 
 @font-face {
   font-family: "YRDZST-Regular";
-  src: url("/fonts/yrdzst/yrdzst-luowen-843d.woff2") format("woff2");
+  src:
+    local("YRDZST-Regular"),
+    url("/fonts/yrdzst/yrdzst-luowen-843d.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -97,7 +137,11 @@
 
 @font-face {
   font-family: "JetBrains Mono";
-  src: url("/fonts/jetbrains-mono/jetbrains-mono-400.woff2") format("woff2");
+  src:
+    local("JetBrains Mono"),
+    local("JetBrains Mono Regular"),
+    local("JetBrainsMono-Regular"),
+    url("/fonts/jetbrains-mono/jetbrains-mono-400.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -105,7 +149,10 @@
 
 @font-face {
   font-family: "JetBrains Mono";
-  src: url("/fonts/jetbrains-mono/jetbrains-mono-500.woff2") format("woff2");
+  src:
+    local("JetBrains Mono Medium"),
+    local("JetBrainsMono-Medium"),
+    url("/fonts/jetbrains-mono/jetbrains-mono-500.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -113,7 +160,10 @@
 
 @font-face {
   font-family: "JetBrains Mono";
-  src: url("/fonts/jetbrains-mono/jetbrains-mono-700.woff2") format("woff2");
+  src:
+    local("JetBrains Mono Bold"),
+    local("JetBrainsMono-Bold"),
+    url("/fonts/jetbrains-mono/jetbrains-mono-700.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -229,7 +279,8 @@ html[data-theme="dark"] {
   --font-code: var(--font-jetbrains-mono), var(--font-lxgw-wenkai);
   --font-ui: var(--font-comic-neue), var(--font-lxgw-wenkai);
   --font-japanese:
-    Charter, var(--font-hina-mincho), TsangerJinKai02, var(--font-lxgw-wenkai);
+    "Yu Mincho", YuMincho, var(--font-hina-mincho), Charter, TsangerJinKai02,
+    var(--font-lxgw-wenkai);
   --font-app: var(--font-body);
   --font-sans: var(--font-ui);
   --font-mono: var(--font-code);
