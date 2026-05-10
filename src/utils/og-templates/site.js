@@ -14,7 +14,7 @@ export default async () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontFamily: "TsangerJinKai02",
+          fontFamily: "LXGW WenKai",
         },
         children: [
           {
@@ -111,7 +111,11 @@ export default async () => {
                         children: {
                           type: "span",
                           props: {
-                            style: { overflow: "hidden", fontWeight: 400 },
+                            style: {
+                              overflow: "hidden",
+                              fontFamily: "Charter",
+                              fontWeight: 400,
+                            },
                             children: new URL(SITE.website).hostname,
                           },
                         },

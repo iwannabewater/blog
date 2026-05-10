@@ -15,9 +15,9 @@ tags:
 
 ## 字体角色
 
-中文正文使用霞鹜文楷，中文题签、封面和引用使用仓耳金楷。左上品牌字使用杨任东竹石体。英文正文与标题优先使用 Charter，导航、标签和按钮交给 Comic Neue，代码区使用 JetBrains Mono。唯一英文手写标语使用 Caveat。日文短句先查找系统 Yu Mincho / YuMincho / 游明朝，系统没有时再用本地 Hina Mincho 承接日文字形，缺字时只回到已允许的中文字体。
+中文正文、题签、封面和引用统一使用霞鹜文楷。左上品牌字保留杨任东竹石体，只承担“落文”两个字。英文正文与标题优先使用 Charter，导航、标签和按钮交给 Comic Neue，代码区使用 JetBrains Mono。唯一英文手写标语使用 Caveat。
 
-这套分工不追求字体数量，而是让每种字体有边界：竹石体只负责“落文”的品牌气口，金楷负责气韵，文楷负责耐读，Charter 负责英文书页感，Comic Neue 负责轻一点的界面语气，JetBrains Mono 负责代码的工程秩序，Caveat 只负责 Larger than life 的手写题签。
+这套分工不追求字体数量，而是让每种字体有边界：竹石体只负责品牌气口，文楷负责中文阅读，Charter 负责英文书页感，Comic Neue 负责轻一点的界面语气，JetBrains Mono 负责代码的工程秩序，Caveat 只负责 Larger than life 的手写题签。
 
 ## 内容组件
 
@@ -30,12 +30,10 @@ export const principle = {
   typography: [
     "LXGW WenKai",
     "YRDZST-Regular",
-    "TsangerJinKai02",
     "Charter",
     "Comic Neue",
     "JetBrains Mono",
     "Caveat",
-    "Yu Mincho Local + Hina Mincho",
   ],
 };
 ```

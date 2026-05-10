@@ -36,7 +36,10 @@
     url("/fonts/lxgw-wenkai/lxgw-wenkai-500.woff2") format("woff2");
   font-weight: 400 500;
   font-style: normal;
-  font-display: fallback;
+  font-display: swap;
+  unicode-range:
+    U+2E80-2EFF, U+2F00-2FDF, U+3000-303F, U+31C0-31EF, U+3400-4DBF,
+    U+4E00-9FFF, U+F900-FAFF, U+FE10-FE1F, U+FE30-FE4F, U+FF00-FFEF;
 }
 
 @font-face {
@@ -47,21 +50,10 @@
     url("/fonts/lxgw-wenkai/lxgw-wenkai-700.woff2") format("woff2");
   font-weight: 600 700;
   font-style: normal;
-  font-display: fallback;
-}
-
-@font-face {
-  font-family: "TsangerJinKai02";
-  src:
-    local("TsangerJinKai02 W04"),
-    local("TsangerJinKai02-W04"),
-    local("TsangerJinKai02"),
-    local("仓耳今楷02 W04"),
-    local("仓耳今楷02"),
-    url("/fonts/tsanger/TsangerJinKai02-W04.woff2") format("woff2");
-  font-weight: 400 700;
-  font-style: normal;
-  font-display: fallback;
+  font-display: swap;
+  unicode-range:
+    U+2E80-2EFF, U+2F00-2FDF, U+3000-303F, U+31C0-31EF, U+3400-4DBF,
+    U+4E00-9FFF, U+F900-FAFF, U+FE10-FE1F, U+FE30-FE4F, U+FF00-FFEF;
 }
 
 @font-face {
@@ -97,35 +89,6 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
-}
-
-@font-face {
-  font-family: "Hina Mincho";
-  src:
-    local("Hina Mincho"),
-    local("Hina Mincho Regular"),
-    local("HinaMincho-Regular"),
-    url("/fonts/hina-mincho/hina-mincho-japanese-400.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: fallback;
-  unicode-range:
-    U+3000-303F, U+3040-30FF, U+31F0-31FF, U+4E00-9FFF, U+FF00-FFEF;
-}
-
-@font-face {
-  font-family: "Yu Mincho Local";
-  /* System-only alias. Add URL sources here only with a web redistribution license. */
-  src:
-    local("Yu Mincho"), local("Yu Mincho Regular"), local("Yu Mincho Demibold"),
-    local("YuMincho"), local("YuMincho-Regular"), local("YuMincho Medium"),
-    local("YuMincho Demibold"), local("YuMincho +36p Kana"), local("游明朝"),
-    local("游明朝体");
-  font-weight: 400;
-  font-style: normal;
-  font-display: fallback;
-  unicode-range:
-    U+3000-303F, U+3040-30FF, U+31F0-31FF, U+4E00-9FFF, U+FF00-FFEF;
 }
 
 @font-face {
@@ -191,9 +154,6 @@ html[data-theme="light"] {
   --font-comic-neue: "Comic Neue";
   --font-jetbrains-mono: "JetBrains Mono";
   --font-caveat: "Caveat";
-  --font-hina-mincho: "Hina Mincho";
-  --font-yu-mincho:
-    "Yu Mincho Local", "Yu Mincho", "YuMincho", "游明朝", "游明朝体";
   --font-yrdzst: "YRDZST-Regular";
   --background: #f5f4ed;
   --foreground: #141413;
@@ -285,19 +245,16 @@ html[data-theme="dark"] {
 }
 
 @theme inline {
-  --font-display: TsangerJinKai02, var(--font-lxgw-wenkai);
-  --font-heading: Charter, TsangerJinKai02, var(--font-lxgw-wenkai);
+  --font-display: var(--font-lxgw-wenkai);
+  --font-heading: Charter, var(--font-lxgw-wenkai);
   --font-body: Charter, var(--font-lxgw-wenkai);
-  --font-quote: TsangerJinKai02, Charter, var(--font-lxgw-wenkai);
-  --font-handwritten: var(--font-comic-neue), var(--font-lxgw-wenkai);
+  --font-quote: Charter, var(--font-lxgw-wenkai);
+  --font-handwritten: var(--font-caveat), var(--font-lxgw-wenkai);
   --font-slogan: var(--font-caveat);
-  --font-brand: var(--font-yrdzst), TsangerJinKai02, var(--font-lxgw-wenkai);
-  --font-decorative: TsangerJinKai02, var(--font-lxgw-wenkai);
+  --font-brand: var(--font-yrdzst), var(--font-lxgw-wenkai);
+  --font-decorative: var(--font-lxgw-wenkai);
   --font-code: var(--font-jetbrains-mono), var(--font-lxgw-wenkai);
   --font-ui: var(--font-comic-neue), var(--font-lxgw-wenkai);
-  --font-japanese:
-    var(--font-yu-mincho), var(--font-hina-mincho), TsangerJinKai02,
-    var(--font-lxgw-wenkai);
   --font-app: var(--font-body);
   --font-sans: var(--font-ui);
   --font-mono: var(--font-code);
@@ -490,11 +447,6 @@ html[data-theme="dark"] {
 
 .font-role-ui {
   font-family: var(--font-ui);
-}
-
-.font-role-japanese,
-:where(:lang(ja)) {
-  font-family: var(--font-japanese);
 }
 
 #theme-btn .theme-icon {

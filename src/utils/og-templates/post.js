@@ -14,7 +14,7 @@ export default async post => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontFamily: "TsangerJinKai02",
+          fontFamily: "LXGW WenKai",
         },
         children: [
           {
@@ -98,6 +98,7 @@ export default async post => {
                                   props: {
                                     style: {
                                       overflow: "hidden",
+                                      fontFamily: "Charter",
                                       fontWeight: 400,
                                     },
                                     children: post.data.author,

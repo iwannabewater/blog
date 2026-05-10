@@ -11,12 +11,19 @@ async function readFont(path: string): Promise<ArrayBuffer> {
 }
 
 export default async function loadLocalFonts() {
-  const tsangerRegular = await readFont("tsanger/TsangerJinKai02-W04.ttf");
+  const lxgwWenkai = await readFont("lxgw-wenkai/lxgw-wenkai-500.otf");
+  const charter = await readFont("charter/charter_regular.otf");
 
   return [
     {
-      name: "TsangerJinKai02",
-      data: tsangerRegular,
+      name: "LXGW WenKai",
+      data: lxgwWenkai,
+      weight: 500,
+      style: "normal",
+    },
+    {
+      name: "Charter",
+      data: charter,
       weight: 400,
       style: "normal",
     },

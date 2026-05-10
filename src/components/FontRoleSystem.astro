@@ -11,16 +11,16 @@ const roles = [
   {
     role: "Display",
     cn: "封面与章题",
-    fonts: "TsangerJinKai02 + LXGW WenKai",
-    detail: "仓耳金楷承担纸面骨架，霞鹜文楷只在中文补字时承接。",
+    fonts: "LXGW WenKai",
+    detail: "中文封面、章题和短句都回到霞鹜文楷，减少下载和视觉切换。",
     sample: "流云栖木",
     demoClass: "font-role-display text-4xl font-medium",
   },
   {
     role: "Heading",
     cn: "英文标题与混排标题",
-    fonts: "Charter + TsangerJinKai02 + LXGW WenKai",
-    detail: "英文先走 Charter，中文标题回到金楷，混排时保持书页感。",
+    fonts: "Charter + LXGW WenKai",
+    detail: "英文先走 Charter，中文直接回到霞鹜文楷，混排时保持书页感。",
     sample: "Quiet Systems / 纸页",
     demoClass: "font-role-heading text-3xl font-medium",
   },
@@ -35,8 +35,8 @@ const roles = [
   {
     role: "Callout",
     cn: "引句与纸条",
-    fonts: "TsangerJinKai02 + Charter + LXGW WenKai",
-    detail: "短句、古风提示和拉引句使用金楷，像夹在书页里的签条。",
+    fonts: "Charter + LXGW WenKai",
+    detail: "拉引句不再额外引入中文展示字体，用正文同源的字形保持安静。",
     sample: "灯下有录，纸上有风。",
     demoClass: "font-role-quote text-3xl font-medium",
   },
@@ -64,15 +64,6 @@ const roles = [
     sample: 'const note = "kami";',
     demoClass: "font-role-code text-base",
   },
-  {
-    role: "Japanese",
-    cn: "日文短句",
-    fonts: "Yu Mincho Local + Hina Mincho",
-    detail:
-      "先命中系统 Yu Mincho / YuMincho / 游明朝；系统没有时，才回到本地 Hina Mincho。",
-    sample: "紙と灯り",
-    demoClass: "font-role-japanese text-3xl font-medium",
-  },
 ];
 ---
 
@@ -86,10 +77,8 @@ const roles = [
         字体少而有序，分工必须清楚
       </h2>
       <p class="mt-4 max-w-md text-base leading-7 text-muted-foreground">
-        品牌字只用杨任东竹石体，中文用霞鹜文楷与仓耳金楷分层，英文用 Charter 与
-        Comic Neue 分工；手写标语只用 Caveat；代码交给 JetBrains
-        Mono。日文先查找系统 Yu Mincho / YuMincho / 游明朝，系统没有时才落到本地
-        Hina Mincho。
+        品牌字只用杨任东竹石体，中文只保留霞鹜文楷，英文用 Charter 与 Comic Neue
+        分工；手写标语只用 Caveat；代码交给 JetBrains Mono。
       </p>
     </div>
 
