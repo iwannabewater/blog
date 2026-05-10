@@ -1,38 +1,39 @@
-# 落文（luò wén）
+# 落文 (luò wén)
 
-Winston 的双语个人博客，写设计、代码、系统与慢一点的判断。
+Winston's bilingual editorial blog for design, code, systems, and slower judgment.
 
 Live site: <https://blog.whynotsleep.cc/>
 
-## 技术栈
+## Stack
 
-- Astro 6：内容集合、静态页面、RSS、sitemap、动态 OG 图。
-- Tailwind CSS 4：设计 token、响应式布局和主题样式。
-- React 19：只用于小型交互岛。
-- shadcn/ui：保留组件组织约定。
-- Pagefind：静态搜索索引。
-- Shiki：代码高亮。
-- GitHub Pages：生产部署。
+- Astro 6 for content collections, static routes, RSS, sitemap, and dynamic Open Graph images.
+- Tailwind CSS 4 for tokens, layout, and responsive styling.
+- React 19 for small interactive islands.
+- shadcn/ui conventions for component organization.
+- Pagefind for static search.
+- Shiki for code highlighting.
+- GitHub Pages for production hosting.
 
-## 字体策略
+## Font System
 
-本项目优先使用本地字体文件，所有入库字体都放在 `public/fonts`，并保留对应许可证。
+The project keeps web fonts under `public/fonts` when redistribution is clear. Each font directory includes its own `LICENSE.fonts.txt`. The repository MIT license covers the application code only; font files keep their original terms.
 
-已入库字体：
+Current font roles:
 
-- `YRDZST-Regular`：品牌字“落文”。
-- `TsangerJinKai02`：中文标题、题签、引用和视觉短句。
-- `LXGW WenKai`：中文正文和中文 fallback。
-- `Charter`：英文正文、英文标题和混排标题。
-- `Comic Neue`：导航、按钮、标签等 UI 小字。
-- `Caveat`：仅用于 `Larger than life`。
-- `JetBrains Mono`：代码和文件名。
+- `YRDZST-Regular`: the two-glyph brand title, `落文`.
+- `TsangerJinKai02`: Chinese display headings, cover text, quotes, and visual captions.
+- `LXGW WenKai`: Chinese body text and Chinese fallback.
+- `Charter`: English body text, English headings, and mixed-language headings.
+- `Comic Neue`: navigation, tags, buttons, and small UI text.
+- `Caveat`: the single `Larger than life` slogan treatment.
+- `Hina Mincho`: local Japanese Mincho snippets.
+- `JetBrains Mono`: code blocks and file names.
 
-`YuMincho` 没有放进 `public/fonts`。它只作为系统优先字体出现在 `--font-japanese` 中，用于日文短句；缺字时回到 `TsangerJinKai02` 和 `LXGW WenKai`。这样做是为了保持授权边界干净：系统字体可以被 CSS 引用，但不代表可以把字体文件提交到公开仓库再分发。字体仍然在 token 层统一管理；如果以后要完全本地化日文字体，应换成可再分发的开源字体，并把字体文件和许可证一起入库。
+`Yu Mincho` / `YuMincho` is not vendored. Platform font catalogs list it as a JIYUKOBO font and point to redistribution licensing rather than a public source package. If a redistributable YuMincho source is provided later, it should be added under `public/fonts/yumincho/` with its license, then swapped into the `--font-japanese` token.
 
-## 本地开发
+## Development
 
-要求：
+Requirements:
 
 - Node.js 24
 - pnpm 11.0.8
@@ -42,11 +43,11 @@ pnpm install
 pnpm dev
 ```
 
-常用命令：
+Useful commands:
 
 | Command             | Purpose                                          |
 | ------------------- | ------------------------------------------------ |
-| `pnpm dev`          | Start Astro locally at `http://localhost:4321`   |
+| `pnpm dev`          | Start Astro at `http://localhost:4321`           |
 | `pnpm build`        | Type-check, build static pages, and index search |
 | `pnpm preview`      | Preview the generated `dist` output              |
 | `pnpm lint`         | Run ESLint                                       |
@@ -54,9 +55,9 @@ pnpm dev
 | `pnpm format`       | Format source files                              |
 | `pnpm clean`        | Remove generated build artifacts                 |
 
-## 内容
+## Content
 
-文章位于 `src/data/blog/*.md`，使用 Astro Content Collections。
+Posts live in `src/data/blog/*.md` and use Astro Content Collections.
 
 ```yaml
 ---
@@ -70,9 +71,9 @@ tags:
 ---
 ```
 
-`draft: true` 会隐藏草稿。生产构建会排除草稿和超出发布时间窗口的文章。
+Set `draft: true` to hide a post. Production builds exclude drafts and posts scheduled for future publication.
 
-## 目录
+## Project Layout
 
 ```text
 src/
@@ -84,28 +85,26 @@ src/
   styles/          Global theme and typography
   utils/           Content, SEO, date, and Markdown helpers
 public/
-  fonts/           Local font files and licenses
+  fonts/           Local font files and font licenses
   CNAME            GitHub Pages custom domain
 .github/workflows/ CI and GitHub Pages deployment
 ```
 
-## 部署
+## Deployment
 
-`main` 分支推送后会触发 `.github/workflows/deploy.yml`。流程会安装依赖、运行 lint、检查格式、构建站点、上传 `dist`，并部署到 GitHub Pages。
+Pushing to `main` runs `.github/workflows/deploy.yml`. The workflow installs dependencies, runs lint, checks formatting, builds the site, uploads `dist`, and deploys to GitHub Pages.
 
-生产域名由两处共同维护：
+The production domain is controlled by:
 
 - `SITE.website` in `src/config.ts`
 - `public/CNAME`
 
-当前域名是 `https://blog.whynotsleep.cc/`。
+Current domain: <https://blog.whynotsleep.cc/>
 
-## 归因
+## Credits
 
-项目基于 [AstroPaper](https://github.com/satnaing/astro-paper) 改造。AstroPaper 由 Sat Naing 创建，使用 MIT License。当前站点的视觉系统、字体系统、内容结构和部署配置由 Winston 维护。
-
-字体文件保留各自许可证，不随本仓库重新授权。
+This project started from [AstroPaper](https://github.com/satnaing/astro-paper), created by Sat Naing under the MIT License. Winston maintains the current visual system, font system, content structure, and deployment setup.
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+MIT for application code. See [LICENSE](LICENSE). Font files are licensed separately in `public/fonts/*/LICENSE.fonts.txt`.

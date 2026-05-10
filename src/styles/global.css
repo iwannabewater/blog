@@ -78,6 +78,14 @@
 }
 
 @font-face {
+  font-family: "Hina Mincho";
+  src: url("/fonts/hina-mincho/hina-mincho-japanese-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: "YRDZST-Regular";
   src: url("/fonts/yrdzst/yrdzst-luowen-6587.woff2") format("woff2");
   font-weight: 400;
@@ -126,6 +134,7 @@ html[data-theme="light"] {
   --font-comic-neue: "Comic Neue";
   --font-jetbrains-mono: "JetBrains Mono";
   --font-caveat: "Caveat";
+  --font-hina-mincho: "Hina Mincho";
   --font-yrdzst: "YRDZST-Regular";
   --background: #f5f4ed;
   --foreground: #141413;
@@ -227,7 +236,8 @@ html[data-theme="dark"] {
   --font-decorative: TsangerJinKai02, var(--font-lxgw-wenkai);
   --font-code: var(--font-jetbrains-mono), var(--font-lxgw-wenkai);
   --font-ui: var(--font-comic-neue), var(--font-lxgw-wenkai);
-  --font-japanese: YuMincho, TsangerJinKai02, var(--font-lxgw-wenkai);
+  --font-japanese:
+    var(--font-hina-mincho), TsangerJinKai02, var(--font-lxgw-wenkai);
   --font-app: var(--font-body);
   --font-sans: var(--font-ui);
   --font-mono: var(--font-code);
