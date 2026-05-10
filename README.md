@@ -16,18 +16,28 @@ Live site: <https://blog.whynotsleep.cc/>
 
 ## Font System
 
-The project keeps web fonts under `public/fonts` when redistribution is clear. Each font directory includes its own `LICENSE.fonts.txt`. The repository MIT license covers the application code only; font files keep their original terms.
+The project keeps the currently used web font files under `public/fonts`. Each font directory includes its own `LICENSE.fonts.txt`; the repository MIT license covers application code only and does not relicense font files. Review the original font terms before reuse, especially for fonts with personal-use or commercial-use constraints.
 
-Current font roles:
+Current role map:
 
-- `YRDZST-Regular`: the two-glyph brand title, `落文`.
-- `TsangerJinKai02`: Chinese display headings, cover text, quotes, and visual captions.
-- `LXGW WenKai`: Chinese body text and Chinese fallback.
-- `Charter`: English body text, English headings, and mixed-language headings.
-- `Comic Neue`: navigation, tags, buttons, and small UI text.
-- `Caveat`: the single `Larger than life` slogan treatment.
-- `Hina Mincho`: Japanese glyph fallback after Yu Mincho / YuMincho in Japanese snippets.
-- `JetBrains Mono`: code blocks and file names.
+| Area                                           | Font chain                                                               | Notes                                                                                                                                                                                        |
+| ---------------------------------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Brand mark `落文`                              | `YRDZST-Regular` -> `TsangerJinKai02` -> `LXGW WenKai`                   | `YRDZST-Regular` is subset to the two brand glyphs.                                                                                                                                          |
+| Hero display, cover text, large Chinese labels | `TsangerJinKai02` -> `LXGW WenKai`                                       | The paper-like Chinese display voice.                                                                                                                                                        |
+| Mixed headings                                 | `Charter` -> `TsangerJinKai02` -> `LXGW WenKai`                          | English uses Charter; Chinese glyphs fall through to the Chinese display/body fonts.                                                                                                         |
+| Body copy                                      | `Charter` -> `LXGW WenKai`                                               | English keeps a book serif; Chinese long-form text uses LXGW WenKai.                                                                                                                         |
+| Quotes and callouts                            | `TsangerJinKai02` -> `Charter` -> `LXGW WenKai`                          | Short Chinese pull quotes use Tsanger; English remains readable through Charter.                                                                                                             |
+| Navigation, tags, buttons, small UI            | `Comic Neue` -> `LXGW WenKai`                                            | UI text stays looser and lighter than article prose.                                                                                                                                         |
+| Slogan `Larger than life`                      | `Caveat`                                                                 | Used only for the handwritten slogan treatment.                                                                                                                                              |
+| Japanese snippets                              | `Yu Mincho Local` -> `Hina Mincho` -> `TsangerJinKai02` -> `LXGW WenKai` | `Yu Mincho Local` is a system-only alias for Yu Mincho / YuMincho / 游明朝 names. If the visitor's device does not have Yu Mincho installed, the site falls back to the bundled Hina Mincho. |
+| Code and filenames                             | `JetBrains Mono` -> `LXGW WenKai`                                        | Monospace for code; LXGW WenKai covers Chinese comments.                                                                                                                                     |
+| Open Graph images                              | `TsangerJinKai02` TTF                                                    | Satori needs TTF/OTF/WOFF input, so the TTF is used during OG image generation.                                                                                                              |
+
+Loading policy:
+
+- Preloaded above the fold: Charter regular/medium, TsangerJinKai02 W04, LXGW WenKai 500, Comic Neue 400, Caveat 400, and the two YRDZST brand subsets.
+- Loaded on demand: LXGW WenKai 700, Comic Neue 700, JetBrains Mono weights, Hina Mincho, and other non-critical faces.
+- Local-first: `@font-face` uses `local()` before `url()` so installed fonts can render without downloading the bundled copy.
 
 ## Development
 
