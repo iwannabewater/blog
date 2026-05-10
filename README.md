@@ -1,25 +1,87 @@
-# 落文
+# Luowen
 
-落文是 Winston 的个人博客，写设计、代码、系统和慢一点的判断。站点基于 Astro 静态生成，保留 RSS、站内搜索、归档、标签和动态 Open Graph 图片，部署在 GitHub Pages。
+Luowen (`落文`, `luò wén`) is Winston's bilingual editorial blog for design, code, systems thinking, and slower judgment. The site is built as a static-first Astro application with a custom paper-inspired design system, local font pipeline, Pagefind search, RSS, sitemap generation, and dynamic Open Graph images.
 
-线上地址：<https://blog.whynotsleep.cc/>
+Production site: <https://blog.whynotsleep.cc/>
 
-## 字体策略
+## Status
 
-项目只分发有明确再分发依据的字体文件。应用代码使用 MIT License，字体文件按各自目录下的 `LICENSE.fonts.txt` 单独授权。
+This repository is maintained as a small but production-grade publishing system:
 
-保留字体：
+- Static output is the default runtime model. GitHub Pages serves generated files from `dist`.
+- React is limited to interaction islands that need client-side behavior.
+- Local fonts are versioned with explicit license files. Browser preload is kept to the visible first-screen font set.
+- CI verifies lint, formatting, type checks, static build, and Pagefind indexing before deployment.
 
-- 中文：`LXGW WenKai`，用于正文、标题、引用和中文展示字。
-- 品牌：`YRDZST-Regular`，只用于左上角“落文”两个字的子集字形。
-- 英文：`Charter` 用于正文和标题，`Comic Neue` 用于导航、标签、按钮等界面小字，`Caveat` 只用于手写标语。
-- 代码：`JetBrains Mono`，中文注释回落到 `LXGW WenKai`。
+## Architecture
 
-加载原则很简单：首屏只预加载可见字体，其他权重按需加载；所有 `@font-face` 都优先命中本机字体，再回落到仓库内的 WOFF2 文件。OG 图片生成器不解析 WOFF2，所以 `LXGW WenKai` 和 `Charter` 额外保留 OTF 构建副本，只在构建阶段读取，不会被浏览器预加载。
+```text
+src/
+  components/      Astro components, React islands, and shadcn/ui primitives
+  data/blog/       Markdown entries managed by Astro Content Collections
+  layouts/         Shared document shells for index, about, and post detail pages
+  pages/           File-system routes, RSS, robots, search, and dynamic OG endpoints
+  styles/          Tailwind 4 theme tokens, global surfaces, and prose typography
+  utils/           Post filtering, paths, reading time, fonts, SEO, and OG generation
+public/
+  fonts/           Redistributable font files and per-family license notices
+  CNAME            GitHub Pages custom domain
+```
 
-## 开发
+The project started from [AstroPaper](https://github.com/satnaing/astro-paper) and keeps its static publishing strengths. Luowen's current system replaces the generic theme layer with a custom editorial identity, bounded typography roles, locally served fonts, dynamic OG generation, and a stricter deployment contract.
 
-要求：
+## Design System
+
+Luowen uses a warm paper canvas, ink-blue emphasis, and low-contrast warm surfaces. The design goal is not to decorate the content. The goal is to make long-form reading, scanning, and maintenance feel deliberate.
+
+Typeface roles are intentionally narrow:
+
+| Role    | Font stack                      | Usage                                               |
+| ------- | ------------------------------- | --------------------------------------------------- |
+| Brand   | `YRDZST-Regular`, `LXGW WenKai` | The two-character `落文` wordmark only              |
+| Display | `LXGW WenKai`                   | Chinese hero lines and short editorial display text |
+| Heading | `Charter`, `LXGW WenKai`        | English and mixed-script headings                   |
+| Body    | `Charter`, `LXGW WenKai`        | Long-form prose                                     |
+| UI      | `Comic Neue`, `LXGW WenKai`     | Navigation, buttons, tags, and small controls       |
+| Slogan  | `Caveat`                        | The single handwritten English slogan               |
+| Code    | `JetBrains Mono`, `LXGW WenKai` | Code blocks, filenames, and inline code             |
+
+Font policy:
+
+- Application source is MIT licensed.
+- Font files are governed by their own license files under `public/fonts/*/LICENSE.fonts.txt`.
+- The browser preload set is limited to first-screen fonts: Charter, LXGW WenKai, Comic Neue, Caveat, and the Luowen wordmark subset.
+- Dynamic OG generation reads local OTF builds because Satori/Resvg does not consume the browser WOFF2 pipeline.
+
+## Content Model
+
+Posts live in `src/data/blog/*.md` and use Astro Content Collections.
+
+```yaml
+---
+title: "Post title"
+pubDatetime: 2026-05-09T10:00:00+08:00
+description: "Short summary for SEO, feeds, cards, and search."
+featured: true
+tags:
+  - design
+  - engineering
+---
+```
+
+Supported fields:
+
+- `draft: true` excludes the post from production lists.
+- `modDatetime` controls the updated date when present.
+- `timezone` overrides the global display timezone for a post.
+- `ogImage` may point to a remote URL or local asset. When omitted, the dynamic OG endpoint generates the image.
+- `canonicalURL` is available for syndicated or migrated essays.
+
+Production filtering excludes drafts and future posts beyond `SITE.scheduledPostMargin` in `src/config.ts`.
+
+## Development
+
+Required runtime:
 
 - Node.js 24
 - pnpm 11.0.8
@@ -29,60 +91,65 @@ pnpm install
 pnpm dev
 ```
 
-常用命令：
+Core commands:
 
 ```bash
-pnpm build        # 类型检查、构建站点、生成 Pagefind 索引
-pnpm lint         # ESLint
-pnpm format:check # Prettier 检查
-pnpm preview      # 预览 dist
-pnpm clean        # 清理构建产物
+pnpm lint          # ESLint across Astro, TypeScript, and React files
+pnpm format:check  # Prettier verification
+pnpm build         # Astro check, static build, Pagefind index, public search assets
+pnpm preview       # Preview the generated site locally
+pnpm clean         # Remove generated build artifacts
 ```
 
-## 内容
+`pnpm build` intentionally refreshes `public/pagefind` from the generated `dist/pagefind` output so GitHub Pages can serve search assets consistently.
 
-文章放在 `src/data/blog/*.md`，使用 Astro Content Collections。
+## Deployment
 
-```yaml
----
-title: "Post title"
-pubDatetime: 2026-05-09T10:00:00+08:00
-description: "Short summary for SEO, feeds, and cards."
-featured: true
-tags:
-  - design
-  - engineering
----
+Pushes to `main` trigger `.github/workflows/deploy.yml`.
+
+The deploy workflow:
+
+1. Checks out the repository.
+2. Installs pnpm 11.0.8 and Node.js 24.
+3. Installs dependencies with the lockfile.
+4. Runs lint, format verification, and the production build.
+5. Uploads `dist` as the GitHub Pages artifact.
+6. Deploys to the configured Pages environment.
+
+The production domain is controlled by both `SITE.website` in `src/config.ts` and `public/CNAME`.
+
+## Verification Contract
+
+Run the same checks locally before shipping:
+
+```bash
+pnpm lint
+pnpm format:check
+pnpm build
 ```
 
-加上 `draft: true` 可以隐藏文章。生产构建会排除草稿和未来发布时间超过容忍窗口的文章。
+For UI changes, also inspect:
 
-## 结构
+- Home page at desktop and 375px mobile width.
+- A post detail page with code, tags, share links, and previous/next links.
+- Search page after a production build.
+- Light, dark, and system theme modes.
+- Reduced-motion behavior for page and scroll reveal effects.
+
+## Repository Metadata
+
+Recommended GitHub About description:
 
 ```text
-src/
-  components/      Astro 和 React 组件
-  data/blog/       Markdown 文章
-  layouts/         页面与文章布局
-  pages/           Astro 路由
-  styles/          全局主题与排版
-  utils/           内容、SEO、日期和 OG 图片工具
-public/
-  fonts/           字体文件与字体授权说明
-  CNAME            GitHub Pages 自定义域名
+Luowen (luò wén), Winston's static-first editorial blog for design, code, systems thinking, and slower judgment.
 ```
 
-## 部署
+Recommended topics:
 
-推送到 `main` 会触发 `.github/workflows/deploy.yml`。流程会安装依赖、检查格式、运行 lint、构建站点、上传 `dist` 并部署到 GitHub Pages。
+```text
+astro, tailwindcss, static-site, editorial, blog, typography, pagefind
+```
 
-生产域名由两处共同决定：
+## License
 
-- `SITE.website` in `src/config.ts`
-- `public/CNAME`
-
-## 来源与授权
-
-项目从 [AstroPaper](https://github.com/satnaing/astro-paper) 起步，当前的视觉系统、字体策略、内容结构和部署流程由 Winston 维护。
-
-应用代码使用 MIT License。字体文件不随应用代码授权走，具体见 `public/fonts/*/LICENSE.fonts.txt`。
+Application code is distributed under the MIT License. Font files are not covered by the application license; read the license notice in each `public/fonts/*` directory before redistributing them.

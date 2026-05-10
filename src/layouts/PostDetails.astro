@@ -12,6 +12,7 @@ import BackToTopButton from "@/components/BackToTopButton.astro";
 import { getPath } from "@/utils/getPath";
 import { withBase } from "@/utils/basePath";
 import { slugifyStr } from "@/utils/slugify";
+import getReadingTime from "@/utils/readingTime";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 import IconChevronRight from "@/assets/icons/IconChevronRight.svg";
 import { SITE } from "@/config";
@@ -22,6 +23,7 @@ type Props = {
 };
 
 const { post, posts } = Astro.props;
+const readingTime = getReadingTime(post.body);
 
 const {
   title,
@@ -106,6 +108,10 @@ const nextPost =
       </p>
       <div class="my-4 flex items-center gap-2">
         <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
+        <span aria-hidden="true" class="font-ui text-border">/</span>
+        <span class="font-ui text-sm text-muted-foreground tabular-nums">
+          {readingTime.label}阅读
+        </span>
         <span
           aria-hidden="true"
           class:list={[
@@ -176,10 +182,13 @@ const nextPost =
   /** Create a progress indicator
    *  at the top */
   function createProgressBar() {
+    if (document.querySelector("#reading-progress")) return;
+
     // Create the main container div
     const progressContainer = document.createElement("div");
     progressContainer.className =
       "progress-container fixed top-0 z-40 h-1 w-full bg-background";
+    progressContainer.id = "reading-progress";
 
     // Create the progress bar div
     const progressBar = document.createElement("div");
@@ -194,6 +203,14 @@ const nextPost =
   }
   createProgressBar();
 
+  document.addEventListener(
+    "astro:before-swap",
+    () => {
+      document.querySelector("#reading-progress")?.remove();
+    },
+    { once: true }
+  );
+
   /** Update the progress bar
    *  when user scrolls */
   function updateScrollProgress() {
@@ -203,7 +220,7 @@ const nextPost =
       const height =
         document.documentElement.scrollHeight -
         document.documentElement.clientHeight;
-      const scrolled = (winScroll / height) * 100;
+      const scrolled = height > 0 ? (winScroll / height) * 100 : 100;
       if (document) {
         const myBar = document.getElementById("myBar");
         if (myBar) {
@@ -221,6 +238,8 @@ const nextPost =
       document.querySelectorAll("h2, h3, h4, h5, h6")
     );
     for (const heading of headings) {
+      if (heading.querySelector(".heading-link")) continue;
+
       heading.classList.add("group");
       const link = document.createElement("a");
       link.className =
@@ -243,6 +262,8 @@ const nextPost =
     const codeBlocks = Array.from(document.querySelectorAll("pre"));
 
     for (const codeBlock of codeBlocks) {
+      if (codeBlock.querySelector(".copy-code")) continue;
+
       const wrapper = document.createElement("div");
       wrapper.style.position = "relative";
 
@@ -257,8 +278,10 @@ const nextPost =
         : "-top-3";
 
       const copyButton = document.createElement("button");
+      copyButton.type = "button";
       copyButton.className = `copy-code absolute end-3 ${topClass} rounded-md bg-muted border border-border px-2 py-1 font-ui text-xs leading-4 text-foreground font-medium`;
-      copyButton.innerHTML = copyButtonLabel;
+      copyButton.setAttribute("aria-label", "Copy code");
+      copyButton.textContent = copyButtonLabel;
       codeBlock.setAttribute("tabindex", "0");
       codeBlock.appendChild(copyButton);
 

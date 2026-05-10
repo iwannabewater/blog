@@ -68,6 +68,24 @@
     font-weight: 500;
   }
 
+  .app-prose mark {
+    border-radius: calc(var(--radius) * 0.35);
+    background: var(--accent-quiet);
+    color: var(--accent);
+    padding: 0.05rem 0.25rem;
+  }
+
+  .app-prose kbd {
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) * 0.55);
+    background: var(--surface);
+    box-shadow: 0 1px 0 var(--border);
+    color: var(--foreground);
+    font-family: var(--font-code);
+    font-size: 0.82em;
+    padding: 0.1rem 0.35rem;
+  }
+
   .app-prose a {
     color: var(--accent);
     text-decoration-line: underline;
@@ -215,7 +233,9 @@
 
   .app-prose .callout,
   .app-prose .note,
-  .app-prose .warning {
+  .app-prose .warning,
+  .app-prose .aside-note,
+  .app-prose .takeaway {
     margin: 2rem 0;
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -244,6 +264,28 @@
   .app-prose .warning {
     border-color: var(--accent);
     background: var(--accent-quiet);
+  }
+
+  .app-prose .aside-note {
+    border-inline-start: 3px solid var(--accent);
+    color: var(--muted-foreground);
+    font-family: var(--font-ui);
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  .app-prose .takeaway {
+    display: grid;
+    gap: 0.65rem;
+    background: var(--accent-quiet);
+    color: var(--accent);
+    font-family: var(--font-ui);
+  }
+
+  .app-prose .takeaway strong {
+    color: var(--accent);
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
   }
 
   .astro-code {

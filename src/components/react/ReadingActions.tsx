@@ -9,18 +9,18 @@ export default function ReadingActions() {
       <Button asChild size="lg" className="font-ui">
         <a href={withBase("/posts/")}>
           开始阅读
-          <ArrowRight data-icon="inline-end" />
+          <ArrowRight data-icon="inline-end" aria-hidden="true" />
         </a>
       </Button>
       <Button asChild variant="outline" size="lg" className="font-ui">
         <a href={withBase("/search/")}>
-          <Search data-icon="inline-start" />
+          <Search data-icon="inline-start" aria-hidden="true" />
           搜索
         </a>
       </Button>
       <Button asChild variant="ghost" size="lg" className="font-ui">
         <a href={withBase("/rss.xml")}>
-          <Rss data-icon="inline-start" />
+          <Rss data-icon="inline-start" aria-hidden="true" />
           RSS
         </a>
       </Button>

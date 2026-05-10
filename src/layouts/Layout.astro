@@ -31,21 +31,41 @@ const {
 
 const socialImageURL = new URL(ogImage, Astro.url);
 
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  headline: `${title}`,
-  image: `${socialImageURL}`,
-  ...(pubDatetime && { datePublished: pubDatetime.toISOString() }),
-  ...(modDatetime && { dateModified: modDatetime.toISOString() }),
-  author: [
-    {
-      "@type": "Person",
-      name: `${author}`,
-      ...(profile && { url: profile }),
-    },
-  ],
+const authorData = {
+  "@type": "Person",
+  name: `${author}`,
+  ...(profile && { url: profile }),
 };
+
+const structuredData = pubDatetime
+  ? {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: `${title}`,
+      description,
+      image: `${socialImageURL}`,
+      datePublished: pubDatetime.toISOString(),
+      ...(modDatetime && { dateModified: modDatetime.toISOString() }),
+      author: [authorData],
+      publisher: authorData,
+      mainEntityOfPage: `${canonicalURL}`,
+    }
+  : {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: SITE.title,
+      description,
+      url: new URL(withBase("/"), SITE.website).href,
+      author: authorData,
+      potentialAction: {
+        "@type": "SearchAction",
+        target: new URL(
+          withBase("/search/?q={search_term_string}"),
+          SITE.website
+        ).href,
+        "query-input": "required name=search_term_string",
+      },
+    };
 ---
 
 <!doctype html>

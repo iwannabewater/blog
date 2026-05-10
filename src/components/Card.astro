@@ -3,6 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import { slugifyStr } from "@/utils/slugify";
 import { getPath } from "@/utils/getPath";
 import { withBase } from "@/utils/basePath";
+import getReadingTime from "@/utils/readingTime";
 import Datetime from "./Datetime.astro";
 
 type Props = {
@@ -12,10 +13,11 @@ type Props = {
 const { variant: Heading = "h2", id, data, filePath } = Astro.props;
 
 const { title, description, tags, ...props } = data;
+const readingTime = getReadingTime(Astro.props.body);
 ---
 
-<li class="group border-b border-border/70 py-6 last:border-b-0">
-  <article class="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-start">
+<li class="article-card group border-b border-border/70 py-6 last:border-b-0">
+  <article class="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-start">
     <div>
       <a
         href={withBase(getPath(id, filePath))}
@@ -31,13 +33,16 @@ const { title, description, tags, ...props } = data;
       <p class="mt-3 max-w-2xl text-lg leading-8 text-muted-foreground">
         {description}
       </p>
+      <div
+        class="mt-4 flex flex-wrap items-center gap-2 font-ui text-sm text-muted-foreground"
+      >
+        <Datetime {...props} />
+        <span aria-hidden="true" class="text-border">/</span>
+        <span class="tabular-nums">{readingTime.label}阅读</span>
+      </div>
     </div>
 
     <div class="sm:pt-1 sm:text-end">
-      <Datetime
-        {...props}
-        class="font-ui text-muted-foreground sm:justify-end"
-      />
       <div class="mt-3 flex flex-wrap gap-2 sm:justify-end">
         {
           tags.slice(0, 3).map(tag => (
