@@ -40,7 +40,7 @@ Copy the returned D1 `database_id` into `wrangler.jsonc`, then run:
 pnpm dlx wrangler d1 migrations apply luowen_analytics --remote
 pnpm dlx wrangler secret put ADMIN_TOKEN
 pnpm dlx wrangler secret put HASH_SALT
-pnpm dlx wrangler deploy
+pnpm dlx wrangler deploy --domain analytics.whynotsleep.cc
 ```
 
 `HASH_SALT` must be at least 16 characters. Collection returns
@@ -79,8 +79,8 @@ Unauthenticated health check. It reports whether `HASH_SALT` is configured.
 
 ## Operational Notes
 
-- `ALLOWED_ORIGINS` is comma-separated. Keep production and local development
-  origins explicit.
+- `ALLOWED_ORIGINS` is comma-separated. Keep production entry domains and local
+  development origins explicit.
 - `DUPLICATE_WINDOW_SECONDS` prevents a single session from double-counting the
   same path during Astro transitions or refresh bursts.
 - `RETENTION_DAYS` deletes old rows opportunistically on collection requests.

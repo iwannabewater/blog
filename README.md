@@ -136,7 +136,7 @@ pnpm dlx wrangler d1 create luowen_analytics
 pnpm dlx wrangler d1 migrations apply luowen_analytics --remote
 pnpm dlx wrangler secret put ADMIN_TOKEN
 pnpm dlx wrangler secret put HASH_SALT
-pnpm dlx wrangler deploy
+pnpm dlx wrangler deploy --domain analytics.whynotsleep.cc
 ```
 
 After the Worker is deployed, add this repository variable in GitHub:

@@ -90,14 +90,13 @@ const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
       const url = endpointFor("/collect");
 
       if (navigator.sendBeacon) {
-        const body = new Blob([payload], { type: "application/json" });
-        if (navigator.sendBeacon(url, body)) return;
+        if (navigator.sendBeacon(url, payload)) return;
       }
 
       fetch(url, {
         method: "POST",
         body: payload,
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "text/plain;charset=UTF-8" },
         keepalive: true,
       }).catch(() => {});
     }

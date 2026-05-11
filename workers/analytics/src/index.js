@@ -1,5 +1,5 @@
 const DEFAULT_ALLOWED_ORIGINS =
-  "https://blog.whynotsleep.cc,http://localhost:4321,http://127.0.0.1:4321";
+  "https://blog.whynotsleep.cc,http://blog.whynotsleep.cc,https://www.whynotsleep.cc,https://whynotsleep.cc,https://iwannabewater.github.io,http://localhost:4321,http://127.0.0.1:4321";
 const DEFAULT_RETENTION_DAYS = 365;
 const MAX_BODY_BYTES = 8192;
 const MAX_EXPORT_ROWS = 5000;
