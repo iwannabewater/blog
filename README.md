@@ -26,6 +26,8 @@ src/
 public/
   fonts/           Redistributable font files and per-family license notices
   CNAME            GitHub Pages custom domain
+workers/
+  analytics/       Cloudflare Worker + D1 first-party analytics backend
 ```
 
 The project started from [AstroPaper](https://github.com/satnaing/astro-paper) and keeps its static publishing strengths. Luowen's current system replaces the generic theme layer with a custom editorial identity, bounded typography roles, locally served fonts, dynamic OG generation, and a stricter deployment contract.
@@ -102,6 +104,49 @@ pnpm clean         # Remove generated build artifacts
 ```
 
 `pnpm build` intentionally refreshes `public/pagefind` from the generated `dist/pagefind` output so GitHub Pages can serve search assets consistently.
+
+## Analytics
+
+Luowen includes an optional first-party analytics system designed for the
+static GitHub Pages deployment model.
+
+- `src/components/AnalyticsTracker.astro` emits pageview events only when
+  `PUBLIC_ANALYTICS_ENDPOINT` is present at build time, and respects browser
+  DNT/GPC signals.
+- `workers/analytics` contains a Cloudflare Worker that records visits in D1,
+  enriches requests with Cloudflare geolocation metadata, deduplicates fast
+  repeat events, and exposes protected summary/export endpoints.
+- `/analytics/` is an unlinked, `noindex` dashboard. It never embeds an admin
+  token in the static build; the endpoint and token are entered in the browser
+  and sent as `Authorization: Bearer <token>`. The token is kept in
+  `sessionStorage`, not persisted in `localStorage`.
+
+The collector records visit time, page path, referrer, UTM fields, visitor and
+session hashes, IP hash, country, region, city, timezone, ASN, device, browser,
+language, viewport, and screen size. Raw IP storage is disabled by default; set
+`STORE_RAW_IP=true` in the Worker only when that operationally and legally makes
+sense.
+
+Setup summary:
+
+```bash
+cd workers/analytics
+cp wrangler.example.jsonc wrangler.jsonc
+pnpm dlx wrangler d1 create luowen_analytics
+pnpm dlx wrangler d1 migrations apply luowen_analytics --remote
+pnpm dlx wrangler secret put ADMIN_TOKEN
+pnpm dlx wrangler secret put HASH_SALT
+pnpm dlx wrangler deploy
+```
+
+After the Worker is deployed, add this repository variable in GitHub:
+
+```text
+PUBLIC_ANALYTICS_ENDPOINT=https://<worker-name>.<account>.workers.dev
+```
+
+Detailed Worker API and operation notes live in
+`workers/analytics/README.md`.
 
 ## Deployment
 

@@ -1,4 +1,11 @@
 interface Window {
+  __luowenAnalytics?: {
+    endpoint: string;
+    lastPath: string;
+    lastSentAt: number;
+    sendPageview: () => void;
+  };
+  doNotTrack?: string;
   theme?: {
     themeMode: string;
     themeValue: string;
@@ -9,4 +16,8 @@ interface Window {
     setTheme: (val: string) => void;
     setMode: (val: string) => void;
   };
+}
+
+interface Navigator {
+  globalPrivacyControl?: boolean;
 }

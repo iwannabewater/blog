@@ -107,7 +107,13 @@ export default defineConfig({
   integrations: [
     react(),
     sitemap({
-      filter: page => SITE.showArchives || !page.endsWith("/archives"),
+      filter: page => {
+        const pathname = new URL(page).pathname.replace(/\/+$/, "") || "/";
+        return (
+          pathname !== "/analytics" &&
+          (SITE.showArchives || pathname !== "/archives")
+        );
+      },
     }),
   ],
   markdown: {
@@ -137,6 +143,11 @@ export default defineConfig({
   env: {
     schema: {
       PUBLIC_GOOGLE_SITE_VERIFICATION: envField.string({
+        access: "public",
+        context: "client",
+        optional: true,
+      }),
+      PUBLIC_ANALYTICS_ENDPOINT: envField.string({
         access: "public",
         context: "client",
         optional: true,

@@ -4,6 +4,7 @@ import { withBase } from "@/utils/basePath";
 const getRobotsTxt = (sitemapURL: URL) => `
 User-agent: *
 Allow: /
+Disallow: /analytics/
 
 Sitemap: ${sitemapURL.href}
 `;

@@ -49,6 +49,8 @@ jobs:
 
       - name: Build
         run: pnpm build
+        env:
+          PUBLIC_ANALYTICS_ENDPOINT: ${{ vars.PUBLIC_ANALYTICS_ENDPOINT }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5

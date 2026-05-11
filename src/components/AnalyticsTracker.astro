@@ -1,0 +1,126 @@
+---
+import { PUBLIC_ANALYTICS_ENDPOINT } from "astro:env/client";
+
+const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
+---
+
+<script is:inline define:vars={{ analyticsEndpoint }} data-astro-rerun>
+  (function () {
+    if (!analyticsEndpoint) return;
+
+    const duplicateWindowMs = 1200;
+
+    function isPrivacyOptedOut() {
+      return (
+        navigator.doNotTrack === "1" ||
+        window.doNotTrack === "1" ||
+        navigator.globalPrivacyControl === true
+      );
+    }
+
+    function storageId(storage, key) {
+      try {
+        const existing = storage.getItem(key);
+        if (existing) return existing;
+
+        const id =
+          crypto.randomUUID?.() ||
+          `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+        storage.setItem(key, id);
+        return id;
+      } catch {
+        return null;
+      }
+    }
+
+    function endpointFor(path) {
+      return `${analyticsEndpoint}${path}`;
+    }
+
+    function collectPayload() {
+      const visitorId = storageId(localStorage, "luowen:visitor-id");
+      const sessionId = storageId(sessionStorage, "luowen:session-id");
+
+      return {
+        version: 1,
+        type: "pageview",
+        path: `${location.pathname}${location.search}`,
+        title: document.title,
+        referrer: document.referrer,
+        occurredAt: new Date().toISOString(),
+        visitorId,
+        sessionId,
+        language: navigator.language,
+        languages: navigator.languages,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        viewport: {
+          width: window.innerWidth,
+          height: window.innerHeight,
+        },
+        screen: {
+          width: window.screen?.width,
+          height: window.screen?.height,
+        },
+        colorScheme: window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light",
+      };
+    }
+
+    function sendPageview() {
+      if (isPrivacyOptedOut()) return;
+
+      const tracker = window.__luowenAnalytics;
+      if (!tracker) return;
+
+      const now = Date.now();
+      const key = `${location.pathname}${location.search}`;
+
+      if (
+        tracker.lastPath === key &&
+        now - tracker.lastSentAt < duplicateWindowMs
+      ) {
+        return;
+      }
+
+      tracker.lastPath = key;
+      tracker.lastSentAt = now;
+
+      const payload = JSON.stringify(collectPayload());
+      const url = endpointFor("/collect");
+
+      if (navigator.sendBeacon) {
+        const body = new Blob([payload], { type: "application/json" });
+        if (navigator.sendBeacon(url, body)) return;
+      }
+
+      fetch(url, {
+        method: "POST",
+        body: payload,
+        headers: { "Content-Type": "application/json" },
+        keepalive: true,
+      }).catch(() => {});
+    }
+
+    if (!window.__luowenAnalytics) {
+      window.__luowenAnalytics = {
+        endpoint: analyticsEndpoint,
+        lastPath: "",
+        lastSentAt: 0,
+        sendPageview,
+      };
+      document.addEventListener("astro:page-load", sendPageview);
+    } else {
+      window.__luowenAnalytics.endpoint = analyticsEndpoint;
+      window.__luowenAnalytics.sendPageview = sendPageview;
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", sendPageview, {
+        once: true,
+      });
+    } else {
+      window.requestAnimationFrame(sendPageview);
+    }
+  })();
+</script>

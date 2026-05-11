@@ -1,0 +1,740 @@
+---
+import { PUBLIC_ANALYTICS_ENDPOINT } from "astro:env/client";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import { SITE } from "@/config";
+
+const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
+---
+
+<Layout title={`访问统计 | ${SITE.title}`} noindex analytics={false}>
+  <Header />
+  <main
+    id="main-content"
+    class="app-layout py-10"
+    data-analytics-dashboard
+    data-endpoint={analyticsEndpoint}
+  >
+    <section class="grid gap-8 lg:grid-cols-[0.72fr_1.28fr]">
+      <div>
+        <p class="font-ui text-sm font-medium text-accent">Analytics</p>
+        <h1
+          class="mt-3 max-w-xl font-heading text-5xl leading-tight font-medium text-balance"
+        >
+          访问统计
+        </h1>
+        <p class="mt-4 max-w-md text-base leading-7 text-muted-foreground">
+          页面访问、独立访客、来源、地区、设备与最近访问记录。
+        </p>
+      </div>
+
+      <form
+        class="analytics-controls"
+        data-analytics-controls
+        autocomplete="off"
+      >
+        <label>
+          <span>Endpoint</span>
+          <input
+            name="endpoint"
+            type="url"
+            inputmode="url"
+            placeholder="https://luowen-analytics.example.workers.dev"
+            value={analyticsEndpoint}
+          />
+        </label>
+        <label>
+          <span>Admin token</span>
+          <input
+            name="token"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Bearer token"
+          />
+        </label>
+        <label>
+          <span>Range</span>
+          <select name="days">
+            <option value="7">7 天</option>
+            <option value="30" selected>30 天</option>
+            <option value="90">90 天</option>
+            <option value="365">365 天</option>
+          </select>
+        </label>
+        <div class="flex flex-wrap items-end gap-2">
+          <button type="submit">刷新</button>
+          <a data-export-link href="#" aria-disabled="true">导出 CSV</a>
+        </div>
+      </form>
+    </section>
+
+    <section class="mt-8 grid gap-3 sm:grid-cols-3" aria-label="访问统计摘要">
+      {
+        ["Pageviews", "Visitors", "Sessions"].map(label => (
+          <article class="metric-card">
+            <p>{label}</p>
+            <strong data-metric={label.toLowerCase()}>-</strong>
+          </article>
+        ))
+      }
+    </section>
+
+    <p class="mt-4 min-h-6 font-ui text-sm text-muted-foreground" data-status>
+      输入 endpoint 和 admin token 后刷新。
+    </p>
+
+    <section class="analytics-grid mt-8">
+      <article class="analytics-panel analytics-panel-wide">
+        <div class="panel-heading">
+          <h2>时间线</h2>
+          <span data-generated-at></span>
+        </div>
+        <div class="timeline-bars" data-timeline></div>
+      </article>
+
+      <article class="analytics-panel">
+        <div class="panel-heading">
+          <h2>访问时段</h2>
+        </div>
+        <div class="hour-bars" data-hourly></div>
+      </article>
+
+      <article class="analytics-panel">
+        <div class="panel-heading">
+          <h2>热门页面</h2>
+        </div>
+        <div data-table="topPages"></div>
+      </article>
+
+      <article class="analytics-panel">
+        <div class="panel-heading">
+          <h2>国家 / 地区</h2>
+        </div>
+        <div data-table="topCountries"></div>
+      </article>
+
+      <article class="analytics-panel">
+        <div class="panel-heading">
+          <h2>省市</h2>
+        </div>
+        <div data-table="topCities"></div>
+      </article>
+
+      <article class="analytics-panel">
+        <div class="panel-heading">
+          <h2>来源</h2>
+        </div>
+        <div data-table="topReferrers"></div>
+      </article>
+
+      <article class="analytics-panel">
+        <div class="panel-heading">
+          <h2>设备</h2>
+        </div>
+        <div data-table="devices"></div>
+      </article>
+
+      <article class="analytics-panel">
+        <div class="panel-heading">
+          <h2>浏览器</h2>
+        </div>
+        <div data-table="browsers"></div>
+      </article>
+
+      <article class="analytics-panel analytics-panel-wide">
+        <div class="panel-heading">
+          <h2>最近访问</h2>
+        </div>
+        <div class="recent-table" data-recent></div>
+      </article>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  type StatusTone = "muted" | "error" | "success";
+  type AnalyticsValue = string | number | null | undefined;
+  type AnalyticsRow = Record<string, AnalyticsValue>;
+  type SavedConfig = {
+    endpoint?: string;
+    token?: string;
+    days?: string;
+  };
+  type AnalyticsData = {
+    generatedAt: string;
+    totals?: {
+      pageviews?: number;
+      visitors?: number;
+      sessions?: number;
+    };
+    timeline?: AnalyticsRow[];
+    hourly?: AnalyticsRow[];
+    topPages?: AnalyticsRow[];
+    topCountries?: AnalyticsRow[];
+    topCities?: AnalyticsRow[];
+    topReferrers?: AnalyticsRow[];
+    devices?: AnalyticsRow[];
+    browsers?: AnalyticsRow[];
+    recentVisits?: AnalyticsRow[];
+  };
+
+  const root = document.querySelector<HTMLElement>(
+    "[data-analytics-dashboard]"
+  );
+  const controls = document.querySelector<HTMLFormElement>(
+    "[data-analytics-controls]"
+  );
+  const status = document.querySelector<HTMLElement>("[data-status]");
+  const exportLink =
+    document.querySelector<HTMLAnchorElement>("[data-export-link]");
+  const generatedAt = document.querySelector<HTMLElement>(
+    "[data-generated-at]"
+  );
+  const endpointInput = controls?.elements.namedItem(
+    "endpoint"
+  ) as HTMLInputElement | null;
+  const tokenInput = controls?.elements.namedItem(
+    "token"
+  ) as HTMLInputElement | null;
+  const daysSelect = controls?.elements.namedItem(
+    "days"
+  ) as HTMLSelectElement | null;
+  const storageKey = "luowen:analytics-admin";
+
+  function setStatus(message: string, tone: StatusTone = "muted") {
+    if (!status) return;
+    status.textContent = message;
+    status.dataset.tone = tone;
+  }
+
+  function readSaved(): SavedConfig {
+    try {
+      const saved = JSON.parse(
+        localStorage.getItem(storageKey) || "{}"
+      ) as SavedConfig;
+      return {
+        ...saved,
+        token: sessionStorage.getItem(`${storageKey}:token`) || "",
+      };
+    } catch {
+      return {
+        token: sessionStorage.getItem(`${storageKey}:token`) || "",
+      };
+    }
+  }
+
+  function saveConfig(endpoint: string, token: string, days: string) {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify({ endpoint, days }));
+    } catch {
+      sessionStorage.setItem(storageKey, JSON.stringify({ endpoint, days }));
+    }
+    sessionStorage.setItem(`${storageKey}:token`, token);
+  }
+
+  function normalizeEndpoint(endpoint: string) {
+    return endpoint.trim().replace(/\/+$/, "");
+  }
+
+  function apiUrl(
+    endpoint: string,
+    path: string,
+    params: Record<string, string | number> = {}
+  ) {
+    const url = new URL(`${normalizeEndpoint(endpoint)}${path}`);
+    Object.entries(params).forEach(([key, value]) => {
+      url.searchParams.set(key, String(value));
+    });
+    return url.href;
+  }
+
+  function number(value: AnalyticsValue) {
+    return new Intl.NumberFormat("zh-CN").format(Number(value || 0));
+  }
+
+  function safeText(value: unknown) {
+    return value == null || value === "" ? "Unknown" : String(value);
+  }
+
+  function escapeHtml(value: unknown) {
+    return safeText(value).replace(/[&<>"']/g, char => {
+      if (char === "&") return "&amp;";
+      if (char === "<") return "&lt;";
+      if (char === ">") return "&gt;";
+      if (char === '"') return "&quot;";
+      return "&#39;";
+    });
+  }
+
+  function renderMetric(name: string, value: AnalyticsValue) {
+    const target = document.querySelector(`[data-metric="${name}"]`);
+    if (target) target.textContent = number(value);
+  }
+
+  function renderBars(
+    target: Element | null,
+    rows: AnalyticsRow[] | undefined,
+    labelKey: string
+  ) {
+    if (!target) return;
+    if (!rows?.length) {
+      target.innerHTML = `<p class="empty-state">暂无数据</p>`;
+      return;
+    }
+
+    const max = Math.max(...rows.map(row => Number(row.pageviews || 0)), 1);
+    target.innerHTML = rows
+      .map(row => {
+        const width = Math.max((Number(row.pageviews || 0) / max) * 100, 3);
+        const label = escapeHtml(row[labelKey]);
+        return `
+          <div class="bar-row">
+            <span>${label}</span>
+            <div><i style="width: ${width}%"></i></div>
+            <strong>${number(row.pageviews)}</strong>
+          </div>
+        `;
+      })
+      .join("");
+  }
+
+  function renderTable(
+    name: string,
+    rows: AnalyticsRow[] | undefined,
+    labelKey = "label"
+  ) {
+    const target = document.querySelector(`[data-table="${name}"]`);
+    if (!target) return;
+    if (!rows?.length) {
+      target.innerHTML = `<p class="empty-state">暂无数据</p>`;
+      return;
+    }
+
+    target.innerHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th>名称</th>
+            <th>访问</th>
+            <th>访客</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows
+            .map(
+              row => `
+                <tr>
+                  <td title="${escapeHtml(row[labelKey])}">${escapeHtml(row[labelKey])}</td>
+                  <td>${number(row.pageviews)}</td>
+                  <td>${number(row.visitors)}</td>
+                </tr>
+              `
+            )
+            .join("")}
+        </tbody>
+      </table>
+    `;
+  }
+
+  function renderRecent(rows: AnalyticsRow[] | undefined) {
+    const target = document.querySelector("[data-recent]");
+    if (!target) return;
+    if (!rows?.length) {
+      target.innerHTML = `<p class="empty-state">暂无数据</p>`;
+      return;
+    }
+
+    target.innerHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th>时间</th>
+            <th>页面</th>
+            <th>地区</th>
+            <th>IP</th>
+            <th>设备</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows
+            .map(row => {
+              const time = new Date(safeText(row.received_at)).toLocaleString(
+                "zh-CN",
+                { hour12: false }
+              );
+              const place = [row.country, row.region, row.city]
+                .filter(Boolean)
+                .map(safeText)
+                .join(" / ");
+              const ip = row.ip_address || `hash:${safeText(row.ip_hash)}`;
+              return `
+                <tr>
+                  <td>${escapeHtml(time)}</td>
+                  <td title="${escapeHtml(row.path)}">${escapeHtml(row.path)}</td>
+                  <td>${escapeHtml(place)}</td>
+                  <td>${escapeHtml(ip)}</td>
+                  <td>${escapeHtml(row.device)} / ${escapeHtml(row.browser)}</td>
+                </tr>
+              `;
+            })
+            .join("")}
+        </tbody>
+      </table>
+    `;
+  }
+
+  async function loadAnalytics(
+    endpoint: string,
+    token: string,
+    days: string
+  ): Promise<AnalyticsData> {
+    const summaryUrl = apiUrl(endpoint, "/summary", { days, limit: 20 });
+    const response = await fetch(summaryUrl, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        response.status === 401 ? "unauthorized" : "request_failed"
+      );
+    }
+
+    return response.json() as Promise<AnalyticsData>;
+  }
+
+  function render(
+    data: AnalyticsData,
+    endpoint: string,
+    token: string,
+    days: string
+  ) {
+    renderMetric("pageviews", data.totals?.pageviews);
+    renderMetric("visitors", data.totals?.visitors);
+    renderMetric("sessions", data.totals?.sessions);
+    renderBars(document.querySelector("[data-timeline]"), data.timeline, "day");
+    renderBars(document.querySelector("[data-hourly]"), data.hourly, "hour");
+    renderTable("topPages", data.topPages, "path");
+    renderTable("topCountries", data.topCountries);
+    renderTable("topCities", data.topCities);
+    renderTable("topReferrers", data.topReferrers);
+    renderTable("devices", data.devices);
+    renderTable("browsers", data.browsers);
+    renderRecent(data.recentVisits);
+
+    if (generatedAt) {
+      generatedAt.textContent = new Date(data.generatedAt).toLocaleString(
+        "zh-CN",
+        { hour12: false }
+      );
+    }
+
+    if (exportLink) {
+      exportLink.href = apiUrl(endpoint, "/export.csv", { days, limit: 1000 });
+      exportLink.setAttribute("aria-disabled", "false");
+      exportLink.onclick = event => {
+        event.preventDefault();
+        fetch(exportLink.href, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+          .then(response => {
+            if (!response.ok) throw new Error("export_failed");
+            return response.blob();
+          })
+          .then(blob => {
+            const url = URL.createObjectURL(blob);
+            const anchor = document.createElement("a");
+            anchor.href = url;
+            anchor.download = `luowen-analytics-${days}d.csv`;
+            anchor.click();
+            URL.revokeObjectURL(url);
+          })
+          .catch(() => setStatus("导出失败，请检查 token。", "error"));
+      };
+    }
+  }
+
+  function hydrateForm() {
+    if (!controls || !endpointInput || !tokenInput || !daysSelect) return;
+    const saved = readSaved();
+    const endpoint = normalizeEndpoint(
+      root?.dataset.endpoint || saved.endpoint || ""
+    );
+    const token = saved.token || "";
+    const days = saved.days || "30";
+
+    endpointInput.value = endpoint;
+    tokenInput.value = token;
+    daysSelect.value = days;
+
+    if (endpoint && token) {
+      controls.requestSubmit();
+    }
+  }
+
+  controls?.addEventListener("submit", async event => {
+    event.preventDefault();
+    if (!endpointInput || !tokenInput || !daysSelect) return;
+
+    const endpoint = normalizeEndpoint(endpointInput.value);
+    const token = tokenInput.value.trim();
+    const days = daysSelect.value;
+
+    if (!endpoint || !token) {
+      setStatus("缺少 endpoint 或 admin token。", "error");
+      return;
+    }
+
+    saveConfig(endpoint, token, days);
+    setStatus("正在读取统计数据...");
+
+    try {
+      const data = await loadAnalytics(endpoint, token, days);
+      render(data, endpoint, token, days);
+      setStatus(`已加载最近 ${days} 天数据。`, "success");
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "";
+      setStatus(
+        message === "unauthorized"
+          ? "鉴权失败，请检查 admin token。"
+          : "请求失败，请检查 endpoint、CORS 和 Worker 状态。",
+        "error"
+      );
+    }
+  });
+
+  hydrateForm();
+</script>
+
+<style>
+  .analytics-controls,
+  .analytics-panel,
+  .metric-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: color-mix(in oklab, var(--surface) 94%, transparent);
+    box-shadow: 0 1px 0 color-mix(in oklab, var(--border) 70%, transparent);
+  }
+
+  .analytics-controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) 8rem auto;
+    gap: 0.75rem;
+    align-items: end;
+    padding: 1rem;
+    font-family: var(--font-ui);
+  }
+
+  .analytics-controls label {
+    display: grid;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  .analytics-controls span,
+  .metric-card p,
+  .panel-heading span {
+    color: var(--muted-foreground);
+    font-family: var(--font-ui);
+    font-size: 0.86rem;
+  }
+
+  .analytics-controls input,
+  .analytics-controls select {
+    width: 100%;
+    min-height: 2.55rem;
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) * 0.75);
+    background: var(--background);
+    color: var(--foreground);
+    padding: 0.55rem 0.7rem;
+  }
+
+  .analytics-controls button,
+  .analytics-controls a {
+    display: inline-flex;
+    min-height: 2.55rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) * 0.75);
+    padding: 0.55rem 0.85rem;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .analytics-controls a {
+    background: var(--surface);
+    color: var(--accent);
+  }
+
+  .analytics-controls a[aria-disabled="true"] {
+    opacity: 0.48;
+    pointer-events: none;
+  }
+
+  .metric-card {
+    padding: 1rem;
+  }
+
+  .metric-card strong {
+    display: block;
+    margin-top: 0.35rem;
+    color: var(--accent);
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 7vw, 3rem);
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  [data-status][data-tone="error"] {
+    color: var(--slogan);
+  }
+
+  [data-status][data-tone="success"] {
+    color: var(--accent);
+  }
+
+  .analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .analytics-panel {
+    min-width: 0;
+    padding: 1rem;
+    overflow: hidden;
+  }
+
+  .analytics-panel-wide {
+    grid-column: 1 / -1;
+  }
+
+  .panel-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.85rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.7rem;
+  }
+
+  .panel-heading h2 {
+    font-family: var(--font-heading);
+    font-size: 1.45rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .timeline-bars,
+  .hour-bars {
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .bar-row {
+    display: grid;
+    grid-template-columns: minmax(4.5rem, 8rem) minmax(0, 1fr) 4rem;
+    gap: 0.75rem;
+    align-items: center;
+    font-family: var(--font-ui);
+    font-size: 0.92rem;
+  }
+
+  .bar-row div {
+    height: 0.65rem;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--muted);
+  }
+
+  .bar-row i {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--accent);
+  }
+
+  .bar-row strong {
+    color: var(--accent);
+    font-weight: 500;
+    text-align: end;
+  }
+
+  .analytics-panel table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-ui);
+    font-size: 0.92rem;
+  }
+
+  .analytics-panel th,
+  .analytics-panel td {
+    border-bottom: 1px solid var(--border);
+    padding: 0.58rem 0.35rem;
+    text-align: start;
+    vertical-align: top;
+  }
+
+  .analytics-panel th {
+    color: var(--muted-foreground);
+    font-size: 0.76rem;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .analytics-panel td {
+    max-width: 16rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .analytics-panel td:nth-child(n + 2),
+  .analytics-panel th:nth-child(n + 2) {
+    text-align: end;
+  }
+
+  .recent-table {
+    overflow-x: auto;
+  }
+
+  .recent-table td,
+  .recent-table th {
+    white-space: nowrap;
+  }
+
+  .empty-state {
+    color: var(--muted-foreground);
+    font-family: var(--font-ui);
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 960px) {
+    .analytics-controls,
+    .analytics-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .analytics-controls {
+      align-items: stretch;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .bar-row {
+      grid-template-columns: 4.5rem minmax(0, 1fr) 3.25rem;
+      font-size: 0.82rem;
+    }
+
+    .analytics-panel td {
+      max-width: 11rem;
+    }
+  }
+</style>

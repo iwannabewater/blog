@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "luowen-analytics",
+  "main": "src/index.js",
+  "compatibility_date": "2026-05-07",
+  "observability": {
+    "enabled": true,
+  },
+  "vars": {
+    "ALLOWED_ORIGINS": "https://blog.whynotsleep.cc,http://localhost:4321,http://127.0.0.1:4321",
+    "DUPLICATE_WINDOW_SECONDS": "20",
+    "RETENTION_DAYS": "365",
+    "STORE_RAW_IP": "false",
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "luowen_analytics",
+      "database_id": "replace-with-d1-database-id",
+    },
+  ],
+}

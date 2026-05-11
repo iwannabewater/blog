@@ -13,3 +13,10 @@
 !eslint.config.js
 !README.md
 !LICENSE
+!.env.example
+!/workers
+!/workers/analytics
+!/workers/analytics/README.md
+!/workers/analytics/src
+!/workers/analytics/src/index.js
+!/workers/analytics/wrangler.example.jsonc
