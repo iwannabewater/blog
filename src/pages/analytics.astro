@@ -255,6 +255,10 @@ const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
     return url.href;
   }
 
+  function timezoneOffsetMinutes() {
+    return -new Date().getTimezoneOffset();
+  }
+
   function number(value: AnalyticsValue) {
     const parsed = Number(value || 0);
     return new Intl.NumberFormat("zh-CN").format(
@@ -421,7 +425,11 @@ const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
     token: string,
     days: string
   ): Promise<AnalyticsData> {
-    const summaryUrl = apiUrl(endpoint, "/summary", { days, limit: 20 });
+    const summaryUrl = apiUrl(endpoint, "/summary", {
+      days,
+      limit: 20,
+      tzOffsetMinutes: timezoneOffsetMinutes(),
+    });
     const response = await fetch(summaryUrl, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -566,7 +574,7 @@ const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
 
   .analytics-overline {
     color: var(--accent);
-    font-family: var(--font-code);
+    font-family: var(--font-ui);
     font-size: 0.78rem;
     font-weight: 500;
     letter-spacing: 0;
@@ -598,7 +606,7 @@ const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
     gap: 0.85rem;
     align-items: end;
     padding: 1rem;
-    font-family: var(--font-code);
+    font-family: var(--font-ui);
   }
 
   .analytics-controls label {
@@ -613,7 +621,7 @@ const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
   .panel-heading span,
   .analytics-status {
     color: var(--muted-foreground);
-    font-family: var(--font-code);
+    font-family: var(--font-ui);
     font-size: 0.78rem;
     letter-spacing: 0;
   }
@@ -724,7 +732,7 @@ const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
     display: block;
     align-self: center;
     color: var(--accent);
-    font-family: var(--font-code);
+    font-family: var(--font-heading);
     font-size: clamp(2.35rem, 6vw, 3.75rem);
     font-weight: 500;
     font-variant-numeric: tabular-nums;
@@ -796,7 +804,7 @@ const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
     gap: 0.85rem;
     align-items: center;
     min-height: 2rem;
-    font-family: var(--font-code);
+    font-family: var(--font-ui);
     font-size: 0.86rem;
     font-variant-numeric: tabular-nums;
   }
@@ -842,7 +850,7 @@ const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
     min-width: 24rem;
     border-collapse: separate;
     border-spacing: 0;
-    font-family: var(--font-code);
+    font-family: var(--font-ui);
     font-size: 0.84rem;
     font-variant-numeric: tabular-nums;
   }
@@ -936,7 +944,7 @@ const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
     border-radius: calc(var(--radius) * 0.75);
     background: color-mix(in oklab, var(--surface) 62%, transparent);
     color: var(--muted-foreground);
-    font-family: var(--font-code);
+    font-family: var(--font-ui);
     font-size: 0.84rem;
     padding: 1rem;
     text-align: center;

@@ -62,11 +62,12 @@ at build time.
 Receives pageview events from allowed origins. Returns `202` for accepted or
 deduplicated events.
 
-`GET /summary?days=30&limit=20`
+`GET /summary?days=30&limit=20&tzOffsetMinutes=480`
 
 Requires `Authorization: Bearer <ADMIN_TOKEN>`. Returns totals, timeline,
 hourly distribution, top pages, geography, referrers, devices, browsers, and
-recent visits.
+recent visits. `tzOffsetMinutes` is the viewer's offset from UTC and is used for
+timeline and hourly aggregation; visit records remain stored in UTC.
 
 `GET /export.csv?days=30&limit=1000`
 

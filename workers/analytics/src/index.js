@@ -351,6 +351,16 @@ function boundedLimit(searchParams, fallback = 20, max = 100) {
   return Math.min(Math.max(limit, 1), max);
 }
 
+function boundedTimezoneOffsetMinutes(searchParams) {
+  const offset = intValue(searchParams.get("tzOffsetMinutes"), 0) || 0;
+  return Math.min(Math.max(offset, -14 * 60), 14 * 60);
+}
+
+function sqliteMinuteModifier(minutes) {
+  const sign = minutes >= 0 ? "+" : "-";
+  return `${sign}${Math.abs(minutes)} minutes`;
+}
+
 function distinctVisitorSql() {
   return "COALESCE(NULLIF(visitor_id_hash, ''), NULLIF(ip_hash, ''), 'unknown')";
 }
@@ -374,6 +384,8 @@ async function summary(request, env, corsHeaders) {
   const url = new URL(request.url);
   const days = boundedDays(url.searchParams);
   const limit = boundedLimit(url.searchParams);
+  const timezoneOffsetMinutes = boundedTimezoneOffsetMinutes(url.searchParams);
+  const timezoneModifier = sqliteMinuteModifier(timezoneOffsetMinutes);
   const since = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();
   const distinctVisitor = distinctVisitorSql();
 
@@ -413,26 +425,28 @@ async function summary(request, env, corsHeaders) {
   const timeline = await all(
     env,
     `SELECT
-       substr(received_at, 1, 10) AS day,
+       strftime('%Y-%m-%d', datetime(received_at, ?2)) AS day,
        COUNT(*) AS pageviews,
        COUNT(DISTINCT ${distinctVisitor}) AS visitors
      FROM visits
      WHERE received_at >= ?1
      GROUP BY day
      ORDER BY day ASC`,
-    since
+    since,
+    timezoneModifier
   );
 
   const hourly = await all(
     env,
     `SELECT
-       substr(received_at, 12, 2) AS hour,
+       strftime('%H', datetime(received_at, ?2)) AS hour,
        COUNT(*) AS pageviews
      FROM visits
      WHERE received_at >= ?1
      GROUP BY hour
      ORDER BY hour ASC`,
-    since
+    since,
+    timezoneModifier
   );
 
   const recentVisits = await all(
@@ -463,6 +477,7 @@ async function summary(request, env, corsHeaders) {
       ok: true,
       days,
       since,
+      timezoneOffsetMinutes,
       generatedAt: new Date().toISOString(),
       totals: totals || { pageviews: 0, visitors: 0, sessions: 0 },
       topPages,
