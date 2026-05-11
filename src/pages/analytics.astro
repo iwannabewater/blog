@@ -12,19 +12,19 @@ const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
   <Header />
   <main
     id="main-content"
-    class="app-layout py-10"
+    class="analytics-shell app-layout py-10"
     data-analytics-dashboard
     data-endpoint={analyticsEndpoint}
   >
-    <section class="grid gap-8 lg:grid-cols-[0.72fr_1.28fr]">
-      <div>
-        <p class="font-ui text-sm font-medium text-accent">Analytics</p>
+    <section class="analytics-hero">
+      <div class="analytics-copy">
+        <p class="analytics-overline">Analytics</p>
         <h1
           class="mt-3 max-w-xl font-heading text-5xl leading-tight font-medium text-balance"
         >
           访问统计
         </h1>
-        <p class="mt-4 max-w-md text-base leading-7 text-muted-foreground">
+        <p class="analytics-intro">
           页面访问、独立访客、来源、地区、设备与最近访问记录。
         </p>
       </div>
@@ -62,25 +62,30 @@ const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
             <option value="365">365 天</option>
           </select>
         </label>
-        <div class="flex flex-wrap items-end gap-2">
+        <div class="analytics-actions">
           <button type="submit">刷新</button>
           <a data-export-link href="#" aria-disabled="true">导出 CSV</a>
         </div>
       </form>
     </section>
 
-    <section class="mt-8 grid gap-3 sm:grid-cols-3" aria-label="访问统计摘要">
+    <section class="analytics-metrics" aria-label="访问统计摘要">
       {
-        ["Pageviews", "Visitors", "Sessions"].map(label => (
+        [
+          ["pageviews", "访问量", "Pageviews"],
+          ["visitors", "访客", "Visitors"],
+          ["sessions", "会话", "Sessions"],
+        ].map(([metric, label, caption]) => (
           <article class="metric-card">
             <p>{label}</p>
-            <strong data-metric={label.toLowerCase()}>-</strong>
+            <strong data-metric={metric}>-</strong>
+            <span>{caption}</span>
           </article>
         ))
       }
     </section>
 
-    <p class="mt-4 min-h-6 font-ui text-sm text-muted-foreground" data-status>
+    <p class="analytics-status" data-status>
       输入 endpoint 和 admin token 后刷新。
     </p>
 
@@ -251,11 +256,16 @@ const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
   }
 
   function number(value: AnalyticsValue) {
-    return new Intl.NumberFormat("zh-CN").format(Number(value || 0));
+    const parsed = Number(value || 0);
+    return new Intl.NumberFormat("zh-CN").format(
+      Number.isFinite(parsed) ? parsed : 0
+    );
   }
 
   function safeText(value: unknown) {
-    return value == null || value === "" ? "Unknown" : String(value);
+    return value == null || value === "" || value === "Unknown"
+      ? "未知"
+      : String(value);
   }
 
   function escapeHtml(value: unknown) {
@@ -287,13 +297,19 @@ const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
     const max = Math.max(...rows.map(row => Number(row.pageviews || 0)), 1);
     target.innerHTML = rows
       .map(row => {
-        const width = Math.max((Number(row.pageviews || 0) / max) * 100, 3);
-        const label = escapeHtml(row[labelKey]);
+        const pageviews = Number(row.pageviews || 0);
+        const width = Math.max((pageviews / max) * 100, 3);
+        const rawLabel = safeText(row[labelKey]);
+        const label =
+          labelKey === "hour" && rawLabel !== "未知"
+            ? `${rawLabel.padStart(2, "0")}:00`
+            : rawLabel;
+        const escapedLabel = escapeHtml(label);
         return `
-          <div class="bar-row">
-            <span>${label}</span>
-            <div><i style="width: ${width}%"></i></div>
-            <strong>${number(row.pageviews)}</strong>
+          <div class="analytics-bar-row">
+            <span class="analytics-bar-label" title="${escapedLabel}">${escapedLabel}</span>
+            <span class="analytics-bar-track" aria-hidden="true"><i style="width: ${width}%"></i></span>
+            <strong class="analytics-bar-value">${number(pageviews)}</strong>
           </div>
         `;
       })
@@ -312,8 +328,10 @@ const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
       return;
     }
 
+    const max = Math.max(...rows.map(row => Number(row.pageviews || 0)), 1);
     target.innerHTML = `
-      <table>
+      <div class="analytics-table-frame">
+      <table class="analytics-table">
         <thead>
           <tr>
             <th>名称</th>
@@ -323,18 +341,25 @@ const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
         </thead>
         <tbody>
           ${rows
-            .map(
-              row => `
+            .map(row => {
+              const pageviews = Number(row.pageviews || 0);
+              const width = Math.max((pageviews / max) * 100, 4);
+              const label = escapeHtml(row[labelKey]);
+              return `
                 <tr>
-                  <td title="${escapeHtml(row[labelKey])}">${escapeHtml(row[labelKey])}</td>
-                  <td>${number(row.pageviews)}</td>
+                  <td class="analytics-name-cell" title="${label}">
+                    <span>${label}</span>
+                    <i style="width: ${width}%"></i>
+                  </td>
+                  <td class="analytics-number">${number(pageviews)}</td>
                   <td>${number(row.visitors)}</td>
                 </tr>
-              `
-            )
+              `;
+            })
             .join("")}
         </tbody>
       </table>
+      </div>
     `;
   }
 
@@ -347,7 +372,8 @@ const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
     }
 
     target.innerHTML = `
-      <table>
+      <div class="analytics-table-frame">
+      <table class="analytics-table analytics-table-recent">
         <thead>
           <tr>
             <th>时间</th>
@@ -369,19 +395,24 @@ const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
                 .map(safeText)
                 .join(" / ");
               const ip = row.ip_address || `hash:${safeText(row.ip_hash)}`;
+              const device = [row.device, row.browser]
+                .filter(Boolean)
+                .map(safeText)
+                .join(" / ");
               return `
                 <tr>
-                  <td>${escapeHtml(time)}</td>
-                  <td title="${escapeHtml(row.path)}">${escapeHtml(row.path)}</td>
-                  <td>${escapeHtml(place)}</td>
-                  <td>${escapeHtml(ip)}</td>
-                  <td>${escapeHtml(row.device)} / ${escapeHtml(row.browser)}</td>
+                  <td data-label="时间">${escapeHtml(time)}</td>
+                  <td data-label="页面" title="${escapeHtml(row.path)}">${escapeHtml(row.path)}</td>
+                  <td data-label="地区">${escapeHtml(place || "未知")}</td>
+                  <td data-label="IP"><span class="analytics-chip">${escapeHtml(ip)}</span></td>
+                  <td data-label="设备">${escapeHtml(device || "未知")}</td>
                 </tr>
               `;
             })
             .join("")}
         </tbody>
       </table>
+      </div>
     `;
   }
 
@@ -508,68 +539,147 @@ const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
 </script>
 
 <style>
+  .analytics-shell {
+    --analytics-panel: color-mix(in oklab, var(--surface) 96%, transparent);
+    --analytics-panel-soft: color-mix(
+      in oklab,
+      var(--surface) 82%,
+      var(--background)
+    );
+    --analytics-line: color-mix(in oklab, var(--border) 84%, transparent);
+    --analytics-subtle: color-mix(in oklab, var(--muted) 54%, transparent);
+    --analytics-shadow:
+      0 1px 0 color-mix(in oklab, var(--border) 72%, transparent),
+      0 18px 48px color-mix(in oklab, var(--accent) 5%, transparent);
+  }
+
+  .analytics-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.72fr) minmax(22rem, 1.28fr);
+    gap: clamp(1rem, 3vw, 2rem);
+    align-items: end;
+  }
+
+  .analytics-copy {
+    min-width: 0;
+  }
+
+  .analytics-overline {
+    color: var(--accent);
+    font-family: var(--font-code);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  .analytics-intro {
+    margin-top: 1rem;
+    max-width: 28rem;
+    color: var(--muted-foreground);
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
   .analytics-controls,
   .analytics-panel,
   .metric-card {
-    border: 1px solid var(--border);
+    border: 1px solid var(--analytics-line);
     border-radius: var(--radius);
-    background: color-mix(in oklab, var(--surface) 94%, transparent);
-    box-shadow: 0 1px 0 color-mix(in oklab, var(--border) 70%, transparent);
+    background: var(--analytics-panel);
+    box-shadow: var(--analytics-shadow);
   }
 
   .analytics-controls {
     display: grid;
-    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) 8rem auto;
-    gap: 0.75rem;
+    grid-template-columns:
+      minmax(12rem, 1.3fr) minmax(10rem, 1fr) minmax(7rem, 0.48fr)
+      auto;
+    gap: 0.85rem;
     align-items: end;
     padding: 1rem;
-    font-family: var(--font-ui);
+    font-family: var(--font-code);
   }
 
   .analytics-controls label {
     display: grid;
-    gap: 0.35rem;
+    gap: 0.42rem;
     min-width: 0;
   }
 
   .analytics-controls span,
   .metric-card p,
-  .panel-heading span {
+  .metric-card span,
+  .panel-heading span,
+  .analytics-status {
     color: var(--muted-foreground);
-    font-family: var(--font-ui);
-    font-size: 0.86rem;
+    font-family: var(--font-code);
+    font-size: 0.78rem;
+    letter-spacing: 0;
   }
 
   .analytics-controls input,
   .analytics-controls select {
     width: 100%;
-    min-height: 2.55rem;
-    border: 1px solid var(--border);
-    border-radius: calc(var(--radius) * 0.75);
-    background: var(--background);
+    min-height: 2.75rem;
+    border: 1px solid var(--analytics-line);
+    border-radius: calc(var(--radius) * 0.7);
+    background: color-mix(in oklab, var(--background) 82%, var(--surface));
     color: var(--foreground);
-    padding: 0.55rem 0.7rem;
+    padding: 0.58rem 0.72rem;
+    font-size: 0.9rem;
+    font-variant-numeric: tabular-nums;
+    outline: none;
+    transition:
+      border-color 160ms ease,
+      box-shadow 160ms ease,
+      background-color 160ms ease;
+  }
+
+  .analytics-controls input:focus,
+  .analytics-controls select:focus {
+    border-color: color-mix(in oklab, var(--accent) 54%, var(--border));
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 13%, transparent);
   }
 
   .analytics-controls button,
   .analytics-controls a {
     display: inline-flex;
-    min-height: 2.55rem;
+    min-height: 2.75rem;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--border);
-    border-radius: calc(var(--radius) * 0.75);
-    padding: 0.55rem 0.85rem;
+    border: 1px solid color-mix(in oklab, var(--accent) 24%, var(--border));
+    border-radius: calc(var(--radius) * 0.7);
+    padding: 0.6rem 0.95rem;
     background: var(--primary);
     color: var(--primary-foreground);
     font-weight: 500;
+    font-size: 0.9rem;
     text-decoration: none;
     white-space: nowrap;
+    transition:
+      transform 140ms ease,
+      border-color 160ms ease,
+      background-color 160ms ease;
   }
 
   .analytics-controls a {
-    background: var(--surface);
+    background: color-mix(in oklab, var(--surface) 90%, var(--accent-quiet));
     color: var(--accent);
+  }
+
+  .analytics-controls button:hover,
+  .analytics-controls a:hover {
+    transform: translateY(-1px);
+    border-color: color-mix(in oklab, var(--accent) 46%, var(--border));
+  }
+
+  .analytics-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    align-items: end;
+    justify-content: end;
   }
 
   .analytics-controls a[aria-disabled="true"] {
@@ -577,18 +687,53 @@ const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
     pointer-events: none;
   }
 
+  .analytics-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem;
+    margin-top: 1.25rem;
+  }
+
   .metric-card {
-    padding: 1rem;
+    position: relative;
+    display: grid;
+    min-height: 8.25rem;
+    overflow: hidden;
+    padding: 1rem 1rem 0.95rem;
+  }
+
+  .metric-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: color-mix(in oklab, var(--accent) 72%, transparent);
+  }
+
+  .metric-card p {
+    align-self: start;
+    color: var(--accent-tertiary);
+  }
+
+  .metric-card span {
+    align-self: end;
+    color: color-mix(in oklab, var(--muted-foreground) 78%, transparent);
   }
 
   .metric-card strong {
     display: block;
-    margin-top: 0.35rem;
+    align-self: center;
     color: var(--accent);
-    font-family: var(--font-heading);
-    font-size: clamp(2rem, 7vw, 3rem);
+    font-family: var(--font-code);
+    font-size: clamp(2.35rem, 6vw, 3.75rem);
     font-weight: 500;
+    font-variant-numeric: tabular-nums;
     line-height: 1;
+  }
+
+  .analytics-status {
+    margin-top: 0.85rem;
+    min-height: 1.5rem;
   }
 
   [data-status][data-tone="error"] {
@@ -601,18 +746,22 @@ const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
 
   .analytics-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 1rem;
+    margin-top: 1.5rem;
   }
 
   .analytics-panel {
+    grid-column: span 6;
     min-width: 0;
-    padding: 1rem;
+    min-height: 12.5rem;
+    padding: 1.05rem;
     overflow: hidden;
   }
 
   .analytics-panel-wide {
     grid-column: 1 / -1;
+    min-height: 13rem;
   }
 
   .panel-heading {
@@ -620,14 +769,14 @@ const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
     align-items: baseline;
     justify-content: space-between;
     gap: 1rem;
-    margin-bottom: 0.85rem;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 0.7rem;
+    margin-bottom: 0.95rem;
+    border-bottom: 1px solid var(--analytics-line);
+    padding-bottom: 0.75rem;
   }
 
   .panel-heading h2 {
     font-family: var(--font-heading);
-    font-size: 1.45rem;
+    font-size: clamp(1.28rem, 3vw, 1.55rem);
     font-weight: 500;
     line-height: 1.2;
   }
@@ -635,106 +784,290 @@ const analyticsEndpoint = PUBLIC_ANALYTICS_ENDPOINT?.trim().replace(/\/+$/, "");
   .timeline-bars,
   .hour-bars {
     display: grid;
-    gap: 0.55rem;
+    gap: 0.62rem;
   }
 
-  .bar-row {
+  :global(.analytics-bar-row) {
     display: grid;
-    grid-template-columns: minmax(4.5rem, 8rem) minmax(0, 1fr) 4rem;
-    gap: 0.75rem;
+    grid-template-columns: minmax(5.6rem, 9rem) minmax(0, 1fr) minmax(
+        3rem,
+        4.5rem
+      );
+    gap: 0.85rem;
     align-items: center;
-    font-family: var(--font-ui);
-    font-size: 0.92rem;
+    min-height: 2rem;
+    font-family: var(--font-code);
+    font-size: 0.86rem;
+    font-variant-numeric: tabular-nums;
   }
 
-  .bar-row div {
-    height: 0.65rem;
+  :global(.analytics-bar-label) {
+    min-width: 0;
+    overflow: hidden;
+    color: var(--foreground);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  :global(.analytics-bar-track) {
+    height: 0.55rem;
     overflow: hidden;
     border-radius: 999px;
-    background: var(--muted);
+    background: var(--analytics-subtle);
   }
 
-  .bar-row i {
+  :global(.analytics-bar-track i) {
     display: block;
     height: 100%;
     border-radius: inherit;
-    background: var(--accent);
+    background: linear-gradient(
+      90deg,
+      var(--accent),
+      color-mix(in oklab, var(--accent-secondary) 86%, var(--accent))
+    );
   }
 
-  .bar-row strong {
+  :global(.analytics-bar-value) {
     color: var(--accent);
     font-weight: 500;
     text-align: end;
   }
 
-  .analytics-panel table {
+  .analytics-panel :global(.analytics-table-frame) {
+    overflow-x: auto;
+  }
+
+  .analytics-panel :global(.analytics-table) {
     width: 100%;
-    border-collapse: collapse;
-    font-family: var(--font-ui);
-    font-size: 0.92rem;
+    min-width: 24rem;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-family: var(--font-code);
+    font-size: 0.84rem;
+    font-variant-numeric: tabular-nums;
   }
 
-  .analytics-panel th,
-  .analytics-panel td {
-    border-bottom: 1px solid var(--border);
-    padding: 0.58rem 0.35rem;
+  .analytics-panel :global(.analytics-table th),
+  .analytics-panel :global(.analytics-table td) {
+    border-bottom: 1px solid var(--analytics-line);
+    padding: 0.64rem 0.45rem;
     text-align: start;
-    vertical-align: top;
+    vertical-align: middle;
   }
 
-  .analytics-panel th {
+  .analytics-panel :global(.analytics-table th) {
     color: var(--muted-foreground);
-    font-size: 0.76rem;
+    font-size: 0.68rem;
     font-weight: 500;
+    letter-spacing: 0;
     text-transform: uppercase;
   }
 
-  .analytics-panel td {
+  .analytics-panel :global(.analytics-table td) {
     max-width: 16rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  .analytics-panel td:nth-child(n + 2),
-  .analytics-panel th:nth-child(n + 2) {
+  .analytics-panel :global(.analytics-table td:nth-child(n + 2)),
+  .analytics-panel :global(.analytics-table th:nth-child(n + 2)) {
+    width: 4rem;
+    min-width: 4rem;
     text-align: end;
-  }
-
-  .recent-table {
-    overflow-x: auto;
-  }
-
-  .recent-table td,
-  .recent-table th {
     white-space: nowrap;
   }
 
-  .empty-state {
+  .analytics-panel :global(.analytics-name-cell) {
+    position: relative;
+    width: 100%;
+  }
+
+  .analytics-panel :global(.analytics-name-cell span) {
+    position: relative;
+    z-index: 1;
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .analytics-panel :global(.analytics-name-cell i) {
+    position: absolute;
+    inset: auto 0 0.35rem 0.4rem;
+    z-index: 0;
+    display: block;
+    max-width: calc(100% - 0.8rem);
+    height: 0.28rem;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--accent) 34%, transparent);
+  }
+
+  .analytics-panel :global(.analytics-number) {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .recent-table :global(.analytics-table-recent) {
+    min-width: 50rem;
+  }
+
+  .recent-table :global(td),
+  .recent-table :global(th) {
+    white-space: nowrap;
+  }
+
+  :global(.analytics-chip) {
+    display: inline-flex;
+    max-width: 9rem;
+    overflow: hidden;
+    border: 1px solid color-mix(in oklab, var(--accent) 18%, var(--border));
+    border-radius: 999px;
+    padding: 0.12rem 0.45rem;
+    background: color-mix(in oklab, var(--accent-quiet) 72%, transparent);
+    color: var(--accent);
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  :global(.empty-state) {
+    border: 1px dashed var(--analytics-line);
+    border-radius: calc(var(--radius) * 0.75);
+    background: color-mix(in oklab, var(--surface) 62%, transparent);
     color: var(--muted-foreground);
-    font-family: var(--font-ui);
-    font-size: 0.95rem;
+    font-family: var(--font-code);
+    font-size: 0.84rem;
+    padding: 1rem;
+    text-align: center;
   }
 
   @media (max-width: 960px) {
+    .analytics-hero,
     .analytics-controls,
     .analytics-grid {
       grid-template-columns: 1fr;
     }
 
+    .analytics-panel {
+      grid-column: 1 / -1;
+    }
+
     .analytics-controls {
       align-items: stretch;
+    }
+
+    .analytics-actions {
+      justify-content: start;
     }
   }
 
   @media (max-width: 640px) {
-    .bar-row {
-      grid-template-columns: 4.5rem minmax(0, 1fr) 3.25rem;
+    .analytics-shell {
+      padding-top: 1.5rem;
+    }
+
+    .analytics-metrics {
+      grid-template-columns: 1fr;
+    }
+
+    .analytics-controls {
+      padding: 0.85rem;
+    }
+
+    .analytics-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .analytics-controls button,
+    .analytics-controls a {
+      width: 100%;
+    }
+
+    .metric-card {
+      min-height: 6.8rem;
+    }
+
+    .analytics-panel {
+      min-height: auto;
+      padding: 0.9rem;
+    }
+
+    :global(.analytics-bar-row) {
+      grid-template-columns: minmax(4rem, 5.25rem) minmax(0, 1fr) 3rem;
       font-size: 0.82rem;
     }
 
-    .analytics-panel td {
+    .analytics-panel :global(.analytics-table:not(.analytics-table-recent)) {
+      min-width: 0;
+      table-layout: fixed;
+    }
+
+    .analytics-panel
+      :global(
+        .analytics-table:not(.analytics-table-recent) th:nth-child(n + 2)
+      ),
+    .analytics-panel
+      :global(
+        .analytics-table:not(.analytics-table-recent) td:nth-child(n + 2)
+      ) {
+      width: 3.25rem;
+      min-width: 3.25rem;
+      padding-inline: 0.2rem;
+    }
+
+    .analytics-panel :global(.analytics-table td) {
       max-width: 11rem;
+    }
+
+    .recent-table :global(.analytics-table-recent) {
+      min-width: 0;
+    }
+
+    .recent-table :global(.analytics-table-recent thead) {
+      display: none;
+    }
+
+    .recent-table :global(.analytics-table-recent tbody),
+    .recent-table :global(.analytics-table-recent tr),
+    .recent-table :global(.analytics-table-recent td) {
+      display: block;
+    }
+
+    .recent-table :global(.analytics-table-recent tr) {
+      display: grid;
+      gap: 0.35rem;
+      border-bottom: 1px solid var(--analytics-line);
+      padding: 0.8rem 0;
+    }
+
+    .recent-table :global(.analytics-table-recent td) {
+      display: flex;
+      width: auto;
+      max-width: none;
+      min-width: 0;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      border-bottom: 0;
+      padding: 0;
+      text-align: end;
+      white-space: normal;
+    }
+
+    .recent-table :global(.analytics-table-recent td:nth-child(n + 2)) {
+      width: auto;
+      min-width: 0;
+      text-align: end;
+    }
+
+    .recent-table :global(.analytics-table-recent td::before) {
+      content: attr(data-label);
+      flex: 0 0 3.5rem;
+      color: var(--muted-foreground);
+      font-size: 0.72rem;
+      text-align: start;
     }
   }
 </style>
