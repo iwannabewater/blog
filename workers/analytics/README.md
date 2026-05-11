@@ -49,7 +49,7 @@ pnpm dlx wrangler deploy
 After deployment, set the GitHub repository variable used by the Pages build:
 
 ```text
-PUBLIC_ANALYTICS_ENDPOINT=https://<worker-name>.<account>.workers.dev
+PUBLIC_ANALYTICS_ENDPOINT=https://analytics.whynotsleep.cc
 ```
 
 The static site only sends pageview events when that public endpoint is present

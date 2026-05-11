@@ -142,7 +142,7 @@ pnpm dlx wrangler deploy
 After the Worker is deployed, add this repository variable in GitHub:
 
 ```text
-PUBLIC_ANALYTICS_ENDPOINT=https://<worker-name>.<account>.workers.dev
+PUBLIC_ANALYTICS_ENDPOINT=https://analytics.whynotsleep.cc
 ```
 
 Detailed Worker API and operation notes live in

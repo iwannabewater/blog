@@ -30,3 +30,7 @@ pnpm-debug.log*
 
 # pagefind
 public/pagefind/
+
+# local Cloudflare Worker deployment state
+workers/analytics/wrangler.jsonc
+workers/analytics/.env*
